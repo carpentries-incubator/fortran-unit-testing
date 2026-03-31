@@ -329,7 +329,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Fortran Unit Test Syntax</h1>
-        <p>Last updated on 2026-01-13 |
+        <p>Last updated on 2026-03-31 |
 
         <a href="https://github.com/UCL-ARC/fortran-unit-testing-lesson/edit/main/episodes/4-pfunit-syntax.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -771,8 +771,8 @@ of the test for each parameter set.</p>
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="kw">function</span> my_test_params_toString(testParameter) <span class="kw">result</span>(string)</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>    <span class="dt">class (my_test_params)</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> testParameter</span>
+<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="kw">function</span> my_test_params_toString(this) <span class="kw">result</span>(string)</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>    <span class="dt">class (my_test_params)</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> this</span>
 <span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>    <span class="dt">character(:)</span>, <span class="dt">allocatable</span> <span class="dt">::</span> string</span>
 <span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a></span>
 <span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>    <span class="dt">character(len=80)</span> <span class="dt">::</span> buffer</span>
@@ -927,7 +927,7 @@ any links that you are not going to use.
   "url": "https://UCL-ARC.github.io/fortran-unit-testing-lesson/instructor/4-pfunit-syntax.html",
   "identifier": "https://UCL-ARC.github.io/fortran-unit-testing-lesson/instructor/4-pfunit-syntax.html",
   "dateCreated": "2025-05-09",
-  "dateModified": "2026-01-13",
+  "dateModified": "2026-03-31",
   "datePublished": "2026-03-31"
 }
 
