@@ -350,8 +350,8 @@ of this function will be displayed alongside the name of the test for each param
 set.
 
 ```F90
-function my_test_params_toString(testParameter) result(string)
-    class (my_test_params), intent(in) :: testParameter
+function my_test_params_toString(this) result(string)
+    class (my_test_params), intent(in) :: this
     character(:), allocatable :: string
 
     character(len=80) :: buffer
