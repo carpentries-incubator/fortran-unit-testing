@@ -37,377 +37,333 @@ the use of [pFUnit](https://github.com/Goddard-Fortran-Ecosystem/pFUnit) as it i
   provided by pFUnit into `.f90` before compilation. This removes the need to write a lot of
   boilerplate code.
 
-## The structure of a test module
+## The most basics pFUnit test
 
-All test modules share a basic structure:
+As we've seen, if we were to write our own unit tests using a custom testing setup we would need to define a test runner that could tracks success and failure states for each test and reports the reason for each failure back to us. 
 
-```f90
-module test_something
-    ! use funit
-    ! use the src to be tested
+Alternatively, if we were to use pFUnit, there is no longer a need to define this test runner as pFUnit handles that for us. Therefore, the most basic test we can define using pFunit becomes very simple. For example, if we wanted to test the Fortran intrinsic function dot_product we could write the following test.
+
+```fortran
+module test_dot_product_intrinsic
+    use funit
+    implicit none
+contains
+    @Test
+    subroutine test_dot_product()
+        integer :: a(10), b(10), c
+
+        ! Define inputs and expected outputs for the scenario we want to test
+        a = [1,2,3,4,5,6,7,8,9,10]
+        b = [11,12,13,14,15,16,17,18,19,20]
+        c = 935
+
+        ! Check that the call to dot_product returned what we expect
+        @assertEqual(c, dot_product(a, b))
+
+    end subroutine test_dot_product
+end module test_dot_product_intrinsic
+```
+
+Here we have introduced some new syntax in the form of `@Test` and `@AssertEqual`. These are pFUnit pre-processor directives which simplify how we write tests:
+
+- `@Test` designates a subroutine as a test should be ran on execution of your pFUnit test suite.
+- `@AssertEqual` is one of many assert directives provided by pFUnit to simplify verification of code outputs and assumed state.
+
+If we then wish to add a new test case we can add a new subroutine again decorated with with `@Test`:
+
+```fortran
+module test_dot_product_intrinsic
+    use funit
+    implicit none
+contains
+    @Test
+    subroutine test_dot_product()
+        integer :: a(10), b(10), c
+
+        ! Define inputs and expected outputs for the scenario we want to test
+        a = [1,2,3,4,5,6,7,8,9,10]
+        b = [11,12,13,14,15,16,17,18,19,20]
+        c = 935
+
+        ! Check that the call to dot_product returned what we expect
+        @assertEqual(c, dot_product(a, b))
+
+    end subroutine test_dot_product
+
+    @Test
+    subroutine test_dot_product_all_zeros()
+        integer :: a(10), b(10), c
+
+        ! Define inputs and expected outputs for the scenario we want to test
+        a = 0
+        b = 0
+        c = 0
+
+        ! Check that the call to dot_product returned what we expect
+        @assertEqual(c, dot_product(a, b))
+
+    end subroutine test_dot_product_all_zeros
+end module test_dot_product_intrinsic
+```
+
+## Handling state within tests
+
+If the code we are testing required some state to be setup prior to running the test such as allocating arrays, we would currently need to repeat this step for each test, like so:
+
+```fortran
+module test_dot_product_intrinsic
+    use funit
+    implicit none
+contains
+    @Test
+    subroutine test_dot_product()
+        integer, allocatable :: a(:), b(:)
+        integer :: c
+
+        ! allocate a and b
+        allocate(a(10), b(10))
+        
+        ! Define inputs and expected outputs for the scenario we want to test
+        a = [1,2,3,4,5,6,7,8,9,10]
+        b = [11,12,13,14,15,16,17,18,19,20]
+        c = 935
+
+        ! Check that the call to dot_product returned what we expect
+        @assertEqual(c, dot_product(a, b))
+
+        ! Deallocate to cleanup (not technically necessary)
+        deallocate(a, b)
+
+    end subroutine test_dot_product
+
+    @Test
+    subroutine test_dot_product_all_zeros()
+        integer, allocatable :: a(:), b(:)
+        integer :: c
+
+        ! allocate a and b
+        allocate(a(10), b(10))
+
+        ! Define inputs and expected outputs for the scenario we want to test
+        a = 0
+        b = 0
+        c = 0
+
+        ! Check that the call to dot_product returned what we expect
+        @assertEqual(c, dot_product(a, b))
+
+        ! Deallocate to cleanup (not technically necessary)
+        deallocate(a, b)
+
+    end subroutine test_dot_product_all_zeros
+end module test_dot_product_intrinsic
+```
+
+To reduce this repeated code, we can make use of another pFUnit pre-processor directive `@TestCase`:
+
+```fortran
+module test_dot_product_intrinsic
+    use funit
     implicit none
 
-    ! Derived types: Define types to act as test parameters and test cases.
+    !> Custom test case type allowing a single definition of setup and tearDown logic
+    @TestCase(constructor=dot_product_test_case_constructor)
+    type, extends(TestCase) :: dot_product_test_case
+        !> The input array `a` to be passed to dot_product
+        integer, allocatable :: a(:)
+        !> The input array `b` to be passed to dot_product
+        integer, allocatable :: b(:)
+    contains
+        procedure :: tearDown
+    end type dot_product_test_case
+
 contains
 
-    ! Test Suite: Define a test suite (collection of tests) to be returned from a procedure.
+    !> Constructor for our custom test case type which allocates arrays `a` and `b`
+    function dot_product_test_case_constructor() result(newTestCase)
+        !> The new instance of our custom test case type to be constructed
+        type(dot_product_test_case) :: newTestCase
 
-    ! Test Logic: Define the actual test execution code which will call the src and execute assertions.
+        allocate(newTestCase%a(10))
+        allocate(newTestCase%b(10))
+    end function dot_product_test_case_constructor
 
-    ! Type Constructors: Define constructors for your derived types (test parameters/cases).
-end module test_something
+    !> Essentially a destructor for our custom test case type which deallocates arrays `a` and `b`
+    subroutine tearDown(this)
+        !> The instance of our custom test case type which we want to teardown
+        class(dot_product_test_case), intent(inout) :: this
+
+        deallocate(this%a)
+        deallocate(this%b)
+    end subroutine tearDown
+
+    @Test
+    subroutine test_dot_product(this)
+        !> The instance of our test case type for this test
+        class(dot_product_test_case), intent(inout) :: this
+        integer :: c
+        
+        ! Define inputs and expected outputs for the scenario we want to test
+        this%a = [1,2,3,4,5,6,7,8,9,10]
+        this%b = [11,12,13,14,15,16,17,18,19,20]
+        c = 935
+
+        ! Check that the call to dot_product returned what we expect
+        @assertEqual(c, dot_product(this%a, this%b))
+    end subroutine test_dot_product
+
+    @Test
+    subroutine test_dot_product_all_zeros(this)
+        !> The instance of our test case type for this test
+        class(dot_product_test_case), intent(inout) :: this
+        integer :: c
+
+        ! Define inputs and expected outputs for the scenario we want to test
+        this%a = 0
+        this%b = 0
+        c = 0
+
+        ! Check that the call to dot_product returned what we expect
+        @assertEqual(c, dot_product(this%a, this%b))
+    end subroutine test_dot_product_all_zeros
+end module test_dot_product_intrinsic
 ```
 
-## Let's dive into the syntax
+In the above code we have defined our own custom derived type `dot_product_test_case` which contains the two arrays `a` and `b` as type-bound prameters. `dot_product_test_case` also contains a type-bound procedures `tearDown` which deallocates `a` and `b`. To first allocate `a` and `b` we have defined a constructor `new_dot_product_test_case`. These two procdures allow us to move this previously repeated logic to one location. Finally, to ensure our new custom type is understood and used correctly by pFUnit, we must do two things. Ensure thus type extend one provided by the pFUnit library - `TestCase` - and Decorate this new type with the pre-processor directive `@TestCase`, ensuring that we pass `new_dot_product_test_case` as the constructor.
 
-We will continue to use the temperature conversion example from the previous episode to cover
-the syntax of pFUnit.
+## Parameterising tests
 
-:::::::::::::::::::::::::::::::::::::::::::::::::::: spoiler
+By defining a custom test case type, we have begun to reduce repetition within our test. However, there is further deduplication to be gained. To do this, we can paramaterise our test such that we reuse the same test logic (calling the src procedure and executing assertions) for a range of input values. This is done by defining a new custom type `dot_product_test_parameters`:
 
-### Derived types
+```fortran
+module test_dot_product_intrinsic
+    use funit
+    implicit none
 
-This uses standard Fortran syntax to define some
-[derived types](https://fortran-lang.org/learn/quickstart/derived_types).
+    !> Custom test parameters type containing all of the inputs and expected outputs of the intrinsic dot_product
+    @TestParameter
+    type, extends(AbstractTestParameter) :: dot_product_test_parameters
+        !> The input array `a` to be passed to dot_product
+        integer, allocatable :: a(:)
+        !> The input array `b` to be passed to dot_product
+        integer, allocatable :: b(:)
+        !> The expected value to be returned from dot_product
+        integer :: expected_dot_product
+        !> A description of the test to be outputted for logging
+        character(len=100) :: description
+    contains
+        procedure :: toString => dot_product_test_parameters_toString
+    end type dot_product_test_parameters
 
-#### Test parameters
+    !> Custom test case type allowing a single definition of tearDown logic. This could also be thought
+    !> of as boilerplate required to make the parameters available within our @Test.
+    @TestCase(constructor=dot_product_test_case_constructor)
+    type, extends(ParameterizedTestCase) :: dot_product_test_case
+        !> The instance of our test parameters type to be used within the test logic
+        type(dot_product_test_parameters) :: params
+    contains
+        procedure :: tearDown
+    end type dot_product_test_case
 
-The test parameter type should contain the inputs and expected outputs of the code we are testing.
-
-:::::::::::::::::::::::::::::: callout
-
-#### Treat the src to be tested like a black box
-
-When writing a unit test,
-
-- The **inputs and outputs** are the important aspects to understand about our src code to be tested.
-- **The implementation should not influence how we write our test**. Not every test needs to be
-  parametrized, but you will always need to consider the inputs and outputs of the src code you
-  are testing.
-
-::::::::::::::::::::::::::::::::::::::
-
-Firstly, the test parameter derived-type is written as:
-
-```F90
-@testParameter
-type, extends(AbstractTestParameter) :: my_test_params
-    integer :: input, expected_output
 contains
-    procedure :: toString => my_test_params_toString
-end type my_test_params
+
+    !> Trims and returns the description of the parameter set. The string returned by this function
+    !> will be included by pFUnit in the name of this test
+    function dot_product_test_parameters_toString(this) result(string)
+        class (dot_product_test_parameters), intent(in) :: this
+        character(:), allocatable :: string
+
+        string = trim(this%description)
+    end function dot_product_test_parameters_toString
+
+    !> Boilerplate constructor required to convert our custom parameters type to the test case type.
+    function dot_product_test_case_constructor(testParameters) result(newTestCase)
+        type(dot_product_test_parameters), intent(in) :: testParameters
+        type(dot_product_test_case) :: newTestCase
+
+        newTestCase%params = testParameters
+    end function dot_product_test_case_constructor
+
+    !> Essentially a destructor for our custom test case type which deallocates arrays `a` and `b`
+    subroutine tearDown(this)
+        !> The instance of our custom test case type which we want to teardown
+        class(dot_product_test_case), intent(inout) :: this
+
+        deallocate(this%params%a)
+        deallocate(this%params%b)
+    end subroutine tearDown
+
+    !> The test suite in which parameter sets (inputs and expected outputs) for each test are defined.
+    function dot_product_test_suite() result(parameter_sets)
+        !> The array of parameter sets to be returned
+        type(dot_product_test_parameters) :: parameter_sets(2)
+
+        integer, allocatable :: a(:), b(:)
+        integer :: c
+
+        allocate(a(10))
+        allocate(b(10))
+
+        ! Parameter set 1
+        a = [1,2,3,4,5,6,7,8,9,10]
+        b = [11,12,13,14,15,16,17,18,19,20]
+        c = 935
+        parameter_sets(1) = dot_product_test_parameters(a, b, c, "10x10 incrementing values") ! Default constructor generated by our type definition
+
+        ! Parameter set 2
+        a = 0
+        b = 0
+        c = 0
+        parameter_sets(2) = dot_product_test_parameters(a, b, c, "10x10 all zeros")
+
+        ! Deallocate the temporary stores of a and b for completeness
+        deallocate(a, b)
+    end function dot_product_test_suite
+
+
+    @Test(testParameters={dot_product_test_suite()})
+    subroutine test_dot_product(this)
+        !> The instance of our test case type for this test
+        class(dot_product_test_case), intent(inout) :: this
+
+        ! Check that the call to dot_product returned what we expect
+        @AssertEqual(this%params%expected_dot_product, dot_product(this%params%a, this%params%b))
+    end subroutine test_dot_product
+end module test_dot_product_intrinsic
 ```
 
-**Key points:**
+There is a lot of new aspects being introduced in the above test so let's break them down.
 
-- Our parameter type must be decorated with **@testParameter** so that the pFUnit pre-processor
-  understands that this derived type defines a test parameter.
-- We must extend one of the base types provided by pFUnit, in this case **AbstractTestParameter**
-  which is the most generic.
-- We have declared a type-bound procedure **toString** which maps to the procedure
-  **my_test_params_toString**. This allows pFUnit to log a helpful description of our parameter set
-  which should be returned from **my_test_params_toString** (we'll see more on this later).
+:::::::::::: spoiler
 
-#### Test case
+### 1. Test parameters type
 
-Then we can write our test case derived-type as:
+First of all we have defined a new custom type `dot_product_test_parameters`
 
-```F90
-@TestCase(constructor=my_test_params_to_my_test_case, testParameters={my_test_suite()})
-type, extends(ParameterizedTestCase) :: my_test_case
-    type(my_test_params) :: params
-end type my_test_case
-```
-
-**Key points:**
-
-- Our parameter type must be decorated with **@TestCase** so that the pFUnit pre-processor
-  understands that this derived type defines a test case.
-- The **@TestCase** decorator includes some extra information to tell the pre-processor how
-  the test case should be constructed. What we have defined is…
-  - To convert from an instance of **my_test_params** to an instance of **my_test_case**, one
-      must call **my_test_params_to_my_test_case**.
-  - The list of parameter sets which define each individual parametrized test will be
-      returned from the function **my_test_suite**
-- Just like with the test parameter type, we must extend one of the base types provided by
-  pFUnit, in this case **ParameterizedTestCase** which indicates that this test should be
-  parametrized.
-- We then define a single type-bound value which is of the test parameter type we have just
-  defined.
-
-::::::::::::::::::::::::::::::::::::: challenge
-
-#### Challenge: Add derived types to pFUnit tests of temperature conversions
-
-Continuing with part two of
-[3-writing-your-first-unit-test/challenge](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/3-writing-your-first-unit-test/challenge)
-from the exercises repo. Begin re-writing your standard Fortran test using pFUnit. First, add some derived
-types to the provided template file,
-[test_temp_conversions.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/3-writing-your-first-unit-test/challenge/test/pfunit/test_temp_conversions.pf#L9-L19).
-
-:::::::::::::::::::::::::::::::: solution
-
-These types could look something like this:
-
-```f90
-!> Test parameter type to package the test parameters
+```fortran
+!> Custom test parameters type containing all of the inputs and expected outputs of the intrinsic dot_product
 @TestParameter
-type, extends(AbstractTestParameter) :: temp_conversions_test_params_t
-    !> The temperature to input into the function being tested
-    real :: input
-    !> Theb temperature expected to be returned from the function being tested
-    real :: expected_output
+type, extends(AbstractTestParameter) :: dot_product_test_parameters
+    !> The input array `a` to be passed to dot_product
+    integer, allocatable :: a(:)
+    !> The input array `b` to be passed to dot_product
+    integer, allocatable :: b(:)
+    !> The expected value to be returned from dot_product
+    integer :: expected_dot_product
     !> A description of the test to be outputted for logging
     character(len=100) :: description
 contains
-    procedure :: toString => temp_conversions_test_params_t_toString
-end type temp_conversions_test_params_t
-
-!> Test case type to specify the style of test (paramaterized)
-@TestCase(constructor=new_test_case)
-type, extends(ParameterizedTestCase) :: temp_conversions_test_case_t
-    type(temp_conversions_test_params_t) :: params
-end type temp_conversions_test_case_t
+    procedure :: toString => dot_product_test_parameters_toString
+end type dot_product_test_parameters
 ```
 
-A full solution is provided in [3-writing-your-first-unit-test/solution](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/3-writing-your-first-unit-test/solution).
-
-:::::::::::::::::::::::::::::::::::::::::
-:::::::::::::::::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::::::::::::::: spoiler
-
-### Test Suite
-
-In this section we define our parameter sets (or test suite). We define a function which
-returns our test parameters like so:
-
-```F90
-function my_test_suite() result(params)
-    type(my_test_params), allocatable :: params(:)
-
-    params = [ &
-        my_test_params(1, 2), & ! Given input is 1, output is 2
-        my_test_params(3, 4) & ! Given input is 3, output is 4
-    ]
-end function my_test_suite
-```
-
-**Key points:**
-
-- The function returns an array of **my_test_params**.
-- We are using a constructor function to define each parameter set which we do not need to
-  define ourselves.
-
-::::::::::::::::::::::::::::::::::::: challenge
-
-#### Challenge: Add a test suite to pFUnit tests of temperature conversions
-
-Continuing with your pFUnit test of `temp_conversions`, add a test suite for tests of the
-function `fahrenheit_to_celsius` in the indicated section of the template file,
-[test_temp_conversions.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/3-writing-your-first-unit-test/challenge/test/pfunit/test_temp_conversions.pf#L27-L28)
-
-:::::::::::::::::::::::::::::::: solution
-
-This test suites could look something like this:
-
-```f90
-!> Test Suite for tests of fahrenheit_to_celsius
-function fahrenheit_to_celsius_testsuite() result(params)
-    !> An array of test parameters, each specifying an individual test
-    class(temp_conversions_test_params_t), allocatable :: params(:)
-
-    params = [ &
-        temp_conversions_test_params_t(0.0, -17.777779, "0.0 °F"), &
-        temp_conversions_test_params_t(32.0, 0.0, "0.0 °C"), &
-        temp_conversions_test_params_t(-100.0, -73.333336, "100 °F"), &
-        temp_conversions_test_params_t(1.23,-17.094444, "Decimal °F") &
-    ]
-end function fahrenheit_to_celsius_testsuite
-```
-
-A full solution is provided in [3-writing-your-first-unit-test/solution](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/3-writing-your-first-unit-test/solution).
-
-:::::::::::::::::::::::::::::::::::::::::
-:::::::::::::::::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::::::::::::::: spoiler
-
-### Test Logic
-
-This is where we actually call our src procedure and carry out assertions:
-
-```F90
-@Test
-subroutine TestMySrcProcedure(this)
-    class (my_test_case), intent(inout) :: this
-
-    integer :: actual_output
-
-    call my_src_procedure(this%params%input, actual_output)
-
-    @assertEqual(this%params%expected_output, actual_output, "Unexpected output from my_src_procedure")
-end subroutine TestMySrcProcedure
-```
-
-**Key points:**
-
-- We must decorate the test subroutine with the pFUnit annotation **@Test** so the pre-processor
-  knows this is a test.
-- We are utilising a pre-processor directive provided by pFUnit **@assertEqual** which allows the
-  exact comparison of two values (also works for comparing arrays). For a full list of the
-  available assertion directives see
-  [pFUnit documentation page for their preprocessor directives](https://pfunit.sourceforge.net/page_Assert.html)
-  - As is done here, it is recommended to provide a helpful message in case of an assertion
-      failing to help diagnose the issue.
-
-::::::::::::::::::::::::::::::::::: callout
-
-#### Parametrize on a test by test basis
-
-It is also possible to parametrize a test at this point, instead of when defining the derived-types.
-This can be useful if you wish to reuse a test parameter type for multiple test cases:
-
-```f90
-@Test(testParameters={my_test_suite()})
-subroutine TestMySrcProcedure(this)
-    class (my_test_case), intent(inout) :: this
-    ...
-```
-
-:::::::::::::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::: challenge
-
-#### Challenge: Add a test function to pFUnit tests of temperature conversions
-
-Continuing with your pFUnit test of `temp_conversions`, add some test logic for tests of
-the function `fahrenheit_to_celsius` in the indicated section of the template file,
-[test_temp_conversions.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/3-writing-your-first-unit-test/challenge/test/pfunit/test_temp_conversions.pf#L30-L31)
-
-:::::::::::::::::::::::::::::::: solution
-
-This test logic could look something like this:
-
-```f90
-!> Test Logic, unit test subroutine for fahrenheit_to_celsius
-@Test(testParameters={fahrenheit_to_celsius_testsuite()})
-subroutine test_fahrenheit_to_celsius(this)
-    !> The test case which indicates the type of test we are running
-    class(temp_conversions_test_case_t), intent(inout) :: this
-
-    character(len=200) :: failure_message
-    real :: actual_output
-
-    ! Get the actual celsius value returned from fahrenheit_to_celsius
-    actual_output = fahrenheit_to_celsius(this%params%input)
-
-    ! Populate the failure message
-    write(failure_message, '(A,F7.2,A,F7.2,A,F7.2,A)') "Failed With ", this%params%input, " °F: Expected ", &
-            this%params%expected_output, "°C but got ", actual_output, "°C"
-    @assertEqual(this%params%expected_output, actual_output, tolerance=1e-6, message=trim(failure_message))
-
-end subroutine test_fahrenheit_to_celsius
-```
-
-A full solution is provided in [3-writing-your-first-unit-test/solution](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/3-writing-your-first-unit-test/solution).
-
-:::::::::::::::::::::::::::::::::::::::::
-:::::::::::::::::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::::::::::::::: spoiler
-
-### Type Constructors
-
-We are required to define two functions.
-
-**A conversion from test parameters to a test case:**
-
-```F90
-function my_test_params_to_my_test_case(testParameter) result(tst)
-    type (my_test_case) :: tst
-    type (my_test_params), intent(in) :: testParameter
-
-    tst%params = testParameter
-end function my_test_params_to_my_test_case
-```
-
-It may be necessary to individually map each type-bound value within the
-**testParameter** to that in the **tst**, depending on their complexity.
-
-**A conversion from test parameters to a string:**
-
-This function helps to provide a clearer description of each test case. The result
-of this function will be displayed alongside the name of the test for each parameter
-set.
-
-```F90
-function my_test_params_toString(this) result(string)
-    class (my_test_params), intent(in) :: this
-    character(:), allocatable :: string
-
-    character(len=80) :: buffer
-
-    write(buffer,'("Given ",i4," we expect to get ",i4)') this%input, this%expected_output
-    string = trim(buffer)
-end function my_test_params_toString
-```
-
-::::::::::::::::::::::::::::::::::::: challenge
-
-#### Challenge: Add type constructors to pFUnit tests of temperature conversions
-
-Continuing with your pFUnit test of `temp_conversions`, add some type constructors for
-tests of the `temp_conversions` in the indicated section of the template file,
-[test_temp_conversions.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/3-writing-your-first-unit-test/challenge/test/pfunit/test_temp_conversions.pf#L49-L59)
-
-:::::::::::::::::::::::::::::::: solution
-
-These type constructors could look something like this:
-
-```f90
-!> Constructor for converting test parameters into a test case
-function new_test_case(testParameter) result(tst)
-    !> The parameters to be converted to a test case
-    type(temp_conversions_test_params_t), intent(in) :: testParameter
-    !> The test case to return after conversion from parameters
-    type(temp_conversions_test_case_t) :: tst
-
-    tst%params = testParameter
-end function new_test_case
-
-!> Constructor for converting test parameters into a string
-function temp_conversions_test_params_t_toString(this) result(string)
-    !> The parameters to be converted to a string
-    class(temp_conversions_test_params_t), intent(in) :: this
-    character(:), allocatable :: string
-
-    string = trim(this%description)
-end function temp_conversions_test_params_t_toString
-```
-
-A full solution is provided in [3-writing-your-first-unit-test/solution](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/3-writing-your-first-unit-test/solution).
-
-:::::::::::::::::::::::::::::::::::::::::
-:::::::::::::::::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::: challenge
-
-## Challenge: Test temperature conversions using pFUnit
-
-Finalising your pFUnit test of **temp_conversions**, add an additional test of the function **celsius_to_kelvin**.
-
-:::::::::::::::::::::::::::::::: solution
-
-The full solution is provided in [3-writing-your-first-unit-test/solution](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/3-writing-your-first-unit-test/solution).
-
-:::::::::::::::::::::::::::::::::::::::::
-:::::::::::::::::::::::::::::::::::::::::::::::
+The key features of this the type `dot_product_test_parameters` are
+
+- It is decorated with the directive `@TestParameter`.
+- It extends the type `AbstractTestParameter` provided by the pFUnit library.
+- All inputs (`a` and `b` and expected outputs (`expected_dot_product`) of dot_product are define as type-bound variables
+- There is an extra type-bound variable - `description` - which is used alongside the type-bound procedure `toString => dot_product_test_parameters_toString`.
+  - pFUnit requires that a type which extends `AbstractTestParameter` defines a type-bound procedure called `toString`. This procedure is then used to provide a description of the specific parameter set within the name of each test.
+  - For simplicity, we have added the variable `description` which we can define and return from `dot_product_test_parameters_toString`. (this will be described shortly)
+
+::::::::::::
