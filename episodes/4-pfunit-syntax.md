@@ -90,7 +90,7 @@ contains
         c = 935
 
         ! Check that the call to dot_product returned what we expect
-        @AssertEqual(c, dot_product(a, b))
+        @AssertEqual(c, dot_product(a, b), message="Unexpected value returned for the dot_product")
 
     end subroutine test_dot_product
 
@@ -104,7 +104,7 @@ contains
         c = 0
 
         ! Check that the call to dot_product returned what we expect
-        @AssertEqual(c, dot_product(a, b))
+        @AssertEqual(c, dot_product(a, b), message="Unexpected value returned for the dot_product")
 
     end subroutine test_dot_product_all_zeros
 end module test_dot_product_intrinsic
@@ -133,7 +133,7 @@ contains
         c = 935
 
         ! Check that the call to dot_product returned what we expect
-        @assertEqual(c, dot_product(a, b))
+        @assertEqual(c, dot_product(a, b), message="Unexpected value returned for the dot_product")
 
         ! Deallocate to cleanup (not technically necessary)
         deallocate(a, b)
@@ -154,7 +154,7 @@ contains
         c = 0
 
         ! Check that the call to dot_product returned what we expect
-        @assertEqual(c, dot_product(a, b))
+        @assertEqual(c, dot_product(a, b), message="Unexpected value returned for the dot_product")
 
         ! Deallocate to cleanup (not technically necessary)
         deallocate(a, b)
@@ -163,7 +163,7 @@ contains
 end module test_dot_product_intrinsic
 ```
 
-However, it is generally better to minimise repeated code. Therefore, we can make use of another pFUnit pre-processor directive **@TestCase**, like so:
+However, it is generally better to minimise repeated code. Therefore, we can make use of another pFUnit pre-processor directive **@TestCase**:
 
 ```fortran
 module test_dot_product_intrinsic
@@ -216,7 +216,7 @@ contains
         c = 935
 
         ! Check that the call to dot_product returned what we expect
-        @assertEqual(c, dot_product(this%a, this%b))
+        @assertEqual(c, dot_product(this%a, this%b), message="Unexpected value returned for the dot_product")
     end subroutine test_dot_product
 
     @Test
@@ -231,12 +231,12 @@ contains
         c = 0
 
         ! Check that the call to dot_product returned what we expect
-        @assertEqual(c, dot_product(this%a, this%b))
+        @assertEqual(c, dot_product(this%a, this%b), message="Unexpected value returned for the dot_product")
     end subroutine test_dot_product_all_zeros
 end module test_dot_product_intrinsic
 ```
 
-In the above code we have defined our own custom derived type **dot_product_test_case** which contains the two arrays **a** and **b** as type-bound prameters. **dot_product_test_case** also contains a type-bound procedures **tearDown** which deallocates **a** and **b**. To first allocate **a** and **b** we have defined a constructor **dot_product_test_case_constructor**. These two procedures allow us to move this previously repeated logic to one location. Finally, to ensure our new custom type is understood and used correctly by pFUnit, we must do two things. Ensure this type extends one provided by the pFUnit library - **TestCase** - and Decorate this new type with the pre-processor directive **@TestCase**, ensuring that we pass **dot_product_test_case_constructor** as the constructor.
+In the above code we have defined our own custom derived type **dot_product_test_case** which contains the two arrays **a** and **b** as type-bound prameters. **dot_product_test_case** also contains a type-bound procedures **tearDown** which deallocates **a** and **b**. To first allocate **a** and **b** we have defined a constructor **dot_product_test_case_constructor**. These two procedures allow us to move this previously repeated logic to one location. Finally, to ensure our new custom type is understood and used correctly by pFUnit, we must do two things. Ensure this type extends one provided by the pFUnit library - **TestCase**. Decorate this new type with the pre-processor directive **@TestCase**, ensuring that we pass **dot_product_test_case_constructor** as the constructor.
 
 ## Parameterising tests
 
@@ -248,7 +248,7 @@ module test_dot_product_intrinsic
     implicit none
 
     !> Custom test parameters type containing all of the inputs and expected
-    !> outputs of the intrinsic dot_product
+    !! outputs of the intrinsic dot_product
     @TestParameter
     type, extends(AbstractTestParameter) :: dot_product_test_parameters
         !> The input array `a` to be passed to dot_product
@@ -262,12 +262,12 @@ module test_dot_product_intrinsic
     contains
         !> The required type-bound procedure for converting an instance
         !> of this type to a string for logging
-        procedure :: toString => dot_product_test_parameters_toString
+        procedure :: toString
     end type dot_product_test_parameters
 
     !> Custom test case type allowing a single definition of tearDown logic. 
-    !> If teardown is not required, This could also be thought of as boilerplate
-    !> required to make the parameters available within our @Test.
+    !! If teardown is not required, This could also be thought of as boilerplate
+    !! required to make the parameters available within our @Test.
     @TestCase(constructor=dot_product_test_case_constructor)
     type, extends(ParameterizedTestCase) :: dot_product_test_case
         !> The instance of our test parameters type to be used within the test logic
@@ -279,16 +279,16 @@ module test_dot_product_intrinsic
 contains
 
     !> Trims and returns the description of the parameter set. The string returned
-    !> by this function will be included by pFUnit in the name of this test
-    function dot_product_test_parameters_toString(this) result(string)
+    !! by this function will be included by pFUnit in the name of this test
+    function toString(this) result(string)
         class (dot_product_test_parameters), intent(in) :: this
         character(:), allocatable :: string
 
         string = trim(this%description)
-    end function dot_product_test_parameters_toString
+    end function toString
 
     !> Boilerplate constructor required to convert our custom parameters type to
-    !> the test case type.
+    !! the test case type.
     function dot_product_test_case_constructor(testParameters) result(newTestCase)
         type(dot_product_test_parameters), intent(in) :: testParameters
         type(dot_product_test_case) :: newTestCase
@@ -297,7 +297,7 @@ contains
     end function dot_product_test_case_constructor
 
     !> Essentially a destructor for our custom test case type which deallocates
-    !> arrays `a` and `b`
+    !! arrays `a` and `b`
     subroutine tearDown(this)
         !> The instance of our custom test case type which we want to teardown
         class(dot_product_test_case), intent(inout) :: this
@@ -307,7 +307,7 @@ contains
     end subroutine tearDown
 
     !> The test suite in which parameter sets (inputs and expected outputs) for each
-    !> test are defined.
+    !! test are defined.
     function dot_product_test_suite() result(parameter_sets)
         !> The array of parameter sets to be returned
         type(dot_product_test_parameters) :: parameter_sets(2)
@@ -343,7 +343,7 @@ contains
         class(dot_product_test_case), intent(inout) :: this
 
         ! Check that the call to dot_product returned what we expect
-        @AssertEqual(this%params%expected_dot_product, dot_product(this%params%a, this%params%b))
+        @AssertEqual(this%params%expected_dot_product, dot_product(this%params%a, this%params%b), message="Unexpected value returned for the dot_product")
     end subroutine test_dot_product
 end module test_dot_product_intrinsic
 ```
@@ -372,7 +372,7 @@ type, extends(AbstractTestParameter) :: dot_product_test_parameters
 contains
     !> The required type-bound procedure for converting an instance
     !> of this type to a string for logging
-    procedure :: toString => dot_product_test_parameters_toString
+    procedure :: toString
 end type dot_product_test_parameters
 ```
 
