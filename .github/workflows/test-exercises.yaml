@@ -33,28 +33,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
-      - name: Test episode 1
-        uses: aleskxyz/build-push@597b92355b8063b229b03ad0c2f7c1bdeb8f9ab4
+      - name: Log in to ghcr.io
+        uses: redhat-actions/podman-login@4934294ad0449894bcd1e9f191899d7292469603 # v1
         with:
-          dockerfile_path: ./docker-tests/Dockerfile.01
-          image_name: exercise-1
-          context: .
-          push_to_registry: false
-          registry_address: ${{ env.REGISTRY }}
-          registry_username: ${{ github.actor }}
-          registry_password: ${{ github.token }}
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+          registry: ghcr.io
+
+      - name: Test episode 1
+        run: docker build . -f docker-tests/Dockerfile.01
 
       - name: Test episode 2
-        run: docker build . -f docker-tests/Dockerfile.ep-2
+        run: docker build . -f docker-tests/Dockerfile.02
 
-      - name: Test episode 3
-        run: docker build . -f docker-tests/Dockerfile.ep-3
+      - name: Test episode 2
+        run: docker build . -f docker-tests/Dockerfile.03
 
       - name: Test episode 4
-        run: docker build . -f docker-tests/Dockerfile.ep-4
+        run: docker build . -f docker-tests/Dockerfile.04
 
       - name: Test episode 5
-        run: docker build . -f docker-tests/Dockerfile.ep-5
+        run: docker build . -f docker-tests/Dockerfile.05
 
       - name: Test episode 6
-        run: docker build . -f docker-tests/Dockerfile.ep-6
+        run: docker build . -f docker-tests/Dockerfile.06
