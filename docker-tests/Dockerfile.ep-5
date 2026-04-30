@@ -1,0 +1,15 @@
+FROM ghcr.io/carpentries-incubator/intro-to-modern-fortran:main
+
+COPY --chown=vscode exercises/5-debugging-a-failing-test /home/vscode/5-debugging-a-failing-test
+
+WORKDIR /home/vscode/5-debugging-a-failing-test/challenge
+
+# Fix intentional bug in code
+RUN sed -i -E 's/.*matrix\(row, col\) = temp_matrix\(row, col\)/matrix\(col, row\) = temp_matrix\(row, col\)/g' src/matrix_transforms.f90
+
+# build tests with cmake
+RUN cmake -B build -DCMAKE_PREFIX_PATH=/home/vscode/pfunit/build/installed && \
+    cmake --build build
+
+# test pfunit with ctest
+RUN ctest --test-dir build --output-on-failure

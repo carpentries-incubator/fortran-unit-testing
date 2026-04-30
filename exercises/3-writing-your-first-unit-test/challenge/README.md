@@ -1,0 +1,119 @@
+# Writing your first unit test
+
+This exercise aims to teach the principles of unit testing and how to write a good
+unit test. Some of the tests within this challenge are intended to be written using standard
+Fortran without the use of a testing framework, in order to teach the principles alone
+before covering specific syntax.
+
+## The src code
+
+In [src](./src) you will find a library [temp_conversions.f90](./src/temp_conversions.f90)
+which provides functions for converting between various units of temperature. The functions
+provided are...
+
+- **fahrenheit_to_celsius**: Which takes in a temperature in Fahrenheit and returns a temperature in Celsius.
+- **celsius_to_kelvin**: Which takes in a temperature in Celsius and returns a temperature in Kelvin.
+
+To build this library you csn use either CMake or Make from within the **challenge** directory.
+
+### Building
+
+**Make:**
+
+```sh
+make tests # You may need to specify the Fortran compiler with FC=<path/to/compiler>
+```
+
+To rebuild after an update, make sure you clean the project first with
+
+```sh
+make clean
+```
+
+**CMake:**
+
+```sh
+cmake -B build
+cmake --build build
+```
+
+To rebuild after an update, make sure you clean the project first with by deleting the build directory.
+
+```sh
+rm -rf build
+```
+
+## The tasks
+
+### Part 1 - Test with Standard Fortran
+
+Imagine you wish to use the temp_conversions library to convert Fahrenheit to Kelvin. We
+know that there is no function which does this direct conversion. With this is mind, write
+a test, or tests, to give you confidence that temp_conversions can correctly convert
+Fahrenheit to Kelvin.
+
+To get you started, the file [test_temp_conversions.f90](./test/standard_fortran/test_temp_conversions.f90)
+has been provided. `test_temp_conversions.f90` contains some boilerplate to make writing a
+test easier. There is an empty test subroutine `test` provided which takes in a logical
+`passed` and a character array `failure_message`. The logical `passed` should indicate if
+the test was successful. The character array `failure_message`, should be populated with a
+message that will be printed to the terminal in the event that `passed` is `.false.`. Once
+the test subroutine is written it should be called within the main body of the test program
+as indicated in `test_temp_conversions.f90`.
+
+> Note: If you add a new test file or change the name of `test_temp_conversions.f90`, you will
+> need to update list of tests (`test_src`) in [test/pfunit/CMakeLists.txt](./test/pfunit/CMakeLists.txt)
+
+### Part 2 - Convert tests to use pFUnit
+
+#### Writing the test
+
+Convert your tests from [Part 1](#part-1---test-with-standard-fortran), to use
+[pFUnit](https://github.com/Goddard-Fortran-Ecosystem/pFUnit).
+
+A file [test_temp_conversions.pf](./test/pfunit/test_temp_conversions.pf) containing a template
+for your pFUnit test(s) has been provided. Comments within this file indicate the aspects of
+the pFUnit test you must write.
+
+> Note: This template has been written to facilitate conversion of
+> [test_temp_conversions.f90](./test/standard_fortran/test_temp_conversions.f90) as provided with this repo
+> to pFUnit. If your version of test_temp_conversions.f90, produced in Part 1, is significantly
+> different, You may prefer to use a different structure to the one provided in the template.
+
+#### Building the test
+
+- **i. Build your new test(s) with Make** - A top level [Makefile](./Makefile) has already been provided to build the
+  src objects and the standard Fortran tests, via [test/standard_fortran/Makefile](./test/standard_fortran/Makefile).
+  Add a new Makefile to the [test/pfunit/](./test/pfunit/) dir which will build your new pFUnit test(s). Note that
+  the top level [Makefile](./Makefile) is already setup to work with this new Makefile (look for lines which look
+  like **"# Uncomment here..."**). Once you have added this Makefile, you should be able to build and run your tests
+  via the following command.
+
+  ```sh
+  make tests
+  ./test/pfunit/tests
+  ```
+  
+  If you are not using the devcontainer, you will likely need to specify the path to your pFUnit include dir. You can do
+  this by passing an environment variable like so.
+
+  ```sh
+  PFUNIT_INCLUDE_DIR=/path/to/pfunit/include make tests
+  ```
+
+  The Fortran compiler will default to **gfortran**. If you wish to use a different compiler, set the env var, **FC**.
+
+- **ii. Build your new test(s) with CMake** - A top level [CMakeLists.txt](./CMakeLists.txt) has already been provided to
+  build the src objects and the standard Fortran tests, via
+  [test/standard_fortran/CMakeLists.txt](./test/standard_fortran/CMakeLists.txt). Add a new CMakeLists.txt to the
+  [test/pfunit/](./test/pfunit/) dir which will build your new pFUnit test(s). Note that the top level
+  [CMakeLists.txt](./CMakeLists.txt) is already setup to work with this new CMakeLists.txt, all you need to do is
+  add the pFUnit lib to the `CMAKE_PREFIX_PATH` when building i.e...
+
+  ```bash
+  cmake -B build -DCMAKE_PREFIX_PATH=/path/to/pfunit/install
+  cmake --build build
+  ctest --test-dir build --output-on-failure
+  ```
+
+> If you are using the devcontainer, there is an installation of pFUnit at /home/vscode/pfunit/build/installed
