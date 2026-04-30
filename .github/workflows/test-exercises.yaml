@@ -34,7 +34,15 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       - name: Test episode 1
-        run: docker build . -f docker-tests/Dockerfile.ep-1
+        uses: aleskxyz/build-push@597b92355b8063b229b03ad0c2f7c1bdeb8f9ab4
+        with:
+          dockerfile_path: ./docker-tests/Dockerfile.01
+          image_name: exercise-1
+          context: .
+          push_to_registry: false
+          registry_address: ${{ env.REGISTRY }}
+          registry_username: ${{ github.actor }}
+          registry_password: ${{ github.token }}
 
       - name: Test episode 2
         run: docker build . -f docker-tests/Dockerfile.ep-2
