@@ -472,6 +472,8 @@ our test case type called **setUp**.
 
 :::::::::::: spoiler
 
+::::::::::::
+
 ### 3. Defining a suite of tests / parameter sets
 
 **TODO:**
@@ -483,7 +485,5 @@ our test case type called **setUp**.
 :::::::::::: spoiler
 
 ### 4. Passing the test suite into the @Test
-
-::::::::::::
 
 ::::::::::::
