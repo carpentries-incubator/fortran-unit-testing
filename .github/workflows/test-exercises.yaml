@@ -34,19 +34,19 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       - name: Test episode 1
-        run: docker build . -f docker/Dockerfile.ep-1
+        run: docker build . -f docker-tests/Dockerfile.ep-1
 
       - name: Test episode 2
-        run: docker build . -f docker/Dockerfile.ep-2
+        run: docker build . -f docker-tests/Dockerfile.ep-2
 
       - name: Test episode 3
-        run: docker build . -f docker/Dockerfile.ep-3
+        run: docker build . -f docker-tests/Dockerfile.ep-3
 
       - name: Test episode 4
-        run: docker build . -f docker/Dockerfile.ep-4
+        run: docker build . -f docker-tests/Dockerfile.ep-4
 
       - name: Test episode 5
-        run: docker build . -f docker/Dockerfile.ep-5
+        run: docker build . -f docker-tests/Dockerfile.ep-5
 
       - name: Test episode 6
-        run: docker build . -f docker/Dockerfile.ep-6
+        run: docker build . -f docker-tests/Dockerfile.ep-6
