@@ -2,7 +2,7 @@
 
 A lesson for teaching how to unit test Fortran code.
 
-## Building the website locally
+## Building the website locally
 
 From within RStudio run the following commands. First, install the needed dependencies.
 
