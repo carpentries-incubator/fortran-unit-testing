@@ -1,10 +1,10 @@
 ---
 title: "Refactoring Fortran"
-teaching: 
-exercises: 
+teaching:
+exercises:
 ---
 
-:::::::::::::::::::::::::::::::::::::: questions 
+:::::::::::::::::::::::::::::::::::::: questions
 
 - What does good Fortran code look like?
 - How do I refactor Fortran code to follow best practices?
@@ -32,7 +32,8 @@ improve his Fortran implementation of the game of life. A copy of John's code ca
 exercises repo at [2-refactoring-fortran/challenge](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/2-refactoring-fortran/challenge).
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
-### Conway's Game of Life 
+
+### Conway's Game of Life
 
 Conway's Game of life is a cellular automaton devised by the British mathematician John Horton Conway in 1970 (Gardner, 1970).
 
@@ -74,7 +75,6 @@ If there are no differences, we can assume we haven't broken anything.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-
 ## The known refactorings
 
 The next few sections will present some known refactorings.
@@ -94,7 +94,8 @@ We'll show before and after code, present any new coding techniques needed to do
   place we need to make an update.
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
-#### Before:
+
+#### Before
 
 ```f90
 do i = 1, 100
@@ -102,10 +103,12 @@ do i = 1, 100
     data(i) = sin(x)
 end do
 ```
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
-#### After:
+
+#### After
 
 ```f90
 do i = 1, resolution
@@ -113,17 +116,18 @@ do i = 1, resolution
     data(i) = sin(x)
 end do
 ```
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::: challenge 
+::::::::::::::::::::::::::::::::::::: challenge
 
 #### Challenge
 
 Replace all magic numbers in John's game of life code with constants.
 
-:::::::::::::::::::::::: solution 
+:::::::::::::::::::::::: solution
 
-This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/e9765a26a9e368571eb162771cd45cd3933c03c4) 
+This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/e9765a26a9e368571eb162771cd45cd3933c03c4)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
@@ -140,31 +144,35 @@ This can be achieved with the changes shown in this [commit](https://github.com/
   to understand the logic employed.
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
-#### Before:
+
+#### Before
 
 ```f90
 a = a + b*dt
 ```
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
-#### After:
+
+#### After
 
 ```f90
 velocity = velocity + acceleration * dt
 ```
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::: challenge 
+::::::::::::::::::::::::::::::::::::: challenge
 
 #### Challenge
 
 Update any poorly named variables in John's code to have clear names
 which make it clear what they are.
 
-:::::::::::::::::::::::: solution 
+:::::::::::::::::::::::: solution
 
-This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/30cfcceb1fc80ef236230e21dae574bdebf64c87) 
+This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/30cfcceb1fc80ef236230e21dae574bdebf64c87)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
@@ -185,7 +193,8 @@ This can be achieved with the changes shown in this [commit](https://github.com/
   when writing your tests.
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
-#### Before:
+
+#### Before
 
 ```f90
 module process_marices_mod
@@ -243,10 +252,12 @@ contains
     end subroutine process_matrices
 end module process_marices_mod
 ```
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
-#### After:
+
+#### After
 
 ```f90
 module process_marices_mod
@@ -316,15 +327,16 @@ contains
     end subroutine display_trace
 end module process_marices_mod
 ```
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::: challenge 
+::::::::::::::::::::::::::::::::::::: challenge
 
 #### Challenge
 
 Update John's code to reduce the responsibilities of any procedures to one
 
-:::::::::::::::::::::::: solution 
+:::::::::::::::::::::::: solution
 
 This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/fb06543e12e217e6f39ffc9df2f13108f64ca7ac)
 
@@ -345,7 +357,8 @@ This can be achieved with the changes shown in this [commit](https://github.com/
 - It becomes harder to introduce side effects which may impact other aspects of your code.
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
-#### Before 
+
+#### Before
 
 ```f90
 program my_matrix_prog
@@ -405,13 +418,12 @@ end program my_matrix_prog
 
 Update John's code to reduce the responsibilities of any procedures to one
 
-:::::::::::::::::::::::: solution 
+:::::::::::::::::::::::: solution
 
 This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/ee860cac1cc2b1c2f0f2ed99b2fe26060e576ce4)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
-
 
 ### 5. Replace repeated code with a procedure
 
@@ -460,6 +472,7 @@ subroutine read_matrices_from_file(filename)
     close(unit)
 end subroutine read_matrices_from_file
 ```
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
@@ -516,19 +529,18 @@ unreadable. Try not to go too far when refactoring!
 
 :::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::: challenge 
+::::::::::::::::::::::::::::::::::::: challenge
 
 #### Challenge
 
 Update John's code to move any repeated code into a procedure.
 
-:::::::::::::::::::::::: solution 
+:::::::::::::::::::::::: solution
 
 This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/da18b6af1a01c82235975ed1589d0496cf6b23f2)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
-
 
 ### 6. Replace global variables with procedure arguments
 
@@ -543,7 +555,8 @@ This can be achieved with the changes shown in this [commit](https://github.com/
 - You get more help from your compiler and it t is much clearer what your code is doing as you can provide more information about dummy arguments such as their `intent`.
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
-#### Before:
+
+#### Before
 
 ```f90
 subroutine multiply_matrices()
@@ -566,7 +579,8 @@ end subroutine multiply_matrices
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
-#### After:
+
+#### After
 
 ```f90
 subroutine multiply_matrices(A, B, C)
@@ -577,7 +591,7 @@ subroutine multiply_matrices(A, B, C)
     n = size(A, 1)
 
     allocate(C(n,n))
-    
+
     C = 0.0
     do i = 1, n
         do j = 1, n
@@ -591,14 +605,14 @@ end subroutine multiply_matrices
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::: challenge 
+::::::::::::::::::::::::::::::::::::: challenge
 
 #### Challenge
 
 Update John's code to replace any global variables accessed within procedures
 with dummy arguments.
 
-:::::::::::::::::::::::: solution 
+:::::::::::::::::::::::: solution
 
 This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/02da8d0b614d7d7412a066fbdd3c249eb308f5a9)
 
@@ -617,7 +631,7 @@ This can be achieved with the changes shown in this [commit](https://github.com/
 - This adds further clarity about what each unit of code is responsible for.
 - Allows further isolation of code as you can scope some procedures or variables to be private.
 
-::::::::::::::::::::::::::::::::::::: spoiler 
+::::::::::::::::::::::::::::::::::::: spoiler
 
 #### Before
 
@@ -637,7 +651,7 @@ Using the example we have seen so far, we start with two files
 
 :::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::: spoiler 
+::::::::::::::::::::::::::::::::::::: spoiler
 
 #### After
 
@@ -661,7 +675,7 @@ on different tasks, we could end up with something like this.
 
 :::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::: challenge 
+::::::::::::::::::::::::::::::::::::: challenge
 
 #### Challenge
 
@@ -670,6 +684,7 @@ Update John's code to separate code concepts into modules.
 :::::::::::::::::::::::: solution
 
 You should end up with a module structure. For example, like this...
+
 ```
 |-- src/
     |-- main.f90
@@ -699,7 +714,7 @@ large scale refactor can feel daunting. Therefore, a great resource for us is
 *[Working Effectively with Legacy Code](https://search.worldcat.org/title/660166658)*
 (Feathers, 2004)
 
-If you don't have time to read the entire book, there is a good summary of the key point in this blog post 
+If you don't have time to read the entire book, there is a good summary of the key point in this blog post
 [The key points of Working Effectively with Legacy Code](https://understandlegacycode.com/blog/key-points-of-working-effectively-with-legacy-code/)
 
 :::::::::::::::::::::::::::::::

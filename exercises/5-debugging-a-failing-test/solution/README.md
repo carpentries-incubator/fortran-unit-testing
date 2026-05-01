@@ -24,9 +24,9 @@ F   end: <test_transpose_suite.TestTranspose[3x3 Asymmetric][3x3 Asymmetric]>
 Time:         0.000 seconds
 
 Failure
- in: 
+ in:
 test_transpose_suite.TestTranspose[3x3 Asymmetric][3x3 Asymmetric]
-  Location: 
+  Location:
 [test_transpose.pf:59]
 ArrayAssertEqual failure:
       Expected: <4.00000000>
@@ -84,7 +84,7 @@ We can fix the src with the following change
 --- a/episodes/4-debugging-a-failing-test/challenge/src/matrix_transforms.f90
 +++ b/episodes/4-debugging-a-failing-test/challenge/src/matrix_transforms.f90
 @@ -22,7 +22,7 @@ contains
- 
+
          do row = 1, nrow
              do col = 1, ncol
 -                matrix(row, col) = temp_matrix(row, col)

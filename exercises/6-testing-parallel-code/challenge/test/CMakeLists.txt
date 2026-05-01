@@ -50,7 +50,7 @@ add_pfunit_ctest (pfunit_get_local_grid_info_tests
   LINK_LIBRARIES sut # your application library
   MAX_PES 4
   )
-  
+
 # find_steady_state tests
 # Your changes here...
 

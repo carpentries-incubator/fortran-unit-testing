@@ -93,7 +93,7 @@ the pFUnit test you must write.
   make tests
   ./test/pfunit/tests
   ```
-  
+
   If you are not using the devcontainer, you will likely need to specify the path to your pFUnit include dir. You can do
   this by passing an environment variable like so.
 

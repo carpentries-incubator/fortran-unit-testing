@@ -73,7 +73,7 @@ contains
         expected_output_board(1,:,rank_index)       = neighbours(DOWN, rank_index)
         params(1) = exchange_boundaries_test_params(num_ranks, input_board, expected_output_board, ncols, nrows, neighbours)
 
-        ! 3 Ranks 
+        ! 3 Ranks
         !  --------
         ! | 222222 |
         ! | 222222 |
@@ -110,7 +110,7 @@ contains
         expected_output_board(1,:,rank_index)       = neighbours(DOWN, rank_index)
         params(2) = exchange_boundaries_test_params(num_ranks, input_board, expected_output_board, ncols, nrows, neighbours)
 
-        ! 4 Ranks 
+        ! 4 Ranks
         !  ----- -----
         ! | 222 | 333 |
         ! | 222 | 333 |
@@ -177,7 +177,7 @@ contains
 
         @assertTrue(allocated(this%params%expected_output_board))
         rank_index = this%getProcessRank() + 1
-        
+
         domainDecomp%communicator = this%getMpiCommunicator()
         domainDecomp%neighbours = this%params%neighbours(:,rank_index)
 

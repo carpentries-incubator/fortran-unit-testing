@@ -10,7 +10,7 @@ project(
 
 # Define src files
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
-set(PROJ_SRC_FILES 
+set(PROJ_SRC_FILES
   "${SRC_DIR}/main.f90"
   "${SRC_DIR}/animation.f90"
   "${SRC_DIR}/cli.f90"

@@ -4,7 +4,7 @@ teaching:
 exercises:
 ---
 
-:::::::::::::::::::::::::::::::::::::: questions 
+:::::::::::::::::::::::::::::::::::::: questions
 
 - What is the syntax of writing a unit test in Fortran?
 - How do I build my tests with my existing build system?
@@ -17,7 +17,6 @@ exercises:
 - Understand the similarities between each framework and where they differ.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
-
 
 ## What framework will we look at?
 
@@ -42,7 +41,7 @@ the use of [pFUnit](https://github.com/Goddard-Fortran-Ecosystem/pFUnit) as it i
 
 All test modules share a basic structure...
 
-```f90 
+```f90
 module test_something
     ! use funit
     ! use the src to be tested
@@ -66,10 +65,10 @@ the syntax of pFUnit.
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::: spoiler
 
-### Derived types:
+### Derived types
 
 This uses standard Fortran syntax to define some
-[derived types](https://fortran-lang.org/learn/quickstart/derived_types). 
+[derived types](https://fortran-lang.org/learn/quickstart/derived_types).
 
 #### Test parameters
 
@@ -126,16 +125,15 @@ end type my_test_case
   understands that this derived type defines a test case.
 - The **@TestCase** decorator includes some extra information to tell the pre-processor how
   the test case should be constructed. What we have defined is...
-    - To convert from an instance of **my_test_params** to an instance of **my_test_case**, one
+  - To convert from an instance of **my_test_params** to an instance of **my_test_case**, one
       must call **my_test_params_to_my_test_case**.
-    - The list of parameter sets which define each individual parametrized test will be
+  - The list of parameter sets which define each individual parametrized test will be
       returned from the function **my_test_suite**
 - Just like with the test parameter type, we must extend one of the base types provided by
   pFUnit, in this case **ParameterizedTestCase** which indicates that this test should be
   parametrized.
 - We then define a single type-bound value which is of the test parameter type we have just
   defined.
-
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
@@ -180,7 +178,7 @@ A full solution is provided in [3-writing-your-first-unit-test/solution](https:/
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::: spoiler
 
-### Test Suite:
+### Test Suite
 
 In this section we define our parameter sets (or test suite). We define a function which
 returns our test parameters like so...
@@ -207,7 +205,7 @@ end function my_test_suite
 #### Challenge: Add a test suite to pFUnit tests of temperature conversions
 
 Continuing with your pFUnit test of `temp_conversions`, add a test suite for tests of the
-function `fahrenheit_to_celsius` in the indicated section of the template file, 
+function `fahrenheit_to_celsius` in the indicated section of the template file,
 [test_temp_conversions.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/3-writing-your-first-unit-test/challenge/test/pfunit/test_temp_conversions.pf#L27-L28)
 
 :::::::::::::::::::::::::::::::: solution
@@ -238,7 +236,7 @@ A full solution is provided in [3-writing-your-first-unit-test/solution](https:/
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::: spoiler
 
-### Test Logic:
+### Test Logic
 
 This is where we actually call our src procedure and carry out assertions...
 
@@ -263,12 +261,12 @@ end subroutine TestMySrcProcedure
   exact comparison of two values (also works for comparing arrays). For a full list of the
   available assertion directives see
   [pFUnit documentation page for their preprocessor directives](https://pfunit.sourceforge.net/page_Assert.html)
-    - As is done here, it is recommended to provide a helpful message in case of an assertion
+  - As is done here, it is recommended to provide a helpful message in case of an assertion
       failing to help diagnose the issue.
 
 ::::::::::::::::::::::::::::::::::: callout
 
-#### Parametrize on a test by test basis 
+#### Parametrize on a test by test basis
 
 It is also possible to parametrize a test at this point, instead of when defining the derived-types.
 This can be useful if you wish to reuse a test parameter type for multiple test cases...
@@ -287,7 +285,7 @@ subroutine TestMySrcProcedure(this)
 #### Challenge: Add a test function to pFUnit tests of temperature conversions
 
 Continuing with your pFUnit test of `temp_conversions`, add some test logic for tests of
-the function `fahrenheit_to_celsius` in the indicated section of the template file, 
+the function `fahrenheit_to_celsius` in the indicated section of the template file,
 [test_temp_conversions.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/3-writing-your-first-unit-test/challenge/test/pfunit/test_temp_conversions.pf#L30-L31)
 
 :::::::::::::::::::::::::::::::: solution
@@ -324,7 +322,7 @@ A full solution is provided in [3-writing-your-first-unit-test/solution](https:/
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::: spoiler
 
-### Type Constructors:
+### Type Constructors
 
 We are required to define two functions.
 
@@ -341,7 +339,6 @@ end function my_test_params_to_my_test_case
 
 It may be necessary to individually map each type-bound value within the
 **testParameter** to that in the **tst**, depending on their complexity.
-
 
 **A conversion from test parameters to a string:**
 
@@ -366,7 +363,7 @@ end function my_test_params_toString
 #### Challenge: Add type constructors to pFUnit tests of temperature conversions
 
 Continuing with your pFUnit test of `temp_conversions`, add some type constructors for
-tests of the `temp_conversions` in the indicated section of the template file, 
+tests of the `temp_conversions` in the indicated section of the template file,
 [test_temp_conversions.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/3-writing-your-first-unit-test/challenge/test/pfunit/test_temp_conversions.pf#L49-L59)
 
 :::::::::::::::::::::::::::::::: solution

@@ -8,14 +8,14 @@ Throughout this walkthrough, we will use the Fortran [exercises](../exercises/) 
 
 ### Codespaces
 
-The exercises repository is setup to work via GitHub codespaces. This process is documented in the 
+The exercises repository is setup to work via GitHub codespaces. This process is documented in the
 [README.md of the exercises](../exercises/README.md).
 
 #### TL;DR
 
 You can open the exercises repository within a container running on a GitHub server with all dependencies pre-built and installed.
 To do this, click select the `<> Code` drop-down within the repository home page. Then, from the codespaces tab, select
-`Create codespace on main`. 
+`Create codespace on main`.
 
 ::::::::::::::::::::::::::::::::::::::::::::::: spoiler
 
@@ -32,9 +32,9 @@ To following along with this lesson's exercises you will require the following
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-#### Challenge: Install the above dependencies.
+#### Challenge: Install the above dependencies
 
-Try to install the dependencies listed above. 
+Try to install the dependencies listed above.
 
 - CMake can be installed via [homebrew](https://formulae.brew.sh/formula/cmake) on mac or your package manager (apt, etc) on Linux.
 - pFUnit can be install via the bash script provided [build-pfunit.sh](../scripts/build-pfunit.sh).
