@@ -41,19 +41,19 @@ jobs:
           registry: ghcr.io
 
       - name: Test episode 1
-        run: docker build . -f docker-tests/Dockerfile.01
+        run: podman build . -f docker-tests/Dockerfile.01
 
       - name: Test episode 2
-        run: docker build . -f docker-tests/Dockerfile.02
+        run: podman build . -f docker-tests/Dockerfile.02
 
       - name: Test episode 2
-        run: docker build . -f docker-tests/Dockerfile.03
+        run: podman build . -f docker-tests/Dockerfile.03
 
       - name: Test episode 4
-        run: docker build . -f docker-tests/Dockerfile.04
+        run: podman build . -f docker-tests/Dockerfile.04
 
       - name: Test episode 5
-        run: docker build . -f docker-tests/Dockerfile.05
+        run: podman build . -f docker-tests/Dockerfile.05
 
       - name: Test episode 6
-        run: docker build . -f docker-tests/Dockerfile.06
+        run: podman build . -f docker-tests/Dockerfile.06
