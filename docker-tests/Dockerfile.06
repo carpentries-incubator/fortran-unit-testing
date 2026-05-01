@@ -1,4 +1,4 @@
-FROM ghcr.io/carpentries-incubator/intro-to-modern-fortran:main
+FROM ghcr.io/carpentries-incubator/fortran-unit-testing:main
 
 COPY --chown=vscode exercises/6-testing-parallel-code /home/vscode/6-testing-parallel-code
 
