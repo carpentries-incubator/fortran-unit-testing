@@ -60,7 +60,7 @@ Objectives
   - *Assessment:* Add a new test to the build system
   - *Assessment:* Update the name of a test in the build system
   - *Assessment:* Enabled and fix a disabled test which is broken.
-- [ ] Understand the failure output of a Fortran unit test written in...
+- [ ] Understand the failure output of a Fortran unit test written in…
   - *Assessment:* Starting from a failing test, update the code so the test passes
 
 ### 8. Adding a test for an untested feature

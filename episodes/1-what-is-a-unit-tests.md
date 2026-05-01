@@ -25,7 +25,7 @@ Unit testing is a way of verifying the validity of a code base by testing its sm
 >*"If the parts don't work by themselves, they probably won't work well together"*
 > --  (Thomas and Hunt, 2019, [The pragmatic programmer](https://search.worldcat.org/search?q=bn:9780135957059), Topic 51).
 
-Several key aspects define a unit test. They should be...
+Several key aspects define a unit test. They should be…
 
 - **Isolated** - Does not rely on any other unit of code within the repository.
 - **Minimal** - Tests only one unit of code.
@@ -82,7 +82,7 @@ for each element in `input_array`:
 
 ## When should unit tests be run?
 
-A major benefit of unit tests is the ability to identify bugs at the earliest possible stage. Therefore, unit tests should be run frequently throughout the development process. Passing unit tests give you and your collaborators confidence that changes to your code aren't modifying the previously expected behaviour, so run your unit tests...
+A major benefit of unit tests is the ability to identify bugs at the earliest possible stage. Therefore, unit tests should be run frequently throughout the development process. Passing unit tests give you and your collaborators confidence that changes to your code aren't modifying the previously expected behaviour, so run your unit tests…
 
 - if you make a change locally
 - if you raise a merge request

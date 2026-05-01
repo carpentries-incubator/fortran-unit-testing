@@ -45,7 +45,7 @@ This workflow does the following:
 #### Caching
 
 This workflow has two caches; one cache is for the lesson infrastructure and
-the other is for the the lesson dependencies if the lesson contains rendered
+the other is for the lesson dependencies if the lesson contains rendered
 content. These caches are invalidated by new versions of the infrastructure and
 the `renv.lock` file, respectively. If there is a problem with the cache,
 manual invaliation is necessary. You will need maintain access to the repository
@@ -80,7 +80,7 @@ give you instructions to provide the token for your repository.
 ### 02 Maintain: Update Workflow Files (update-workflow.yaml)
 
 The {sandpaper} repository was designed to do as much as possible to separate
-the tools from the content. For local builds, this is absolutely true, but
+the tools from the content. For local builds, this is true, but
 there is a minor issue when it comes to workflow files: they must live inside
 the repository.
 

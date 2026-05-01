@@ -45,7 +45,7 @@ convert from Fahrenheit to Kelvin.
 
 ::::::::::::::::::::::::::::::::::: solution
 
-Your test could look something like this...
+Your test could look something like this:
 
 ```
 Set some input value of Fahrenheit, for example 32.0

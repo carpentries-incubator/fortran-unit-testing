@@ -19,7 +19,7 @@ exercises:
 
 ## What's the difference?
 
-Depending on the parallelisation tool and strategy employed, the implementation of parallel code can be very different
+Depending on the parallelisation tool and strategy employed, the implementation of parallel code can be different
 to that of serial code. This is especially true for code which utilises the message passing interface (MPI). These codes
 almost always contain some functionality in which processes, or ranks, communicate by exchanging messages. This message
 passing is often complex and will always benefit from testing.
@@ -27,7 +27,7 @@ passing is often complex and will always benefit from testing.
 There is added complexity when testing MPI code compared to serial as the logical path through the code is changed
 depending on the number of ranks with which the code is executed. Therefore, it is important that we test for a range
 of numbers of ranks. This will require controlling the number of ranks running the src and is not something we want
-to implement ourselves. Thankfully, pFUnit can handle this for us.
+to implement ourselves. pFUnit can handle this for us.
 
 ## Tips for writing testable MPI code
 
@@ -128,7 +128,7 @@ end type find_steady_state_test_case
 ### Test Suite
 
 Now that we have updated our derived types, we must update how we populate our test parameter sets within
-the test suite. There is actually very little that needs to change, all we must do is set how many MPI
+the test suite. There is actually little that needs to change, all we must do is set how many MPI
 ranks we want each parameter set to be run with. For example,
 
 ```f90
@@ -318,7 +318,7 @@ PFUNIT_INCLUDE_DIR=/path/to/pfunit/include FC=mpif90 make tests
 
 ### Integrating with CMake
 
-The difference between a serial test and an MPI test built using CMake is very minimal. For an MPI test
+The difference between a serial test and an MPI test built using CMake is minimal. For an MPI test
 **add_pfunit_ctest** will produce an executable which must be run with an appropriate MPI runner (i.e.
 **mpirun** or **mpiexec**). To achieve this, there is only one extra parameter we must pass into
 **add_pfunit_ctest** as shown below.
@@ -338,7 +338,7 @@ constructor).
 
 ## Testing more complex procedures
 
-So far we have been assuming our src procedure returns the same value to all ranks for any number of MPI
+Thus far we have been assuming our src procedure returns the same value to all ranks for any number of MPI
 ranks. We must do things slightly differently if we expect different values to be returned for different
 ranks. To handle this scenario we can make use of the functions provided by pFUnit, **getNumProcesses()** and
 **getProcessRank()**. However, these values are not set until the test case runs (i.e. until we are within

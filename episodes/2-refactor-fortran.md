@@ -21,7 +21,7 @@ exercises:
 Within Fortran projects, it is common to find many instances of bad practice which makes it difficult,
 if not impossible to implement unit tests. Therefore, in many cases, the first step to writing unit tests
 for a Fortran project is to refactor some section of the code into a more testable state which follows
-best practice. Examples of what we mean by "bad practice" would be not limited to but could include...
+best practice. Examples of what we mean by "bad practice" would be not limited to but could include…
 
 - Using global variables.
 - Large, multi-purpose procedures.
@@ -683,7 +683,7 @@ Update John's code to separate code concepts into modules.
 
 :::::::::::::::::::::::: solution
 
-You should end up with a module structure. For example, like this...
+You should end up with a module structure. For example, like this:
 
 ```
 |-- src/
@@ -709,7 +709,7 @@ This can be achieved with the changes shown in this [commit](https://github.com/
 
 ## Working effectively with legacy code
 
-When working with Fortran it is very common that you will be working with legacy code and a
+When working with Fortran it is common that you will be working with legacy code and a
 large scale refactor can feel daunting. Therefore, a great resource for us is
 *[Working Effectively with Legacy Code](https://search.worldcat.org/title/660166658)*
 (Feathers, 2004)

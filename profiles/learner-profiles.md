@@ -13,8 +13,8 @@ title: Learner Profiles
   - Good practice for writing unit tests.
   - How to write testable code.
 - Mental models
-  - Procedures are not always separate neat units. They are often full features which would be very difficult to unit test.
-  - Fortran in a very functional language without the use of types.
+  - Procedures are not always separate neat units. They are often full features which would be difficult to unit test.
+  - Fortran is a functional language without the use of types.
   - Global state is necessary for Fortran code.
 - Motivation
   - They wish to add unit testing into their own code bases but don't know how to.

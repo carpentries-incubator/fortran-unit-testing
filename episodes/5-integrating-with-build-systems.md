@@ -37,7 +37,7 @@ Firstly, assume we have the following file structure.
 ```
 
 The top level **Makefile** is responsible for compiling the src code but
-should do very little regarding building the tests. However, it should...
+should do little regarding building the tests. However, it should…
 
 - Export relevant variables for the **tests/Makefile** to pick up.
 
@@ -66,7 +66,7 @@ should do very little regarding building the tests. However, it should...
 
 #### Full file
 
-The full top level **Makefile** may look something like this...
+The full top level **Makefile** may look something like this:
 
 ```
 # Top level variables
@@ -140,7 +140,7 @@ export LIBS
 
 :::::::::::::::::::::::::::::
 
-The **tests/Makefile** would then look like this...
+The **tests/Makefile** would then look like this:
 
 ```
 PFUNIT_INCLUDE_DIR ?= /path/to/pfunit/include
@@ -172,7 +172,7 @@ clean:
 **Key points:**
 
 - We must include the pre-installed pFUnit dependencies and Makefile options via the **PFUNIT.mk** file.
-  - The version of pFUnit that has been built will affect the path to this file (i.e. **.../installed/PFUNIT-4.12/include/...**)
+  - The version of pFUnit that has been built will affect the path to this file (i.e. **…/installed/PFUNIT-4.12/include/…**)
 - We are utilising the function provided by pFUnit **make_pfunit_test**
   - This will create a target of the provided name (in this case **tests**)
   - We define the variables pFUnit requires to build the **tests** target as variables prefixed with **tests_**.
@@ -273,8 +273,8 @@ CMake. Similar to before, let's assume we have the following file structure.
 ```
 
 Just like with Make, the top level **CMakeLists.txt** file is responsible for
-compiling the src code but should do very little regarding building the tests.
-However, it should...
+compiling the src code but should do little regarding building the tests.
+However, it should…
 
 - Define a variable which stores a list of src files
 
@@ -302,7 +302,7 @@ However, it should...
 
 #### Full file
 
-The full top level **CMakeLists.txt** may look something like this...
+The full top level **CMakeLists.txt** may look something like this:
 
 ```cmake
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
@@ -334,7 +334,7 @@ add_subdirectory("tests")
 
 :::::::::::::::::::::::::::::
 
-The **tests/CMakeLists.txt** file would then look like this...
+The **tests/CMakeLists.txt** file would then look like this:
 
 ```cmake
 find_package(PFUNIT REQUIRED)
@@ -368,7 +368,7 @@ add_pfunit_ctest (test_something_interesting
   to be referenced later.
 - We list the test **.pf** files we wish to include within **test_srcs**.
 - We then create a test with pFUnit and CTest using the function provided by
-  pFUnit, **add_pfunit_ctest**. Here we are...
+  pFUnit, **add_pfunit_ctest**. Here we are…
   - naming the test **test_something_interesting**.
   - informing pFUnit of the relevant src files via **TEST_SOURCES**.
   - linking to the src library via **LINK_LIBRARIES**.
