@@ -1,0 +1,21 @@
+FROM ghcr.io/carpentries-incubator/fortran-unit-testing:main
+
+COPY --chown=vscode exercises/1-into-to-unit-tests /home/vscode/1-into-to-unit-tests
+
+WORKDIR /home/vscode/1-into-to-unit-tests/challenge
+
+# Build challenge's tests with cmake
+RUN cmake -B build && \
+    cmake --build build
+# Run test with ctest
+RUN ctest --test-dir build --output-on-failure
+
+# clean build 
+RUN rm -rf build
+
+# Build solution's tests with cmake
+RUN mv ../solution/test_maths_solution.f90 test/test_maths.f90 && \
+    cmake -B build && \
+    cmake --build build
+# Run test with ctest
+RUN ctest --test-dir build --output-on-failure

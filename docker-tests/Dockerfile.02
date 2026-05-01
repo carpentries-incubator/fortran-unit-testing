@@ -1,0 +1,13 @@
+FROM ghcr.io/carpentries-incubator/fortran-unit-testing:main
+
+COPY --chown=vscode exercises/2-refactoring-fortran /home/vscode/2-refactoring-fortran
+
+# Build challenge with cmake
+WORKDIR /home/vscode/2-refactoring-fortran/challenge
+RUN cmake -B build && \
+    cmake --build build
+
+# Build solution with cmake
+WORKDIR /home/vscode/2-refactoring-fortran/solution
+RUN cmake -B build && \
+    cmake --build build

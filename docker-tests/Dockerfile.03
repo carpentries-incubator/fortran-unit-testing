@@ -1,0 +1,66 @@
+FROM ghcr.io/carpentries-incubator/fortran-unit-testing:main
+
+COPY --chown=vscode exercises/3-writing-your-first-unit-test /home/vscode/3-writing-your-first-unit-test
+
+# Test the Challenge code
+
+WORKDIR /home/vscode/3-writing-your-first-unit-test/challenge
+
+# Build with CMake
+RUN cmake -B build-std && \
+    cmake --build build-std
+    
+# Test with CMake
+RUN ctest --test-dir build-std --output-on-failure
+
+# Build with Make
+RUN FC=/usr/bin/f95 make tests
+
+# Test with Make
+RUN ./build/standard_fortran_tests
+
+
+# Test the Solution code
+
+# Copy solution code
+RUN cp ../solution/standard_fortran/test_temp_conversions.f90 test/standard_fortran/test_temp_conversions.f90 && \
+    cp ../solution/pfunit/* test/pfunit/
+
+# Build with make
+
+# Uncomment pfunit comments
+RUN sed -i -E 's/tests: standard_fortran_tests \#\| pfunit_tests/tests: standard_fortran_tests \| pfunit_tests/g' Makefile
+RUN sed -i -E 's/clean: \#clean_pfunit/clean: clean_pfunit/g' Makefile
+
+# Clean up anything from the previous builds
+RUN make clean
+RUN rm -rf build-std
+
+# Build
+RUN FC=/usr/bin/f95 make tests
+
+# Run pFUnit tests
+RUN ./test/pfunit/tests
+
+# Run standard_fortran tests
+RUN ./build/standard_fortran_tests
+
+# Run cleanup again
+RUN make clean
+
+
+# Build with CMake
+
+# Build without pFUnit
+RUN cmake -B build-std && \
+    cmake --build build-std
+
+# Rebuild with pFUnit
+RUN cmake -B build-pf -DCMAKE_PREFIX_PATH=/home/vscode/pfunit/build/installed && \
+    cmake --build build-pf
+
+# Test without pFUnit
+RUN ctest --test-dir build-std --output-on-failure
+
+# Test with pFUnit
+RUN ctest --test-dir build-pf --output-on-failure

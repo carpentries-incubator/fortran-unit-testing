@@ -1,0 +1,59 @@
+---
+name: "Exercise tests"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - ready_for_review
+      - reopened
+      - synchronize
+
+concurrency:
+  cancel-in-progress: true
+  group: >-
+    ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+
+jobs:
+  testing:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      attestations: read
+      # This is used to complete the identity challenge
+      # with sigstore/fulcio when running outside of PRs.
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Log in to ghcr.io
+        uses: redhat-actions/podman-login@4934294ad0449894bcd1e9f191899d7292469603 # v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+          registry: ghcr.io
+
+      - name: Test episode 1
+        run: podman build . -f docker-tests/Dockerfile.01
+
+      - name: Test episode 2
+        run: podman build . -f docker-tests/Dockerfile.02
+
+      - name: Test episode 2
+        run: podman build . -f docker-tests/Dockerfile.03
+
+      - name: Test episode 4
+        run: podman build . -f docker-tests/Dockerfile.04
+
+      - name: Test episode 5
+        run: podman build . -f docker-tests/Dockerfile.05
+
+      - name: Test episode 6
+        run: podman build . -f docker-tests/Dockerfile.06
