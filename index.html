@@ -320,13 +320,12 @@ and serial Fortran code.</li>
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  --><section id="setup"><section><h2 class="section-heading" id="exercises-repository">Exercises repository<a class="anchor" aria-label="anchor" href="#exercises-repository"></a></h2>
-<hr class="half-width"><p>Throughout this walkthrough, we will use the repository <a href="https://github.com/UCL-ARC/fortran-unit-testing-exercises" class="external-link">UCL-ARC/fortran-unit-testing-exercises</a>
-which contains example exercises written in Fortran.</p>
+<hr class="half-width"><p>Throughout this walkthrough, we will use the Fortran <a href="exercises/">exercises</a> defined within this repo.</p>
 <div class="section level3">
 <h3 id="codespaces">Codespaces<a class="anchor" aria-label="anchor" href="#codespaces"></a></h3>
 <p>The exercises repository is setup to work via GitHub codespaces. This
-process is documented in the <a href="https://github.com/UCL-ARC/fortran-unit-testing-exercises/blob/main/README.md" class="external-link">README.md
-of the exercises repo</a>.</p>
+process is documented in the <a href="exercises/README.html">README.md
+of the exercises</a>.</p>
 <div class="section level4">
 <h4 id="tldr">TL;DR<a class="anchor" aria-label="anchor" href="#tldr"></a></h4>
 <p>You can open the exercises repository within a container running on a
@@ -339,7 +338,7 @@ repository home page. Then, from the codespaces tab, select
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Running locally outside of container </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <p>If you do not wish to use GitHub Codespaces or the VSCode
 devcontainer, you can build/install the relevant dependencies on your
@@ -362,8 +361,7 @@ dependencies.</h3>
 <p>Try to install the dependencies listed above.</p>
 <ul><li>CMake can be installed via <a href="https://formulae.brew.sh/formula/cmake" class="external-link">homebrew</a> on mac or
 your package manager (apt, etc) on Linux.</li>
-<li>pFUnit can be install via the bash script provided in the exercises
-repo <a href="https://github.com/UCL-ARC/fortran-unit-testing-exercises/blob/main/scripts/build-pfunit.sh" class="external-link">build-pfunit.sh</a>.</li>
+<li>pFUnit can be install via the bash script provided <a href="scripts/build-pfunit.sh">build-pfunit.sh</a>.</li>
 </ul></div>
 </div>
 </div>
@@ -372,7 +370,7 @@ repo <a href="https://github.com/UCL-ARC/fortran-unit-testing-exercises/blob/mai
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -466,13 +464,13 @@ any links that you are not going to use.
         <p>This lesson is subject to the <a href="CODE_OF_CONDUCT.html">Code of Conduct</a></p>
         <p>
 
-        <a href="https://github.com/UCL-ARC/fortran-unit-testing-lesson/edit/main/index.md" class="external-link">Edit on GitHub</a>
+        <a href="https://github.com/carpentries-incubator/fortran-unit-testing/edit/main/index.md" class="external-link">Edit on GitHub</a>
 
 	
-        | <a href="https://github.com/UCL-ARC/fortran-unit-testing-lesson/blob/main/CONTRIBUTING.md" class="external-link">Contributing</a>
-        | <a href="https://github.com/UCL-ARC/fortran-unit-testing-lesson/" class="external-link">Source</a></p>
+        | <a href="https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/CONTRIBUTING.md" class="external-link">Contributing</a>
+        | <a href="https://github.com/carpentries-incubator/fortran-unit-testing/" class="external-link">Source</a></p>
         <p>
-        <a href="https://github.com/UCL-ARC/fortran-unit-testing-lesson/blob/main/" class="external-link">Cite</a>
+        <a href="https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/" class="external-link">Cite</a>
         | <a href="mailto:c.aird@ucl.ac.uk">Contact</a> | <a href="https://carpentries.org/about/" class="external-link">About</a></p>
 		</div>
 		<div class="col-md-6">
@@ -492,15 +490,15 @@ any links that you are not going to use.
     {
   "@context": "https://schema.org",
   "@type": "LearningResource",
-  "@id": "https://UCL-ARC.github.io/fortran-unit-testing-lesson/index.html",
+  "@id": "https://carpentries-incubator.github.io/fortran-unit-testing/index.html",
   "inLanguage": "en",
   "dct:conformsTo": "https://bioschemas.org/profiles/LearningResource/1.0-RELEASE",
   "description": "A Carpentries Lesson teaching foundational data and coding skills to researchers worldwide",
   "keywords": "software, data, lesson, The Carpentries, Fortran, unit testing",
   "name": "Unit Testing in Fortran",
   "creativeWorkStatus": "active",
-  "url": "https://UCL-ARC.github.io/fortran-unit-testing-lesson/index.html",
-  "identifier": "https://UCL-ARC.github.io/fortran-unit-testing-lesson/index.html",
+  "url": "https://carpentries-incubator.github.io/fortran-unit-testing/index.html",
+  "identifier": "https://carpentries-incubator.github.io/fortran-unit-testing/index.html",
   "dateCreated": "2025-05-09",
   "dateModified": "2026-05-01",
   "datePublished": "2026-05-01"

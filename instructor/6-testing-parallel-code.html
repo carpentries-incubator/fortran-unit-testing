@@ -327,9 +327,9 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Testing parallel code</h1>
-        <p>Last updated on 2026-01-13 |
+        <p>Last updated on 2026-05-01 |
 
-        <a href="https://github.com/UCL-ARC/fortran-unit-testing-lesson/edit/main/episodes/6-testing-parallel-code.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+        <a href="https://github.com/carpentries-incubator/fortran-unit-testing/edit/main/episodes/6-testing-parallel-code.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
 
 
@@ -405,7 +405,7 @@ approach.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Derived types: </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
 <p>To test MPI code, we must inform pFUnit that we intend to do so.
 Firstly, we must change how we define our test parameters. Assuming our
@@ -464,12 +464,12 @@ for the current test.</li>
 <h3 class="callout-title">Challenge: Update derived types to work with
 MPI</h3>
 <div class="callout-content">
-<p>Take a look at the exercise <a href="https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/6-testing-parallel-code/challenge" class="external-link">6-testing-parallel-code</a>.
+<p>Take a look at the exercise <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/6-testing-parallel-code/challenge" class="external-link">6-testing-parallel-code</a>.
 This exercise contains an MPI parallelised version of the game of life
 from episode <a href="https://github-pages.arc.ucl.ac.uk/fortran-unit-testing-lesson/2-refactor-fortran.html" class="external-link">2.
-Refactoring Fortran</a> and the exercise <a href="https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/4-fortran-unit-test-syntax/challenge" class="external-link">4-fortran-unit-test-syntax</a>.</p>
+Refactoring Fortran</a> and the exercise <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/4-fortran-unit-test-syntax/challenge" class="external-link">4-fortran-unit-test-syntax</a>.</p>
 <p>Complete the first step of the challenge by converting the derived
-types within <a href="https://github.com/UCL-ARC/fortran-unit-testing-exercises/blob/main/episodes/6-testing-parallel-code/challenge/test/test_find_steady_state.pf#L10-L29" class="external-link">test_find_steady_state.pf</a>
+types within <a href="https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/6-testing-parallel-code/challenge/test/test_find_steady_state.pf#L10-L29" class="external-link">test_find_steady_state.pf</a>
 to work with MPI.</p>
 </div>
 </div>
@@ -479,7 +479,7 @@ to work with MPI.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>Your derived types should now look something like this,</p>
 <div class="codewrapper sourceCode" id="cb3">
@@ -518,7 +518,7 @@ to work with MPI.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
   <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Test Suite: </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
 <div class="accordion-body">
 <p>Now that we have updated our derived types, we must update how we
 populate our test parameter sets within the test suite. There is
@@ -551,9 +551,9 @@ example,</p>
 <h3 class="callout-title">Challenge: Update test suite to work with
 MPI</h3>
 <div class="callout-content">
-<p>Continuing with the exercise <a href="https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/6-testing-parallel-code/challenge" class="external-link">6-testing-parallel-code</a>.</p>
+<p>Continuing with the exercise <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/6-testing-parallel-code/challenge" class="external-link">6-testing-parallel-code</a>.</p>
 <p>Complete the next step of the challenge by converting the test suite
-within <a href="https://github.com/UCL-ARC/fortran-unit-testing-exercises/blob/main/episodes/6-testing-parallel-code/challenge/test/test_find_steady_state.pf#L37-L63" class="external-link">test_find_steady_state.pf</a>
+within <a href="https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/6-testing-parallel-code/challenge/test/test_find_steady_state.pf#L37-L63" class="external-link">test_find_steady_state.pf</a>
 to work with your new derived types.</p>
 </div>
 </div>
@@ -563,7 +563,7 @@ to work with your new derived types.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Your derived types should now look something like this,</p>
 <div class="codewrapper sourceCode" id="cb5">
@@ -612,7 +612,7 @@ to work with your new derived types.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
   <h3 class="accordion-header" id="headingSpoiler3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Test Logic: </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
 <div class="accordion-body">
 <p>As we are assuming our src procedure returns the same value to all
 ranks for any number of MPI ranks there is not much that needs to change
@@ -658,8 +658,8 @@ number of ranks used within each test.</p>
 <h3 class="callout-title">Challenge: Update test logic to work with
 MPI</h3>
 <div class="callout-content">
-<p>Continuing with the exercise <a href="https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/6-testing-parallel-code/challenge" class="external-link">6-testing-parallel-code</a>.</p>
-<p>Converting the test logic within <a href="https://github.com/UCL-ARC/fortran-unit-testing-exercises/blob/main/episodes/6-testing-parallel-code/challenge/test/test_find_steady_state.pf#L69-L84" class="external-link">test_find_steady_state.pf</a>
+<p>Continuing with the exercise <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/6-testing-parallel-code/challenge" class="external-link">6-testing-parallel-code</a>.</p>
+<p>Converting the test logic within <a href="https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/6-testing-parallel-code/challenge/test/test_find_steady_state.pf#L69-L84" class="external-link">test_find_steady_state.pf</a>
 to work with the new src procedure signature.</p>
 </div>
 </div>
@@ -669,7 +669,7 @@ to work with the new src procedure signature.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>Your derived types should now look something like this,</p>
 <div class="codewrapper sourceCode" id="cb7">
@@ -706,7 +706,7 @@ to work with the new src procedure signature.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler4" aria-expanded="false" aria-controls="collapseSpoiler4">
   <h3 class="accordion-header" id="headingSpoiler4">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Type Constructors: </h3>
 </button>
-<div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
+<div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
 <div class="accordion-body">
 <p>Converting to supporting MPI has not altered the relationship between
 the test parameters and the test case. Therefore, the constructors will
@@ -868,7 +868,7 @@ indexed parameters during the test</p>
 <div id="challenge-a-more-complex-mpi-test" class="callout-inner">
 <h3 class="callout-title">Challenge: A more complex MPI test</h3>
 <div class="callout-content">
-<p>Take a look at part 3 of <a href="https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/6-testing-parallel-code/challenge" class="external-link">6-testing-parallel-code/challenge</a>
+<p>Take a look at part 3 of <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/6-testing-parallel-code/challenge" class="external-link">6-testing-parallel-code/challenge</a>
 in the exercises repository.</p>
 </div>
 </div>
@@ -878,9 +878,9 @@ in the exercises repository.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
   <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
 </button>
-<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
-<p>A solution is provided in <a href="https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/6-testing-parallel-code/solution" class="external-link">6-testing-parallel-code/solution</a>.</p>
+<p>A solution is provided in <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/6-testing-parallel-code/solution" class="external-link">6-testing-parallel-code/solution</a>.</p>
 </div>
 </div>
 </div>
@@ -913,13 +913,13 @@ any links that you are not going to use.
         <p>This lesson is subject to the <a href="CODE_OF_CONDUCT.html">Code of Conduct</a></p>
         <p>
 
-        <a href="https://github.com/UCL-ARC/fortran-unit-testing-lesson/edit/main/episodes/6-testing-parallel-code.md" class="external-link">Edit on GitHub</a>
+        <a href="https://github.com/carpentries-incubator/fortran-unit-testing/edit/main/episodes/6-testing-parallel-code.md" class="external-link">Edit on GitHub</a>
 
 	
-        | <a href="https://github.com/UCL-ARC/fortran-unit-testing-lesson/blob/main/CONTRIBUTING.md" class="external-link">Contributing</a>
-        | <a href="https://github.com/UCL-ARC/fortran-unit-testing-lesson/" class="external-link">Source</a></p>
+        | <a href="https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/CONTRIBUTING.md" class="external-link">Contributing</a>
+        | <a href="https://github.com/carpentries-incubator/fortran-unit-testing/" class="external-link">Source</a></p>
         <p>
-        <a href="https://github.com/UCL-ARC/fortran-unit-testing-lesson/blob/main/" class="external-link">Cite</a>
+        <a href="https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/" class="external-link">Cite</a>
         | <a href="mailto:c.aird@ucl.ac.uk">Contact</a> | <a href="https://carpentries.org/about/" class="external-link">About</a></p>
 		</div>
 		<div class="col-md-6">
@@ -939,17 +939,17 @@ any links that you are not going to use.
     {
   "@context": "https://schema.org",
   "@type": "LearningResource",
-  "@id": "https://UCL-ARC.github.io/fortran-unit-testing-lesson/instructor/6-testing-parallel-code.html",
+  "@id": "https://carpentries-incubator.github.io/fortran-unit-testing/instructor/6-testing-parallel-code.html",
   "inLanguage": "en",
   "dct:conformsTo": "https://bioschemas.org/profiles/LearningResource/1.0-RELEASE",
   "description": "A Carpentries Lesson teaching foundational data and coding skills to researchers worldwide",
   "keywords": "software, data, lesson, The Carpentries, Fortran, unit testing",
   "name": "Testing parallel code",
   "creativeWorkStatus": "active",
-  "url": "https://UCL-ARC.github.io/fortran-unit-testing-lesson/instructor/6-testing-parallel-code.html",
-  "identifier": "https://UCL-ARC.github.io/fortran-unit-testing-lesson/instructor/6-testing-parallel-code.html",
+  "url": "https://carpentries-incubator.github.io/fortran-unit-testing/instructor/6-testing-parallel-code.html",
+  "identifier": "https://carpentries-incubator.github.io/fortran-unit-testing/instructor/6-testing-parallel-code.html",
   "dateCreated": "2025-05-09",
-  "dateModified": "2026-01-13",
+  "dateModified": "2026-05-01",
   "datePublished": "2026-05-01"
 }
 
