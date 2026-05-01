@@ -1,12 +1,12 @@
 # Fortran Unit Testing Exercises
 
-This repo contains exercises to help learn unit testing in Fortran and is intended to be used alongside the
-[Unit Testing in Fortran lesson](https://github-pages.arc.ucl.ac.uk/fortran-unit-testing-lesson/).
+These exercises are intended to be used alongside the
+[Unit Testing in Fortran lesson][lesson-site].
 
 ## Using this repo
 
-In the [episodes](./episodes/) directory you will find exercises which match up to episodes in the
-[Unit Testing in Fortran lesson](https://github-pages.arc.ucl.ac.uk/fortran-unit-testing-lesson/).
+In this directory you will find exercises which match up to episodes in the
+[Unit Testing in Fortran lesson][lesson-site].
 
 Each episode contains its own build system and README.md with information on how to build and what the tasks are for that episode.
 
@@ -80,3 +80,5 @@ To setup pre-commit and fortitude
    ```sh
    pre-commit install
    ```
+
+[lesson_site]: https://carpentries-incubator.github.io/fortran-unit-testing/

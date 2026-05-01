@@ -88,9 +88,9 @@ end type my_test_case
 
 #### Challenge: Update derived types to work with MPI
 
-Take a look at the exercise [6-testing-parallel-code](https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/6-testing-parallel-code/challenge). This exercise contains an MPI parallelised version of the game of life from episode [2. Refactoring Fortran](https://github-pages.arc.ucl.ac.uk/fortran-unit-testing-lesson/2-refactor-fortran.html) and the exercise [4-fortran-unit-test-syntax](https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/4-fortran-unit-test-syntax/challenge).
+Take a look at the exercise [6-testing-parallel-code](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/6-testing-parallel-code/challenge). This exercise contains an MPI parallelised version of the game of life from episode [2. Refactoring Fortran](https://github-pages.arc.ucl.ac.uk/fortran-unit-testing-lesson/2-refactor-fortran.html) and the exercise [4-fortran-unit-test-syntax](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/4-fortran-unit-test-syntax/challenge).
 
-Complete the first step of the challenge by converting the derived types within [test_find_steady_state.pf](https://github.com/UCL-ARC/fortran-unit-testing-exercises/blob/main/episodes/6-testing-parallel-code/challenge/test/test_find_steady_state.pf#L10-L29) to work with MPI.
+Complete the first step of the challenge by converting the derived types within [test_find_steady_state.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/6-testing-parallel-code/challenge/test/test_find_steady_state.pf#L10-L29) to work with MPI.
 
 :::::::::::::::::::::::::::::::: solution
 
@@ -151,9 +151,9 @@ end function my_test_suite
 
 #### Challenge: Update test suite to work with MPI
 
-Continuing with the exercise [6-testing-parallel-code](https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/6-testing-parallel-code/challenge). 
+Continuing with the exercise [6-testing-parallel-code](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/6-testing-parallel-code/challenge). 
 
-Complete the next step of the challenge by converting the test suite within [test_find_steady_state.pf](https://github.com/UCL-ARC/fortran-unit-testing-exercises/blob/main/episodes/6-testing-parallel-code/challenge/test/test_find_steady_state.pf#L37-L63) to work with your new derived types.
+Complete the next step of the challenge by converting the test suite within [test_find_steady_state.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/6-testing-parallel-code/challenge/test/test_find_steady_state.pf#L37-L63) to work with your new derived types.
 
 :::::::::::::::::::::::::::::::: solution
 
@@ -231,9 +231,9 @@ In the example above, the MPI communicator is passed into the src procedure. Usi
 
 #### Challenge: Update test logic to work with MPI
 
-Continuing with the exercise [6-testing-parallel-code](https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/6-testing-parallel-code/challenge). 
+Continuing with the exercise [6-testing-parallel-code](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/6-testing-parallel-code/challenge). 
 
-Converting the test logic within [test_find_steady_state.pf](https://github.com/UCL-ARC/fortran-unit-testing-exercises/blob/main/episodes/6-testing-parallel-code/challenge/test/test_find_steady_state.pf#L69-L84) to work with the new src procedure
+Converting the test logic within [test_find_steady_state.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/6-testing-parallel-code/challenge/test/test_find_steady_state.pf#L69-L84) to work with the new src procedure
 signature.
 
 :::::::::::::::::::::::::::::::: solution
@@ -411,11 +411,11 @@ end subroutine TestMySrcProcedure
 
 ### Challenge: A more complex MPI test
 
-Take a look at part 3 of [6-testing-parallel-code/challenge](https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/6-testing-parallel-code/challenge) in the exercises repository.
+Take a look at part 3 of [6-testing-parallel-code/challenge](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/6-testing-parallel-code/challenge) in the exercises repository.
 
 :::::::::::::::::::::::::::::::: solution
 
-A solution is provided in [6-testing-parallel-code/solution](https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/6-testing-parallel-code/solution).
+A solution is provided in [6-testing-parallel-code/solution](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/6-testing-parallel-code/solution).
 
 :::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::

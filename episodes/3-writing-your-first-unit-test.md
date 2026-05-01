@@ -94,6 +94,6 @@ A solution is provided in [3-writing-your-first-unit-test/solution][exercises-so
 ::::::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-[temp-lib]: https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/3-writing-your-first-unit-test/challenge/src/temp_conversions.f90
-[exercises-challenge]: https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/3-writing-your-first-unit-test/challenge
-[exercises-solution]: https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/3-writing-your-first-unit-test/solution
+[temp-lib]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/3-writing-your-first-unit-test/challenge/src/temp_conversions.f90
+[exercises-challenge]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/3-writing-your-first-unit-test/challenge
+[exercises-solution]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/3-writing-your-first-unit-test/solution

@@ -196,7 +196,7 @@ This results in the output
 
 ```bash
 $ ctest 
-Test project /Users/connoraird/work/fortran-unit-testing-exercises/episodes/5-debugging-a-broken-test/challenge-1/build-cmake
+Test project /Users/connoraird/work/fortran-unit-testing/exercises/5-debugging-a-broken-test/challenge-1/build-cmake
     Start 2: pfunit_transpose_tests
 1/1 Test #2: pfunit_transpose_tests ...........   Passed    0.24 sec
 
@@ -449,11 +449,11 @@ end do
 
 ### Challenge 2: Debug and fix a failing test.
 
-Take a look at the [5-debugging-a-broken-test/challenge](https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/5-debugging-a-broken-test/challenge) in the exercises repository.
+Take a look at the [5-debugging-a-broken-test/challenge](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/5-debugging-a-broken-test/challenge) in the exercises repository.
 
 :::::::::::::::::::::::::::::::: solution
 
-A solution is provided in [README-solution.md](https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/5-debugging-a-broken-test/solution).
+A solution is provided in [README-solution.md](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/5-debugging-a-broken-test/solution).
 
 :::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::

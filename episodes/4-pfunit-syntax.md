@@ -141,10 +141,10 @@ end type my_test_case
 
 #### Challenge: Add derived types to pFUnit tests of temperature conversions
 
-Continuing with part two of [3-writing-your-first-unit-test/challenge](https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/3-writing-your-first-unit-test/challenge) from the
+Continuing with part two of [3-writing-your-first-unit-test/challenge](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/3-writing-your-first-unit-test/challenge) from the
 exercises repo. Begin re-writing your standard Fortran test using pFUnit. First, add some derived
 types to the provided template file,
-[test_temp_conversions.pf](https://github.com/UCL-ARC/fortran-unit-testing-exercises/blob/main/episodes/3-writing-your-first-unit-test/challenge/test/pfunit/test_temp_conversions.pf#L9-L19).
+[test_temp_conversions.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/3-writing-your-first-unit-test/challenge/test/pfunit/test_temp_conversions.pf#L9-L19).
 
 :::::::::::::::::::::::::::::::: solution
 
@@ -171,7 +171,7 @@ type, extends(ParameterizedTestCase) :: temp_conversions_test_case_t
 end type temp_conversions_test_case_t
 ```
 
-A full solution is provided in [3-writing-your-first-unit-test/solution](https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/3-writing-your-first-unit-test/solution).
+A full solution is provided in [3-writing-your-first-unit-test/solution](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/3-writing-your-first-unit-test/solution).
 
 :::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::
@@ -208,7 +208,7 @@ end function my_test_suite
 
 Continuing with your pFUnit test of `temp_conversions`, add a test suite for tests of the
 function `fahrenheit_to_celsius` in the indicated section of the template file, 
-[test_temp_conversions.pf](https://github.com/UCL-ARC/fortran-unit-testing-exercises/blob/main/episodes/3-writing-your-first-unit-test/challenge/test/pfunit/test_temp_conversions.pf#L27-L28)
+[test_temp_conversions.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/3-writing-your-first-unit-test/challenge/test/pfunit/test_temp_conversions.pf#L27-L28)
 
 :::::::::::::::::::::::::::::::: solution
 
@@ -229,7 +229,7 @@ function fahrenheit_to_celsius_testsuite() result(params)
 end function fahrenheit_to_celsius_testsuite
 ```
 
-A full solution is provided in [3-writing-your-first-unit-test/solution](https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/3-writing-your-first-unit-test/solution).
+A full solution is provided in [3-writing-your-first-unit-test/solution](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/3-writing-your-first-unit-test/solution).
 
 :::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::
@@ -288,7 +288,7 @@ subroutine TestMySrcProcedure(this)
 
 Continuing with your pFUnit test of `temp_conversions`, add some test logic for tests of
 the function `fahrenheit_to_celsius` in the indicated section of the template file, 
-[test_temp_conversions.pf](https://github.com/UCL-ARC/fortran-unit-testing-exercises/blob/main/episodes/3-writing-your-first-unit-test/challenge/test/pfunit/test_temp_conversions.pf#L30-L31)
+[test_temp_conversions.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/3-writing-your-first-unit-test/challenge/test/pfunit/test_temp_conversions.pf#L30-L31)
 
 :::::::::::::::::::::::::::::::: solution
 
@@ -315,7 +315,7 @@ subroutine test_fahrenheit_to_celsius(this)
 end subroutine test_fahrenheit_to_celsius
 ```
 
-A full solution is provided in [3-writing-your-first-unit-test/solution](https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/3-writing-your-first-unit-test/solution).
+A full solution is provided in [3-writing-your-first-unit-test/solution](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/3-writing-your-first-unit-test/solution).
 
 :::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::
@@ -367,7 +367,7 @@ end function my_test_params_toString
 
 Continuing with your pFUnit test of `temp_conversions`, add some type constructors for
 tests of the `temp_conversions` in the indicated section of the template file, 
-[test_temp_conversions.pf](https://github.com/UCL-ARC/fortran-unit-testing-exercises/blob/main/episodes/3-writing-your-first-unit-test/challenge/test/pfunit/test_temp_conversions.pf#L49-L59)
+[test_temp_conversions.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/3-writing-your-first-unit-test/challenge/test/pfunit/test_temp_conversions.pf#L49-L59)
 
 :::::::::::::::::::::::::::::::: solution
 
@@ -394,7 +394,7 @@ function temp_conversions_test_params_t_toString(this) result(string)
 end function temp_conversions_test_params_t_toString
 ```
 
-A full solution is provided in [3-writing-your-first-unit-test/solution](https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/3-writing-your-first-unit-test/solution).
+A full solution is provided in [3-writing-your-first-unit-test/solution](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/3-writing-your-first-unit-test/solution).
 
 :::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::
@@ -409,7 +409,7 @@ Finalising your pFUnit test of **temp_conversions**, add an additional test of t
 
 :::::::::::::::::::::::::::::::: solution
 
-The full solution is provided in [3-writing-your-first-unit-test/solution](https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/3-writing-your-first-unit-test/solution).
+The full solution is provided in [3-writing-your-first-unit-test/solution](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/3-writing-your-first-unit-test/solution).
 
 :::::::::::::::::::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::
