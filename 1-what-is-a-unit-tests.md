@@ -118,11 +118,11 @@ This is much clearer. We immediately have an idea of what could be going wrong a
 
 ## Challenge 2: Unit test bad practices
 
-Take a look at [1-into-to-unit-tests/challenge](https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/1-into-to-unit-tests/challenge) in the exercises repository.
+Take a look at [1-into-to-unit-tests/challenge](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/1-into-to-unit-tests/challenge) in the exercises repository.
 
 :::::::::::::::::::::::::::::::: solution
 
-A solution is provided in [1-into-to-unit-tests/solution](https://github.com/UCL-ARC/fortran-unit-testing-exercises/tree/main/episodes/1-into-to-unit-tests/solution).
+A solution is provided in [1-into-to-unit-tests/solution](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/1-into-to-unit-tests/solution).
 
 :::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::
