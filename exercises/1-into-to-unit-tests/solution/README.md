@@ -8,7 +8,7 @@ There are several issues with `test_maths.f90`
 
 - Our test function `test` is not **minimal** as it is testing the combination of calling both `maths::double` and then
   `maths::factorial`.
-- Currently, we are only testing one scenario where the input is `2`. This means there is likely to be only very small coverage of
+- Currently, we are only testing one scenario where the input is `2`. This means there is likely to be only small coverage of
   our src code.
 
 ## Task 2
@@ -26,7 +26,7 @@ There are several issues with `test_maths.f90`
 
 The solution here is a single test file [test_maths_solution.f90](./test_maths_solution.f90). To use this solution, replace the
 contents of [challenge/test/test_maths.f90](../challenge/test/test_maths.f90) with the solution. Then run the tests as before
-with...
+with:
 
 ```sh
 cmake -B build

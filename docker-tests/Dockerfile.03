@@ -9,7 +9,7 @@ WORKDIR /home/vscode/3-writing-your-first-unit-test/challenge
 # Build with CMake
 RUN cmake -B build-std && \
     cmake --build build-std
-    
+
 # Test with CMake
 RUN ctest --test-dir build-std --output-on-failure
 

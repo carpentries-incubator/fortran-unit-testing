@@ -13,4 +13,3 @@ add_executable(test_temp_conversions_exec
 
 # Add test as ctest
 add_test(NAME test_temp_conversions COMMAND test_temp_conversions_exec)
-

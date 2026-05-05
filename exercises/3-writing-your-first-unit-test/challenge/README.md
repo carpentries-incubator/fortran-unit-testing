@@ -9,7 +9,7 @@ before covering specific syntax.
 
 In [src](./src) you will find a library [temp_conversions.f90](./src/temp_conversions.f90)
 which provides functions for converting between various units of temperature. The functions
-provided are...
+provided are:
 
 - **fahrenheit_to_celsius**: Which takes in a temperature in Fahrenheit and returns a temperature in Celsius.
 - **celsius_to_kelvin**: Which takes in a temperature in Celsius and returns a temperature in Kelvin.
@@ -86,14 +86,14 @@ the pFUnit test you must write.
   src objects and the standard Fortran tests, via [test/standard_fortran/Makefile](./test/standard_fortran/Makefile).
   Add a new Makefile to the [test/pfunit/](./test/pfunit/) dir which will build your new pFUnit test(s). Note that
   the top level [Makefile](./Makefile) is already setup to work with this new Makefile (look for lines which look
-  like **"# Uncomment here..."**). Once you have added this Makefile, you should be able to build and run your tests
+  like **"# Uncomment here"**). Once you have added this Makefile, you should be able to build and run your tests
   via the following command.
 
   ```sh
   make tests
   ./test/pfunit/tests
   ```
-  
+
   If you are not using the devcontainer, you will likely need to specify the path to your pFUnit include dir. You can do
   this by passing an environment variable like so.
 
@@ -108,7 +108,7 @@ the pFUnit test you must write.
   [test/standard_fortran/CMakeLists.txt](./test/standard_fortran/CMakeLists.txt). Add a new CMakeLists.txt to the
   [test/pfunit/](./test/pfunit/) dir which will build your new pFUnit test(s). Note that the top level
   [CMakeLists.txt](./CMakeLists.txt) is already setup to work with this new CMakeLists.txt, all you need to do is
-  add the pFUnit lib to the `CMAKE_PREFIX_PATH` when building i.e...
+  add the pFUnit lib to the `CMAKE_PREFIX_PATH` when building i.e:
 
   ```bash
   cmake -B build -DCMAKE_PREFIX_PATH=/path/to/pfunit/install

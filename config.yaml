@@ -8,7 +8,7 @@
 # lc: Library Carpentry
 # cp: Carpentries (to use for instructor training for instance)
 # incubator: The Carpentries Incubator
-# 
+#
 # This option supports custom types so lessons can be branded
 # and themed with your own logo and alt-text (see `carpentry_description`)
 # See https://carpentries.github.io/sandpaper-docs/editing.html#adding-a-custom-logo
@@ -65,7 +65,7 @@ contact: 'c.aird@ucl.ac.uk'
 # - another-learner.md
 
 # Order of episodes in your lesson
-episodes: 
+episodes:
 - 1-what-is-a-unit-tests.md
 - 2-refactor-fortran.md
 - 3-writing-your-first-unit-test.md
@@ -74,17 +74,15 @@ episodes:
 - 6-testing-parallel-code.md
 
 # Information for Learners
-learners: 
+learners:
 
 # Information for Instructors
-instructors: 
+instructors:
 
 # Learner Profiles
-profiles: 
+profiles:
 
 # Customisation ---------------------------------------------
 #
 # This space below is where custom yaml items (e.g. pinning
 # sandpaper and varnish versions) should live
-
-

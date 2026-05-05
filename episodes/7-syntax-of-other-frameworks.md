@@ -4,7 +4,7 @@ teaching:
 exercises:
 ---
 
-:::::::::::::::::::::::::::::::::::::: questions 
+:::::::::::::::::::::::::::::::::::::: questions
 
 - What is the syntax of writing a unit test in Fortran?
 - How do I build my tests with my existing build system?
@@ -18,21 +18,20 @@ exercises:
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-
 ## What frameworks will we look at?
 
 - [Veggies](https://gitlab.com/everythingfunctional/veggies)
-    - Integrated with FPM and CMake.
+  - Integrated with FPM and CMake.
 - [test-drive](https://github.com/fortran-lang/test-drive)
-    - This is the least featured of the frameworks.
-    - Requires more boilerplate than the other frameworks.
-    - Integrated with FPM and CMake.
+  - This is the least featured of the frameworks.
+  - Requires more boilerplate than the other frameworks.
+  - Integrated with FPM and CMake.
 
 ## The shared structure of a test module
 
 All three frameworks share the basic structure for their test modules.
 
-```f90 
+```f90
 module test_something
     ! use veggies|testdrive|funit
     ! use the src to be tested
@@ -51,8 +50,7 @@ end module test_something
 
 ## Let's dive into the syntax
 
-
-### Derived types:
+### Derived types
 
 The key differences are:
 
@@ -83,8 +81,7 @@ end my_test_params
 
 :::::::::::::::::::::::::::::::::::::
 
-
-### Test Suite:
+### Test Suite
 
 ::::::::::::::::::::::::::::: spoiler
 
@@ -92,7 +89,7 @@ end my_test_params
 
 For Veggies, we define a function which returns a Veggies derived-type that takes an array of test parameters
 representing different test scenarios and a generic test function, in this case **check_my_src_procedure**. This
-test function is where we actually call our src procedure and carry out assertions (see the next section). 
+test function is where we actually call our src procedure and carry out assertions (see the next section).
 
 ```F90
 function my_test_suite() result(tests)
@@ -147,7 +144,7 @@ end subroutine test_my_procedure_with_input_1
 
 :::::::::::::::::::::::::::::::::::::
 
-### Test Logic:
+### Test Logic
 
 ::::::::::::::::::::::::::::: spoiler
 
@@ -190,7 +187,7 @@ subroutine check_my_src_procedure(error, params)
     class(my_test_params), intent(in) :: params
 
     integer :: actual_output
-    
+
     call my_src_procedure(params%input, actual_output)
 
     call check(error, params%expected_output, actual_output, "Unexpected output from my_src_procedure")
@@ -214,7 +211,7 @@ if (allocated(error)) return
 
 :::::::::::::::::::::::::::::::::::::
 
-### Type Constructors:
+### Type Constructors
 
 For **Veggies** and **test-drive**, this step is not always required but can be useful to simplify
 populating multiple different test cases. For example, if we wished to test a subroutine which
@@ -235,7 +232,7 @@ declare your constructor,
 
 ```f90
 interface my_test_params
-    module procedure my_test_params_constructor 
+    module procedure my_test_params_constructor
 end interface my_test_params
 ```
 

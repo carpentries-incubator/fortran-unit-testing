@@ -10,4 +10,3 @@ RUN cmake -B build -DCMAKE_PREFIX_PATH=/home/vscode/pfunit/build/installed && \
 
 # test pfunit with ctest
 RUN ctest --test-dir build --output-on-failure
-

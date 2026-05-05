@@ -11,9 +11,9 @@ module test_check_for_steady_state
     !> Type to bundle inputs and expected outputs of game_of_life::check_for_steady_state
     @testParameter
     type, extends(AbstractTestParameter) :: check_for_steady_state_test_params
-        !> A board representing the current board before the last evolution 
+        !> A board representing the current board before the last evolution
         integer, dimension(:,:), allocatable :: current_board
-        !> A board representing the new board after the last evolution 
+        !> A board representing the new board after the last evolution
         integer, dimension(:,:), allocatable :: new_board
         !> The value of steady state expected to be returned with the above boards as inputs
         logical :: expected_steady_state

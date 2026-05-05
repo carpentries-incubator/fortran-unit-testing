@@ -4,7 +4,7 @@ teaching:
 exercises:
 ---
 
-:::::::::::::::::::::::::::::::::::::: questions 
+:::::::::::::::::::::::::::::::::::::: questions
 
 - How do I unit test a procedure which makes MPI calls?
 - How do I easily test different numbers of MPI ranks?
@@ -19,7 +19,7 @@ exercises:
 
 ## What's the difference?
 
-Depending on the parallelisation tool and strategy employed, the implementation of parallel code can be very different
+Depending on the parallelisation tool and strategy employed, the implementation of parallel code can be different
 to that of serial code. This is especially true for code which utilises the message passing interface (MPI). These codes
 almost always contain some functionality in which processes, or ranks, communicate by exchanging messages. This message
 passing is often complex and will always benefit from testing.
@@ -27,36 +27,36 @@ passing is often complex and will always benefit from testing.
 There is added complexity when testing MPI code compared to serial as the logical path through the code is changed
 depending on the number of ranks with which the code is executed. Therefore, it is important that we test for a range
 of numbers of ranks. This will require controlling the number of ranks running the src and is not something we want
-to implement ourselves. Thankfully, pFUnit can handle this for us.
+to implement ourselves. pFUnit can handle this for us.
 
 ## Tips for writing testable MPI code
 
-### Where possible, separate calls to the MPI library into procedures.
+### Where possible, separate calls to the MPI library into procedures
 
 If a procedure does not contain any calls to the MPI library, then it can be tested with a serial unit test. Therefore,
 separating MPI calls into their own units makes for a simpler test suite for most of your logic. Only, procedures with
 MPI library calls will require MPI enabled pFUnit tests.
 
-### Pass the MPI communicator information into each mpi procedure to be tested.
+### Pass the MPI communicator information into each mpi procedure to be tested
 
 If we pass the MPI communicator into a procedure, we can define this to be whatever we wish in our tests. This allows us
 to use the communicator provided by pFUnit or some other communicator specific to our problem.
 
 Creating types to wrap this information along with any other MPI specific information (neighbour ranks, etc) can be a
-convenient approach. 
+convenient approach.
 
 ## Syntax of writing MPI enabled pFUnit tests
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::: spoiler
 
-### Derived types:
+### Derived types
 
 To test MPI code, we must inform pFUnit that we intend to do so. Firstly, we must change how we define
 our test parameters. Assuming our src procedure returns the same value to all ranks for any number of
 MPI ranks, we can do the following:
 
 - We now use **MPITestParameter** instead of **AbstractTestParameter**.
-    - **MPITestParameter** inherits from **AbstractTestParameter** and provides an additional parameter in its constructor which
+  - **MPITestParameter** inherits from **AbstractTestParameter** and provides an additional parameter in its constructor which
     corresponds to the number of processors for which a particular test should be ran.
 
 ```F90
@@ -72,10 +72,10 @@ end type my_test_params
 We also need to change how we define our test case:
 
 - We now use **MPITestCase** instead of **ParameterizedTestCase**
-    - **MPITestCase** provides several helpful methods for us to use whilst testing
-        - **getProcessRank()** returns the rank of the current process allowing per rank selection of inputs and expected outputs.
-        - **getMpiCommunicator()** returns the MPI communicator created by pFUnit to control the number of ranks per test.
-        - **getNumProcesses()** returns the number of MPI ranks for the current test.
+  - **MPITestCase** provides several helpful methods for us to use whilst testing
+    - **getProcessRank()** returns the rank of the current process allowing per rank selection of inputs and expected outputs.
+    - **getMpiCommunicator()** returns the MPI communicator created by pFUnit to control the number of ranks per test.
+    - **getNumProcesses()** returns the number of MPI ranks for the current test.
 
 ```F90
 @TestCase(constructor=my_test_params_to_my_test_case, testParameters={my_test_suite()})
@@ -84,13 +84,20 @@ type, extends(MPITestCase) :: my_test_case
 end type my_test_case
 ```
 
-::::::::::::::::::::::::::::::::::::: challenge 
+::::::::::::::::::::::::::::::::::::: challenge
 
 #### Challenge: Update derived types to work with MPI
 
-Take a look at the exercise [6-testing-parallel-code](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/6-testing-parallel-code/challenge). This exercise contains an MPI parallelised version of the game of life from episode [2. Refactoring Fortran](https://github-pages.arc.ucl.ac.uk/fortran-unit-testing-lesson/2-refactor-fortran.html) and the exercise [4-fortran-unit-test-syntax](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/4-fortran-unit-test-syntax/challenge).
+Take a look at the exercise
+[6-testing-parallel-code](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/6-testing-parallel-code/challenge).
+This exercise contains an MPI parallelised version of the game of life from episode
+[2. Refactoring Fortran](https://github-pages.arc.ucl.ac.uk/fortran-unit-testing-lesson/2-refactor-fortran.html)
+and the exercise
+[4-fortran-unit-test-syntax](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/4-fortran-unit-test-syntax/challenge).
 
-Complete the first step of the challenge by converting the derived types within [test_find_steady_state.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/6-testing-parallel-code/challenge/test/test_find_steady_state.pf#L10-L29) to work with MPI.
+Complete the first step of the challenge by converting the derived types within
+[test_find_steady_state.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/6-testing-parallel-code/challenge/test/test_find_steady_state.pf#L10-L29)
+to work with MPI.
 
 :::::::::::::::::::::::::::::::: solution
 
@@ -125,10 +132,10 @@ end type find_steady_state_test_case
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::: spoiler
 
-### Test Suite:
+### Test Suite
 
 Now that we have updated our derived types, we must update how we populate our test parameter sets within
-the test suite. There is actually very little that needs to change, all we must do is set how many MPI
+the test suite. There is actually little that needs to change, all we must do is set how many MPI
 ranks we want each parameter set to be run with. For example,
 
 ```f90
@@ -147,13 +154,16 @@ function my_test_suite() result(params)
 end function my_test_suite
 ```
 
-::::::::::::::::::::::::::::::::::::: challenge 
+::::::::::::::::::::::::::::::::::::: challenge
 
 #### Challenge: Update test suite to work with MPI
 
-Continuing with the exercise [6-testing-parallel-code](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/6-testing-parallel-code/challenge). 
+Continuing with the exercise
+[6-testing-parallel-code](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/6-testing-parallel-code/challenge).
 
-Complete the next step of the challenge by converting the test suite within [test_find_steady_state.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/6-testing-parallel-code/challenge/test/test_find_steady_state.pf#L37-L63) to work with your new derived types.
+Complete the next step of the challenge by converting the test suite within
+[test_find_steady_state.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/6-testing-parallel-code/challenge/test/test_find_steady_state.pf#L37-L63)
+to work with your new derived types.
 
 :::::::::::::::::::::::::::::::: solution
 
@@ -198,10 +208,10 @@ end function getTestSuite
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::: spoiler
 
-### Test Logic:
+### Test Logic
 
 As we are assuming our src procedure returns the same value to all ranks for any number of MPI ranks
-there is not much that needs to change within our test logic subroutine. The one thing that is likely 
+there is not much that needs to change within our test logic subroutine. The one thing that is likely
 to change in this case is the call to the src procedure being tested as it is recommended to pass the
 MPI communicator into each procedure which utilises MPI. For example, the test logic might look
 something like this.
@@ -226,15 +236,16 @@ In the example above, the MPI communicator is passed into the src procedure. Usi
 
 :::::::::::::::::::::::::::::::::
 
-
-::::::::::::::::::::::::::::::::::::: challenge 
+::::::::::::::::::::::::::::::::::::: challenge
 
 #### Challenge: Update test logic to work with MPI
 
-Continuing with the exercise [6-testing-parallel-code](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/6-testing-parallel-code/challenge). 
+Continuing with the exercise
+[6-testing-parallel-code](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/6-testing-parallel-code/challenge).
 
-Converting the test logic within [test_find_steady_state.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/6-testing-parallel-code/challenge/test/test_find_steady_state.pf#L69-L84) to work with the new src procedure
-signature.
+Converting the test logic within
+[test_find_steady_state.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/6-testing-parallel-code/challenge/test/test_find_steady_state.pf#L69-L84)
+to work with the new src procedure signature.
 
 :::::::::::::::::::::::::::::::: solution
 
@@ -267,7 +278,7 @@ end subroutine TestFindSteadyState
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::: spoiler
 
-### Type Constructors:
+### Type Constructors
 
 Converting to supporting MPI has not altered the relationship between the test parameters and the test case.
 Therefore, the constructors will remain unchanged.
@@ -282,7 +293,9 @@ Just like serial tests, MPI tests can be integrated into projects which utilise 
 
 To build MPI enabled pFUnit tests via Make, one must use an mpi enabled compiler such as **mpif90** and
 include the pFUnit library in the compiler arguments **-lpfunit**. Therefore, the **tests/Makefile**
-from [5-integrating-with-build-systems#integrating-pfunit-with-make](https://github-pages.arc.ucl.ac.uk/fortran-unit-testing-lesson/5-integrating-with-build-systems.html#integrating-pfunit-with-make) becomes,
+from
+[5-integrating-with-build-systems#integrating-pfunit-with-make](https://github-pages.arc.ucl.ac.uk/fortran-unit-testing-lesson/5-integrating-with-build-systems.html#integrating-pfunit-with-make)
+becomes,
 
 ```makefile
 PFUNIT_INCLUDE_DIR ?= /path/to/pfunit/include
@@ -305,10 +318,10 @@ $(eval $(call make_pfunit_test,tests))
 
 # Converts pre-processed test files into objects ready for building of the executable
 %.o: %.F90
-	$(FC) -c $(TEST_FLAGS) $<
+ $(FC) -c $(TEST_FLAGS) $<
 
 clean:
-	\rm -f *.o *.mod *.F90 *.inc tests
+ \rm -f *.o *.mod *.F90 *.inc tests
 ```
 
 With this, we can compile for MPI using the following command.
@@ -319,7 +332,7 @@ PFUNIT_INCLUDE_DIR=/path/to/pfunit/include FC=mpif90 make tests
 
 ### Integrating with CMake
 
-The difference between a serial test and an MPI test built using CMake is very minimal. For an MPI test
+The difference between a serial test and an MPI test built using CMake is minimal. For an MPI test
 **add_pfunit_ctest** will produce an executable which must be run with an appropriate MPI runner (i.e.
 **mpirun** or **mpiexec**). To achieve this, there is only one extra parameter we must pass into
 **add_pfunit_ctest** as shown below.
@@ -339,7 +352,7 @@ constructor).
 
 ## Testing more complex procedures
 
-So far we have been assuming our src procedure returns the same value to all ranks for any number of MPI
+Thus far we have been assuming our src procedure returns the same value to all ranks for any number of MPI
 ranks. We must do things slightly differently if we expect different values to be returned for different
 ranks. To handle this scenario we can make use of the functions provided by pFUnit, **getNumProcesses()** and
 **getProcessRank()**. However, these values are not set until the test case runs (i.e. until we are within
@@ -407,15 +420,18 @@ subroutine TestMySrcProcedure(this)
 end subroutine TestMySrcProcedure
 ```
 
-::::::::::::::::::::::::::::::::::::: challenge 
+::::::::::::::::::::::::::::::::::::: challenge
 
 ### Challenge: A more complex MPI test
 
-Take a look at part 3 of [6-testing-parallel-code/challenge](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/6-testing-parallel-code/challenge) in the exercises repository.
+Take a look at part 3 of
+[6-testing-parallel-code/challenge](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/6-testing-parallel-code/challenge)
+in the exercises repository.
 
 :::::::::::::::::::::::::::::::: solution
 
-A solution is provided in [6-testing-parallel-code/solution](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/6-testing-parallel-code/solution).
+A solution is provided in
+[6-testing-parallel-code/solution](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/6-testing-parallel-code/solution).
 
 :::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::

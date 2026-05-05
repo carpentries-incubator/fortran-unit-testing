@@ -68,9 +68,9 @@ while [ $# -gt 0 ] ; do
             shift 2
             continue
             ;;
-        *) 
-            echo "Invalid option: $1" >&2; 
-            help 
+        *)
+            echo "Invalid option: $1" >&2;
+            help
             exit 1
             ;;
     esac
@@ -104,7 +104,7 @@ then
     then
         echo "Building pFUnit requested but no root dir for pFUnit provided. Please provide a path using --path."
         exit 0
-    else    
+    else
         if [ -d "$pfunit_src_path" ]
         then
             pushd $pfunit_src_path > /dev/null
