@@ -1,10 +1,10 @@
 ---
 title: "Refactoring Fortran"
-teaching: 
-exercises: 
+teaching:
+exercises:
 ---
 
-:::::::::::::::::::::::::::::::::::::: questions 
+:::::::::::::::::::::::::::::::::::::: questions
 
 - What does good Fortran code look like?
 - How do I refactor Fortran code to follow best practices?
@@ -21,22 +21,25 @@ exercises:
 Within Fortran projects, it is common to find many instances of bad practice which makes it difficult,
 if not impossible to implement unit tests. Therefore, in many cases, the first step to writing unit tests
 for a Fortran project is to refactor some section of the code into a more testable state which follows
-best practice. Examples of what we mean by "bad practice" would be not limited to but could include...
+best practice. Examples of what we mean by "bad practice" would be not limited to but could include…
 
 - Using global variables.
 - Large, multi-purpose procedures.
 - Undocumented variables, procedures, modules and programs.
 
-To demonstrate the benefits of refactoring Fortran and how it can be done, we're going to help John to
-improve his Fortran implementation of the game of life. A copy of John's code can be found in the
-exercises repo at [2-refactoring-fortran/challenge](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/2-refactoring-fortran/challenge).
+To demonstrate the benefits of refactoring Fortran and how it can be done, we're going to help John to improve his Fortran
+implementation of the game of life. A copy of John's code can be found in the exercises repo at
+[2-refactoring-fortran/challenge](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/2-refactoring-fortran/challenge).
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
-### Conway's Game of Life 
+
+### Conway's Game of Life
 
 Conway's Game of life is a cellular automaton devised by the British mathematician John Horton Conway in 1970 (Gardner, 1970).
 
-The universe of the Game of Life is an infinite, two-dimensional orthogonal grid of square cells, each of which is in one of two possible states, live or dead (or populated and unpopulated, respectively). Every cell interacts with its eight neighbours, which are the cells that are horizontally, vertically, or diagonally adjacent. At each step in time, the following transitions occur:
+The universe of the Game of Life is an infinite, two-dimensional orthogonal grid of square cells, each of which is in one of two
+possible states, live or dead (or populated and unpopulated, respectively). Every cell interacts with its eight neighbours, which
+are the cells that are horizontally, vertically, or diagonally adjacent. At each step in time, the following transitions occur:
 
 1. Any live cell with fewer than two live neighbours dies, as if by underpopulation.
 2. Any live cell with two or three live neighbours lives on to the next generation.
@@ -74,12 +77,12 @@ If there are no differences, we can assume we haven't broken anything.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-
 ## The known refactorings
 
 The next few sections will present some known refactorings.
 
-We'll show before and after code, present any new coding techniques needed to do the refactoring, and describe [code smells](https://en.wikipedia.org/wiki/Code_smell): how you know you need to refactor.
+We'll show before and after code, present any new coding techniques needed to do the refactoring, and describe
+[code smells](https://en.wikipedia.org/wiki/Code_smell) - how you know you need to refactor.
 
 ### 1. Replace magic numbers with constants
 
@@ -94,7 +97,8 @@ We'll show before and after code, present any new coding techniques needed to do
   place we need to make an update.
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
-#### Before:
+
+#### Before
 
 ```f90
 do i = 1, 100
@@ -102,10 +106,12 @@ do i = 1, 100
     data(i) = sin(x)
 end do
 ```
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
-#### After:
+
+#### After
 
 ```f90
 do i = 1, resolution
@@ -113,17 +119,19 @@ do i = 1, resolution
     data(i) = sin(x)
 end do
 ```
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::: challenge 
+::::::::::::::::::::::::::::::::::::: challenge
 
 #### Challenge
 
 Replace all magic numbers in John's game of life code with constants.
 
-:::::::::::::::::::::::: solution 
+:::::::::::::::::::::::: solution
 
-This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/e9765a26a9e368571eb162771cd45cd3933c03c4) 
+This can be achieved with the changes shown in this
+[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/e9765a26a9e368571eb162771cd45cd3933c03c4)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
@@ -140,31 +148,36 @@ This can be achieved with the changes shown in this [commit](https://github.com/
   to understand the logic employed.
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
-#### Before:
+
+#### Before
 
 ```f90
 a = a + b*dt
 ```
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
-#### After:
+
+#### After
 
 ```f90
 velocity = velocity + acceleration * dt
 ```
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::: challenge 
+::::::::::::::::::::::::::::::::::::: challenge
 
 #### Challenge
 
 Update any poorly named variables in John's code to have clear names
 which make it clear what they are.
 
-:::::::::::::::::::::::: solution 
+:::::::::::::::::::::::: solution
 
-This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/30cfcceb1fc80ef236230e21dae574bdebf64c87) 
+This can be achieved with the changes shown in this
+[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/30cfcceb1fc80ef236230e21dae574bdebf64c87)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
@@ -185,7 +198,8 @@ This can be achieved with the changes shown in this [commit](https://github.com/
   when writing your tests.
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
-#### Before:
+
+#### Before
 
 ```f90
 module process_marices_mod
@@ -243,10 +257,12 @@ contains
     end subroutine process_matrices
 end module process_marices_mod
 ```
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
-#### After:
+
+#### After
 
 ```f90
 module process_marices_mod
@@ -316,17 +332,19 @@ contains
     end subroutine display_trace
 end module process_marices_mod
 ```
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::: challenge 
+::::::::::::::::::::::::::::::::::::: challenge
 
 #### Challenge
 
 Update John's code to reduce the responsibilities of any procedures to one
 
-:::::::::::::::::::::::: solution 
+:::::::::::::::::::::::: solution
 
-This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/fb06543e12e217e6f39ffc9df2f13108f64ca7ac)
+This can be achieved with the changes shown in this
+[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/fb06543e12e217e6f39ffc9df2f13108f64ca7ac)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
@@ -345,7 +363,8 @@ This can be achieved with the changes shown in this [commit](https://github.com/
 - It becomes harder to introduce side effects which may impact other aspects of your code.
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
-#### Before 
+
+#### Before
 
 ```f90
 program my_matrix_prog
@@ -405,13 +424,13 @@ end program my_matrix_prog
 
 Update John's code to reduce the responsibilities of any procedures to one
 
-:::::::::::::::::::::::: solution 
+:::::::::::::::::::::::: solution
 
-This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/ee860cac1cc2b1c2f0f2ed99b2fe26060e576ce4)
+This can be achieved with the changes shown in this
+[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/ee860cac1cc2b1c2f0f2ed99b2fe26060e576ce4)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
-
 
 ### 5. Replace repeated code with a procedure
 
@@ -460,6 +479,7 @@ subroutine read_matrices_from_file(filename)
     close(unit)
 end subroutine read_matrices_from_file
 ```
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
@@ -516,19 +536,19 @@ unreadable. Try not to go too far when refactoring!
 
 :::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::: challenge 
+::::::::::::::::::::::::::::::::::::: challenge
 
 #### Challenge
 
 Update John's code to move any repeated code into a procedure.
 
-:::::::::::::::::::::::: solution 
+:::::::::::::::::::::::: solution
 
-This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/da18b6af1a01c82235975ed1589d0496cf6b23f2)
+This can be achieved with the changes shown in this
+[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/da18b6af1a01c82235975ed1589d0496cf6b23f2)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
-
 
 ### 6. Replace global variables with procedure arguments
 
@@ -540,10 +560,12 @@ This can be achieved with the changes shown in this [commit](https://github.com/
 #### Benefits
 
 - Testing becomes much easier because your code is more isolated and thus less code is required within your tests to setup state.
-- You get more help from your compiler and it t is much clearer what your code is doing as you can provide more information about dummy arguments such as their `intent`.
+- You get more help from your compiler and it t is much clearer what your code is doing as you can provide more information about
+  dummy arguments such as their `intent`.
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
-#### Before:
+
+#### Before
 
 ```f90
 subroutine multiply_matrices()
@@ -566,7 +588,8 @@ end subroutine multiply_matrices
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
-#### After:
+
+#### After
 
 ```f90
 subroutine multiply_matrices(A, B, C)
@@ -577,7 +600,7 @@ subroutine multiply_matrices(A, B, C)
     n = size(A, 1)
 
     allocate(C(n,n))
-    
+
     C = 0.0
     do i = 1, n
         do j = 1, n
@@ -591,16 +614,17 @@ end subroutine multiply_matrices
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::: challenge 
+::::::::::::::::::::::::::::::::::::: challenge
 
 #### Challenge
 
 Update John's code to replace any global variables accessed within procedures
 with dummy arguments.
 
-:::::::::::::::::::::::: solution 
+:::::::::::::::::::::::: solution
 
-This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/02da8d0b614d7d7412a066fbdd3c249eb308f5a9)
+This can be achieved with the changes shown in this
+[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/02da8d0b614d7d7412a066fbdd3c249eb308f5a9)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
@@ -617,14 +641,14 @@ This can be achieved with the changes shown in this [commit](https://github.com/
 - This adds further clarity about what each unit of code is responsible for.
 - Allows further isolation of code as you can scope some procedures or variables to be private.
 
-::::::::::::::::::::::::::::::::::::: spoiler 
+::::::::::::::::::::::::::::::::::::: spoiler
 
 #### Before
 
 Using the example we have seen so far, we start with two files
 `my_matrix_prog.f90` and `process_marices_mod.f90`.
 
-```
+```txt
 |-- project/directory/
     |-- my_matrix_prog.f90
     |   |-- subroutine read_filename
@@ -637,14 +661,14 @@ Using the example we have seen so far, we start with two files
 
 :::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::: spoiler 
+::::::::::::::::::::::::::::::::::::: spoiler
 
 #### After
 
 If we split the procedures in these files across multiple modules which focus
 on different tasks, we could end up with something like this.
 
-```
+```txt
 |-- project/directory/
     |-- my_matrix_prog.f90
     |-- io.f90
@@ -661,7 +685,7 @@ on different tasks, we could end up with something like this.
 
 :::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::: challenge 
+::::::::::::::::::::::::::::::::::::: challenge
 
 #### Challenge
 
@@ -669,8 +693,9 @@ Update John's code to separate code concepts into modules.
 
 :::::::::::::::::::::::: solution
 
-You should end up with a module structure. For example, like this...
-```
+You should end up with a module structure. For example, like this:
+
+```txt
 |-- src/
     |-- main.f90
     |-- animation.f90
@@ -685,7 +710,8 @@ You should end up with a module structure. For example, like this...
         |-- subroutine read_model_from_file
 ```
 
-This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/b4c6afcdb2e3a37c602051966e55ad764cdb6203)
+This can be achieved with the changes shown in this
+[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/b4c6afcdb2e3a37c602051966e55ad764cdb6203)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
@@ -694,17 +720,19 @@ This can be achieved with the changes shown in this [commit](https://github.com/
 
 ## Working effectively with legacy code
 
-When working with Fortran it is very common that you will be working with legacy code and a
+When working with Fortran it is common that you will be working with legacy code and a
 large scale refactor can feel daunting. Therefore, a great resource for us is
 *[Working Effectively with Legacy Code](https://search.worldcat.org/title/660166658)*
 (Feathers, 2004)
 
-If you don't have time to read the entire book, there is a good summary of the key point in this blog post 
+If you don't have time to read the entire book, there is a good summary of the key point in this blog post
 [The key points of Working Effectively with Legacy Code](https://understandlegacycode.com/blog/key-points-of-working-effectively-with-legacy-code/)
 
 :::::::::::::::::::::::::::::::
 
 ## References
 
-- Martin Gardner, 1970. [The fantastic combinations of John Conway’s new solitaire game “life” by Martin Gardner](https://web.stanford.edu/class/sts145/Library/life.pdf). Scientific American, 223, pp.120–123.
+- Martin Gardner, 1970.
+  [The fantastic combinations of John Conway’s new solitaire game “life” by Martin Gardner](https://web.stanford.edu/class/sts145/Library/life.pdf).
+  Scientific American, 223, pp.120–123.
 - Michael Feathers (2004). [Working Effectively with Legacy Code](https://search.worldcat.org/title/660166658). Pearson.

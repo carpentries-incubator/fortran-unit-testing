@@ -1,10 +1,10 @@
 ---
 title: "Writing your first unit test"
-teaching: 
-exercises: 
+teaching:
+exercises:
 ---
 
-:::::::::::::::::::::::::::::::::::::: questions 
+:::::::::::::::::::::::::::::::::::::: questions
 
 - What does a unit test look like?
 
@@ -17,12 +17,11 @@ exercises:
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-
 The key aspects of a unit test are the same no matter the language being testing
 (python, Fortran, etc) or the framework we are using (pFUnit, etc). Therefore,
 when we are first learning unit testing, it can be useful to think about what the
 content of a unit test might look like before we try to learn the specific syntax
-of any one tool. 
+of any one tool.
 
 ## Testing the temperature
 
@@ -46,9 +45,9 @@ convert from Fahrenheit to Kelvin.
 
 ::::::::::::::::::::::::::::::::::: solution
 
-Your test could look something like this...
+Your test could look something like this:
 
-```
+```txt
 Set some input value of Fahrenheit, for example 32.0
 Call fahrenheit_to_celsius with this input
 Check that the output is equal to the expected value of 0.0
@@ -57,11 +56,11 @@ Set some input value of Celsius, for example 0.0
 Call celsius_to_kelvin with this input
 Check that the output is equal to the expected value of 273.15
 ```
+
 ::::::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-
-## Writing a test 
+## Writing a test
 
 All unit tests tend to follow a similar pattern.
 
@@ -69,7 +68,7 @@ All unit tests tend to follow a similar pattern.
    expect from execution with these inputs.
 
 2. Setup and verify any state required for successful execution (verify a file exists,
-   allocate memory, etc) 
+   allocate memory, etc)
 
 3. Call the unit of code to be tested using the inputs defined in the first step.
 

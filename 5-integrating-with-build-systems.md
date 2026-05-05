@@ -4,7 +4,7 @@ teaching:
 exercises:
 ---
 
-:::::::::::::::::::::::::::::::::::::: questions 
+:::::::::::::::::::::::::::::::::::::: questions
 
 - How do we go from **.pf** files to an executable test?
 - How do we identify which test is failing and where?
@@ -23,13 +23,13 @@ exercises:
 Let's look at the steps required to add pFUnit tests to a project built using Make.
 Firstly, assume we have the following file structure.
 
-```
+```txt
 |-- ROOT_DIR/
     | Makefile
     |-- src/
     |   |-- main.f90
     |   |-- something.f90
-    |      
+    |
     |-- tests/
         |-- Makefile
         |-- test_something.pf
@@ -37,10 +37,11 @@ Firstly, assume we have the following file structure.
 ```
 
 The top level **Makefile** is responsible for compiling the src code but
-should do very little regarding building the tests. However, it should...
+should do little regarding building the tests. However, it should…
 
 - Export relevant variables for the **tests/Makefile** to pick up.
-  ```
+
+  ```bash
   export SRC_BUILD_DIR
   export ROOT_DIR
   export SRC_OBJS
@@ -48,24 +49,26 @@ should do very little regarding building the tests. However, it should...
   export FC_FLAGS
   export LIBS
   ```
+
 - Define targets which pass through to targets in the **tests/Makefile**.
-  ```
+
+  ```Makefile
   tests: $(SRC_OBJS)
-  	@echo "Building pFUnit test suite..."
-  	@$(MAKE) -C $(TEST_DIR) tests
+   @echo "Building pFUnit test suite..."
+   @$(MAKE) -C $(TEST_DIR) tests
 
   clean:
-  	rm -rf $(BUILD_DIR)
-  	$(MAKE) -C $(TEST_DIR) clean
+   rm -rf $(BUILD_DIR)
+   $(MAKE) -C $(TEST_DIR) clean
   ```
 
 ::::::::::::::::::::: spoiler
 
-#### Full file
+### Full file
 
-The full top level **Makefile** may look something like this...
+The full top level **Makefile** may look something like this:
 
-```
+```bash
 # Top level variables
 ROOT_DIR = $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 FC ?= gfortran
@@ -88,19 +91,19 @@ SRC_OBJS = $(patsubst %.f90, $(BUILD_DIR)/%.o, $(SRC_FILES))
 
 # Build src .o files
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.f90 | $(BUILD_DIR)
-	@echo "Building $@"
-	$(FC) -c -J $(BUILD_DIR) -o $@ $<
+ @echo "Building $@"
+ $(FC) -c -J $(BUILD_DIR) -o $@ $<
 
 # Build src executable
 $(BUILD_DIR)/a.exe: $(SRC_OBJS)
-	$(FC) -o $@ $(FC_FLAGS) $^ $(LIBS) 
+ $(FC) -o $@ $(FC_FLAGS) $^ $(LIBS)
 
 # Map exe target to building executable
 exe: $(BUILD_DIR)/a.exe
 
 # Ensure the build dirs exists
 $(BUILD_DIR):
-	mkdir -p $@
+ mkdir -p $@
 
 #------------------------------------#
 #         Targets for testing        #
@@ -109,8 +112,8 @@ TEST_DIR = $(ROOT_DIR)/tests
 
 # Include make command from tests Makefile
 tests: $(SRC_OBJS)
-	@echo "Building pFUnit test suite..."
-	@$(MAKE) -C $(TEST_DIR) tests
+ @echo "Building pFUnit test suite..."
+ @$(MAKE) -C $(TEST_DIR) tests
 
 
 #------------------------------------#
@@ -118,8 +121,8 @@ tests: $(SRC_OBJS)
 #------------------------------------#
 # Define target for cleaning the build dir
 clean:
-	rm -rf $(BUILD_DIR)
-	$(MAKE) -C $(TEST_DIR) clean
+ rm -rf $(BUILD_DIR)
+ $(MAKE) -C $(TEST_DIR) clean
 
 .PHONY: clean
 
@@ -137,9 +140,9 @@ export LIBS
 
 :::::::::::::::::::::::::::::
 
-The **tests/Makefile** would then look like this...
+The **tests/Makefile** would then look like this:
 
-```
+```bash
 PFUNIT_INCLUDE_DIR ?= /path/to/pfunit/include
 
 # Don't try to include if we're cleaning as this doesn't depend on pFUnit
@@ -160,16 +163,16 @@ $(eval $(call make_pfunit_test,tests))
 
 # Converts pre-processed test files into objects ready for building of the executable
 %.o: %.F90
-	$(FC) -c $(TEST_FLAGS) $<
+ $(FC) -c $(TEST_FLAGS) $<
 
 clean:
-	\rm -f *.o *.mod *.F90 *.inc tests
+ \rm -f *.o *.mod *.F90 *.inc tests
 ```
 
 **Key points:**
 
 - We must include the pre-installed pFUnit dependencies and Makefile options via the **PFUNIT.mk** file.
-  - The version of pFUnit that has been built will affect the path to this file (i.e. **.../installed/PFUNIT-4.12/include/...**)
+  - The version of pFUnit that has been built will affect the path to this file (i.e. **…/installed/PFUNIT-4.12/include/…**)
 - We are utilising the function provided by pFUnit **make_pfunit_test**
   - This will create a target of the provided name (in this case **tests**)
   - We define the variables pFUnit requires to build the **tests** target as variables prefixed with **tests_**.
@@ -184,17 +187,17 @@ We can then build and run our tests with the following commands
 $ make tests
 ...
 $ ./tests/tests --verbose
- 
+
 
  Start: <test_something_suite.test_do_something_1>
 .   end: <test_something_suite.test_do_something_1>
- 
+
 
  Start: <test_something_else_suite.test_do_something_2>
 .   end: <test_something_else_suite.test_do_something_2>
 
 Time:         0.001 seconds
-  
+
  OK
  (2 tests)
 ```
@@ -256,13 +259,13 @@ A solution is provided in
 Let's now look at the steps required to add pFUnit tests to a project built using
 CMake. Similar to before, let's assume we have the following file structure.
 
-```
+```txt
 |-- ROOT_DIR/
     | CMakeLists.txt
     |-- src/
     |   |-- main.f90
     |   |__ ... Some module files containing src code
-    |      
+    |
     |-- tests/
         |-- CMakeLists.txt
         |-- test_something.pf
@@ -270,31 +273,36 @@ CMake. Similar to before, let's assume we have the following file structure.
 ```
 
 Just like with Make, the top level **CMakeLists.txt** file is responsible for
-compiling the src code but should do very little regarding building the tests.
-However, it should...
+compiling the src code but should do little regarding building the tests.
+However, it should…
 
 - Define a variable which stores a list of src files
+
   ```cmake
   set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
-  set(PROJ_SRC_FILES 
+  set(PROJ_SRC_FILES
     "${SRC_DIR}/main.f90"
     "${SRC_DIR}/something.f90"
   )
   ```
+
 - Enable testing.
+
   ```cmake
   enable_testing()
   ```
+
 - Add the **tests/** dir as a subdirectory.
+
   ```cmake
   add_subdirectory("tests")
   ```
 
 ::::::::::::::::::::: spoiler
 
-#### Full file
+### Full file
 
-The full top level **CMakeLists.txt** may look something like this...
+The full top level **CMakeLists.txt** may look something like this:
 
 ```cmake
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
@@ -309,7 +317,7 @@ project(
 
 # Define a variable which stores a list of src files
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
-set(PROJ_SRC_FILES 
+set(PROJ_SRC_FILES
   "${SRC_DIR}/main.f90"
   "${SRC_DIR}/something.f90"
 )
@@ -326,7 +334,7 @@ add_subdirectory("tests")
 
 :::::::::::::::::::::::::::::
 
-The **tests/CMakeLists.txt** file would then look like this...
+The **tests/CMakeLists.txt** file would then look like this:
 
 ```cmake
 find_package(PFUNIT REQUIRED)
@@ -360,10 +368,10 @@ add_pfunit_ctest (test_something_interesting
   to be referenced later.
 - We list the test **.pf** files we wish to include within **test_srcs**.
 - We then create a test with pFUnit and CTest using the function provided by
-  pFUnit, **add_pfunit_ctest**. Here we are...
-    - naming the test **test_something_interesting**.
-    - informing pFUnit of the relevant src files via **TEST_SOURCES**.
-    - linking to the src library via **LINK_LIBRARIES**.
+  pFUnit, **add_pfunit_ctest**. Here we are…
+  - naming the test **test_something_interesting**.
+  - informing pFUnit of the relevant src files via **TEST_SOURCES**.
+  - linking to the src library via **LINK_LIBRARIES**.
 
 ### Building with CMake
 
@@ -383,20 +391,20 @@ In this case we have called **add_pfunit_ctest** once with all of our **.pf**
 test files. This results in there being one CTest test (i.e. one executable
 **./build/tests/test_something**) which runs all tests. However, it may be
 preferable to call **add_pfunit_ctest** more than once, thus creating multiple
-executables to further divide up your tests. 
+executables to further divide up your tests.
 
 Note that the tests can still be filtered by calling the executable itself and
 using pFUnit's inbuilt filtering option, like so.
 
 ```sh
 $ ./build/tests/test_something_interesting -f test_something_else -v
- 
+
 
  Start: <test_something_else_suite.test_do_something_2>
 .   end: <test_something_else_suite.test_do_something_2>
 
 Time:         0.001 seconds
-  
+
  OK
  (1 test)
 ```
@@ -406,7 +414,7 @@ Time:         0.001 seconds
 ### Naming our tests with CMake
 
 When we run our tests by directly calling the executable as shown above, we can see
-that the test suite names and test subroutine names are identical to when 
+that the test suite names and test subroutine names are identical to when
 [built using make](#naming-our-tests-with-make). However, when using CMake we have
 control of one other name. The name of the CTest test. This name is set when we
 call **add_pfunit_ctest**. For example the below will create a test named
