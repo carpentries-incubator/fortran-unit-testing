@@ -11,6 +11,11 @@ on:
       - ready_for_review
       - reopened
       - synchronize
+    paths:
+      - '.github/workflows/test-exercises.yaml'
+      - 'docker-tests/**'
+      - 'exercises/**'
+      - '!exercises/**/*.md'
 
 concurrency:
   cancel-in-progress: true
