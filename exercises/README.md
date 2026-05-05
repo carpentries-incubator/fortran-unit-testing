@@ -80,3 +80,5 @@ To setup pre-commit and fortitude
    ```sh
    pre-commit install
    ```
+
+[lesson-site]: https://carpentries-incubator.github.io/fortran-unit-testing/
