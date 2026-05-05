@@ -593,7 +593,7 @@ end subroutine multiply_matrices
 
 ```f90
 subroutine multiply_matrices(A, B, C)
-    real, allocatable, intent(int) :: A(:,:), B(:,:)
+    real, allocatable, intent(in) :: A(:,:), B(:,:)
     real, allocatable, intent(out) :: C(:,:)
 
     integer :: i, j, k, n
