@@ -1096,7 +1096,7 @@ arguments such as their <code>intent</code>.</li>
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a><span class="kw">subroutine</span> multiply_matrices(A, B, C)</span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1" aria-label="code-block-14-2"></a>    <span class="dt">real</span>, <span class="dt">allocatable</span>, <span class="dt">intent(int)</span> <span class="dt">::</span> A(:,:), B(:,:)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1" aria-label="code-block-14-2"></a>    <span class="dt">real</span>, <span class="dt">allocatable</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> A(:,:), B(:,:)</span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1" aria-label="code-block-14-3"></a>    <span class="dt">real</span>, <span class="dt">allocatable</span>, <span class="dt">intent(out)</span> <span class="dt">::</span> C(:,:)</span>
 <span id="cb14-4"><a href="#cb14-4" tabindex="-1" aria-label="code-block-14-4"></a></span>
 <span id="cb14-5"><a href="#cb14-5" tabindex="-1" aria-label="code-block-14-5"></a>    <span class="dt">integer</span> <span class="dt">::</span> i, j, k, n</span>
