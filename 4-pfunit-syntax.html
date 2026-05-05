@@ -325,7 +325,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Fortran Unit Test Syntax</h1>
-        <p>Last updated on 2026-05-01 |
+        <p>Last updated on 2026-05-05 |
 
         <a href="https://github.com/carpentries-incubator/fortran-unit-testing/edit/main/episodes/4-pfunit-syntax.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -381,7 +381,7 @@ code, including parametrizing tests by number of MPI ranks.</li>
 by pFUnit into <code>.f90</code> before compilation. This removes the
 need to write a lot of boilerplate code.</li>
 </ul></section><section><h2 class="section-heading" id="the-structure-of-a-test-module">The structure of a test module<a class="anchor" aria-label="anchor" href="#the-structure-of-a-test-module"></a></h2>
-<hr class="half-width"><p>All test modules share a basic structure…</p>
+<hr class="half-width"><p>All test modules share a basic structure:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -406,7 +406,7 @@ previous episode to cover the syntax of pFUnit.</p>
 <div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
-  <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Derived types: </h3>
+  <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Derived types </h3>
 </button>
 <div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
@@ -436,7 +436,7 @@ testing.</li>
 </ul></div>
 </div>
 </div>
-<p>Firstly, the test parameter derived-type is written as…</p>
+<p>Firstly, the test parameter derived-type is written as:</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -462,7 +462,7 @@ which should be returned from <strong>my_test_params_toString</strong>
 </ul></div>
 <div class="section level4">
 <h4 id="test-case">Test case<a class="anchor" aria-label="anchor" href="#test-case"></a></h4>
-<p>Then we can write our test case derived-type as…</p>
+<p>Then we can write our test case derived-type as:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -515,7 +515,7 @@ file, <a href="https://github.com/carpentries-incubator/fortran-unit-testing/blo
 </button>
 <div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
-<p>These types could look something like this…</p>
+<p>These types could look something like this:</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -551,12 +551,12 @@ file, <a href="https://github.com/carpentries-incubator/fortran-unit-testing/blo
 <div id="accordionSpoiler2" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
-  <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Test Suite: </h3>
+  <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Test Suite </h3>
 </button>
 <div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
 <div class="accordion-body">
 <p>In this section we define our parameter sets (or test suite). We
-define a function which returns our test parameters like so…</p>
+define a function which returns our test parameters like so:</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -597,7 +597,7 @@ template file, <a href="https://github.com/carpentries-incubator/fortran-unit-te
 </button>
 <div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
-<p>This test suites could look something like this…</p>
+<p>This test suites could look something like this:</p>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -626,12 +626,12 @@ template file, <a href="https://github.com/carpentries-incubator/fortran-unit-te
 <div id="accordionSpoiler3" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
-  <h3 class="accordion-header" id="headingSpoiler3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Test Logic: </h3>
+  <h3 class="accordion-header" id="headingSpoiler3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Test Logic </h3>
 </button>
 <div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
 <div class="accordion-body">
 <p>This is where we actually call our src procedure and carry out
-assertions…</p>
+assertions:</p>
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -668,7 +668,7 @@ case of an assertion failing to help diagnose the issue.</li>
 <div class="callout-content">
 <p>It is also possible to parametrize a test at this point, instead of
 when defining the derived-types. This can be useful if you wish to reuse
-a test parameter type for multiple test cases…</p>
+a test parameter type for multiple test cases:</p>
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -703,7 +703,7 @@ template file, <a href="https://github.com/carpentries-incubator/fortran-unit-te
 </button>
 <div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
-<p>This test logic could look something like this…</p>
+<p>This test logic could look something like this:</p>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -738,7 +738,7 @@ template file, <a href="https://github.com/carpentries-incubator/fortran-unit-te
 <div id="accordionSpoiler4" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler4" aria-expanded="false" aria-controls="collapseSpoiler4">
-  <h3 class="accordion-header" id="headingSpoiler4">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Type Constructors: </h3>
+  <h3 class="accordion-header" id="headingSpoiler4">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Type Constructors </h3>
 </button>
 <div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
 <div class="accordion-body">
@@ -798,7 +798,7 @@ file, <a href="https://github.com/carpentries-incubator/fortran-unit-testing/blo
 </button>
 <div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
-<p>These type constructors could look something like this…</p>
+<p>These type constructors could look something like this:</p>
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -921,7 +921,7 @@ any links that you are not going to use.
   "url": "https://carpentries-incubator.github.io/fortran-unit-testing/4-pfunit-syntax.html",
   "identifier": "https://carpentries-incubator.github.io/fortran-unit-testing/4-pfunit-syntax.html",
   "dateCreated": "2025-05-09",
-  "dateModified": "2026-05-01",
+  "dateModified": "2026-05-05",
   "datePublished": "2026-05-05"
 }
 

@@ -324,7 +324,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Refactoring Fortran</h1>
-        <p>Last updated on 2026-05-01 |
+        <p>Last updated on 2026-05-05 |
 
         <a href="https://github.com/carpentries-incubator/fortran-unit-testing/edit/main/episodes/2-refactor-fortran.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -441,8 +441,8 @@ anything.</p>
 <section><h2 class="section-heading" id="the-known-refactorings">The known refactorings<a class="anchor" aria-label="anchor" href="#the-known-refactorings"></a></h2>
 <hr class="half-width"><p>The next few sections will present some known refactorings.</p>
 <p>We’ll show before and after code, present any new coding techniques
-needed to do the refactoring, and describe <a href="https://en.wikipedia.org/wiki/Code_smell" class="external-link">code smells</a>: how you
-know you need to refactor.</p>
+needed to do the refactoring, and describe <a href="https://en.wikipedia.org/wiki/Code_smell" class="external-link">code smells</a> - how
+you know you need to refactor.</p>
 <div class="section level3">
 <h3 id="replace-magic-numbers-with-constants">1. Replace magic numbers with constants<a class="anchor" aria-label="anchor" href="#replace-magic-numbers-with-constants"></a></h3>
 <div class="section level4">
@@ -458,7 +458,7 @@ to be changed, there is only one place we need to make an update.</li>
 </ul><div id="accordionSpoiler2" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
-  <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Before: </h3>
+  <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Before </h3>
 </button>
 <div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
 <div class="accordion-body">
@@ -477,7 +477,7 @@ to be changed, there is only one place we need to make an update.</li>
 <div id="accordionSpoiler3" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
-  <h3 class="accordion-header" id="headingSpoiler3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> After: </h3>
+  <h3 class="accordion-header" id="headingSpoiler3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> After </h3>
 </button>
 <div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
 <div class="accordion-body">
@@ -534,7 +534,7 @@ employed.</li>
 </ul><div id="accordionSpoiler4" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler4" aria-expanded="false" aria-controls="collapseSpoiler4">
-  <h3 class="accordion-header" id="headingSpoiler4">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Before: </h3>
+  <h3 class="accordion-header" id="headingSpoiler4">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Before </h3>
 </button>
 <div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
 <div class="accordion-body">
@@ -550,7 +550,7 @@ employed.</li>
 <div id="accordionSpoiler5" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler5" aria-expanded="false" aria-controls="collapseSpoiler5">
-  <h3 class="accordion-header" id="headingSpoiler5">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> After: </h3>
+  <h3 class="accordion-header" id="headingSpoiler5">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> After </h3>
 </button>
 <div id="collapseSpoiler5" class="accordion-collapse collapse" aria-labelledby="headingSpoiler5" data-bs-parent="#accordionSpoiler5">
 <div class="accordion-body">
@@ -611,7 +611,7 @@ and scenarios to consider when writing your tests.</li>
 </ul><div id="accordionSpoiler6" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler6" aria-expanded="false" aria-controls="collapseSpoiler6">
-  <h3 class="accordion-header" id="headingSpoiler6">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Before: </h3>
+  <h3 class="accordion-header" id="headingSpoiler6">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Before </h3>
 </button>
 <div id="collapseSpoiler6" class="accordion-collapse collapse" aria-labelledby="headingSpoiler6" data-bs-parent="#accordionSpoiler6">
 <div class="accordion-body">
@@ -680,7 +680,7 @@ and scenarios to consider when writing your tests.</li>
 <div id="accordionSpoiler7" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler7" aria-expanded="false" aria-controls="collapseSpoiler7">
-  <h3 class="accordion-header" id="headingSpoiler7">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> After: </h3>
+  <h3 class="accordion-header" id="headingSpoiler7">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> After </h3>
 </button>
 <div id="collapseSpoiler7" class="accordion-collapse collapse" aria-labelledby="headingSpoiler7" data-bs-parent="#accordionSpoiler7">
 <div class="accordion-body">
@@ -1060,7 +1060,7 @@ arguments such as their <code>intent</code>.</li>
 </ul><div id="accordionSpoiler12" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler12" aria-expanded="false" aria-controls="collapseSpoiler12">
-  <h3 class="accordion-header" id="headingSpoiler12">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Before: </h3>
+  <h3 class="accordion-header" id="headingSpoiler12">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Before </h3>
 </button>
 <div id="collapseSpoiler12" class="accordion-collapse collapse" aria-labelledby="headingSpoiler12" data-bs-parent="#accordionSpoiler12">
 <div class="accordion-body">
@@ -1090,7 +1090,7 @@ arguments such as their <code>intent</code>.</li>
 <div id="accordionSpoiler13" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler13" aria-expanded="false" aria-controls="collapseSpoiler13">
-  <h3 class="accordion-header" id="headingSpoiler13">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> After: </h3>
+  <h3 class="accordion-header" id="headingSpoiler13">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> After </h3>
 </button>
 <div id="collapseSpoiler13" class="accordion-collapse collapse" aria-labelledby="headingSpoiler13" data-bs-parent="#accordionSpoiler13">
 <div class="accordion-body">
@@ -1105,7 +1105,7 @@ arguments such as their <code>intent</code>.</li>
 <span id="cb14-6"><a href="#cb14-6" tabindex="-1" aria-label="code-block-14-6"></a>    n <span class="kw">=</span> <span class="fu">size</span>(A, <span class="dv">1</span>)</span>
 <span id="cb14-7"><a href="#cb14-7" tabindex="-1" aria-label="code-block-14-7"></a></span>
 <span id="cb14-8"><a href="#cb14-8" tabindex="-1" aria-label="code-block-14-8"></a>    <span class="kw">allocate</span>(C(n,n))</span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1" aria-label="code-block-14-9"></a>    </span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1" aria-label="code-block-14-9"></a></span>
 <span id="cb14-10"><a href="#cb14-10" tabindex="-1" aria-label="code-block-14-10"></a>    C <span class="kw">=</span> <span class="fl">0.0</span></span>
 <span id="cb14-11"><a href="#cb14-11" tabindex="-1" aria-label="code-block-14-11"></a>    <span class="kw">do</span> i <span class="kw">=</span> <span class="dv">1</span>, n</span>
 <span id="cb14-12"><a href="#cb14-12" tabindex="-1" aria-label="code-block-14-12"></a>        <span class="kw">do</span> j <span class="kw">=</span> <span class="dv">1</span>, n</span>
@@ -1170,14 +1170,18 @@ variables to be private.</li>
 <p>Using the example we have seen so far, we start with two files
 <code>my_matrix_prog.f90</code> and
 <code>process_marices_mod.f90</code>.</p>
-<pre><code>|-- project/directory/
-    |-- my_matrix_prog.f90
-    |   |-- subroutine read_filename
-    |-- process_marices_mod.f90
-        |-- subroutine read_matrices_from_file
-        |-- subroutine read_next_matrix_from_file
-        |-- subroutine multiply_matrices
-        |-- subroutine display_trace</code></pre>
+<div class="codewrapper sourceCode" id="cb15">
+<h3 class="code-label">TXT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode txt" tabindex="0"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" tabindex="-1" aria-label="code-block-15-1"></a>|-- project/directory/</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1" aria-label="code-block-15-2"></a>    |-- my_matrix_prog.f90</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1" aria-label="code-block-15-3"></a>    |   |-- subroutine read_filename</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1" aria-label="code-block-15-4"></a>    |-- process_marices_mod.f90</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1" aria-label="code-block-15-5"></a>        |-- subroutine read_matrices_from_file</span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1" aria-label="code-block-15-6"></a>        |-- subroutine read_next_matrix_from_file</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1" aria-label="code-block-15-7"></a>        |-- subroutine multiply_matrices</span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1" aria-label="code-block-15-8"></a>        |-- subroutine display_trace</span></code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -1192,15 +1196,19 @@ variables to be private.</li>
 <p>If we split the procedures in these files across multiple modules
 which focus on different tasks, we could end up with something like
 this.</p>
-<pre><code>|-- project/directory/
-    |-- my_matrix_prog.f90
-    |-- io.f90
-    |   |-- subroutine read_filename
-    |   |-- subroutine read_matrices_from_file
-    |   |-- subroutine read_next_matrix_from_file
-    |-- matrix_operations.f90
-        |-- subroutine multiply_matrices
-        |-- subroutine display_trace</code></pre>
+<div class="codewrapper sourceCode" id="cb16">
+<h3 class="code-label">TXT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode txt" tabindex="0"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" tabindex="-1" aria-label="code-block-16-1"></a>|-- project/directory/</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1" aria-label="code-block-16-2"></a>    |-- my_matrix_prog.f90</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1" aria-label="code-block-16-3"></a>    |-- io.f90</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1" aria-label="code-block-16-4"></a>    |   |-- subroutine read_filename</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1" aria-label="code-block-16-5"></a>    |   |-- subroutine read_matrices_from_file</span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1" aria-label="code-block-16-6"></a>    |   |-- subroutine read_next_matrix_from_file</span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1" aria-label="code-block-16-7"></a>    |-- matrix_operations.f90</span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1" aria-label="code-block-16-8"></a>        |-- subroutine multiply_matrices</span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1" aria-label="code-block-16-9"></a>        |-- subroutine display_trace</span></code></pre>
+</div>
 <blockquote>
 <p>Note: there isn’t one correct way to group these subroutines. For
 example, we could place <code>display_trace</code> in
@@ -1230,19 +1238,23 @@ example, we could place <code>display_trace</code> in
 <div id="collapseSolution7" class="accordion-collapse collapse" aria-labelledby="headingSolution7" data-bs-parent="#accordionSolution7">
 <div class="accordion-body">
 <p>You should end up with a module structure. For example, like
-this…</p>
-<pre><code>|-- src/
-    |-- main.f90
-    |-- animation.f90
-    |   |-- subroutine draw_board
-    |-- cli.f90
-    |   |-- subroutine read_cli_arg
-    |-- game_of_life.f90
-    |   |-- subroutine find_steady_state
-    |   |-- subroutine evolve_board
-    |   |-- subroutine check_for_steady_state
-    |-- io.f90
-        |-- subroutine read_model_from_file</code></pre>
+this:</p>
+<div class="codewrapper sourceCode" id="cb17">
+<h3 class="code-label">TXT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode txt" tabindex="0"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1" tabindex="-1" aria-label="code-block-17-1"></a>|-- src/</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1" aria-label="code-block-17-2"></a>    |-- main.f90</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1" aria-label="code-block-17-3"></a>    |-- animation.f90</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1" aria-label="code-block-17-4"></a>    |   |-- subroutine draw_board</span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1" aria-label="code-block-17-5"></a>    |-- cli.f90</span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1" aria-label="code-block-17-6"></a>    |   |-- subroutine read_cli_arg</span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1" aria-label="code-block-17-7"></a>    |-- game_of_life.f90</span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1" aria-label="code-block-17-8"></a>    |   |-- subroutine find_steady_state</span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1" aria-label="code-block-17-9"></a>    |   |-- subroutine evolve_board</span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1" aria-label="code-block-17-10"></a>    |   |-- subroutine check_for_steady_state</span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1" aria-label="code-block-17-11"></a>    |-- io.f90</span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1" aria-label="code-block-17-12"></a>        |-- subroutine read_model_from_file</span></code></pre>
+</div>
 <p>This can be achieved with the changes shown in this <a href="https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/b4c6afcdb2e3a37c602051966e55ad764cdb6203" class="external-link">commit</a></p>
 </div>
 </div>
@@ -1256,9 +1268,9 @@ this…</p>
 <div id="working-effectively-with-legacy-code" class="callout-inner">
 <h3 class="callout-title">Working effectively with legacy code</h3>
 <div class="callout-content">
-<p>When working with Fortran it is very common that you will be working
-with legacy code and a large scale refactor can feel daunting.
-Therefore, a great resource for us is <em><a href="https://search.worldcat.org/title/660166658" class="external-link">Working Effectively
+<p>When working with Fortran it is common that you will be working with
+legacy code and a large scale refactor can feel daunting. Therefore, a
+great resource for us is <em><a href="https://search.worldcat.org/title/660166658" class="external-link">Working Effectively
 with Legacy Code</a></em> (Feathers, 2004)</p>
 <p>If you don’t have time to read the entire book, there is a good
 summary of the key point in this blog post <a href="https://understandlegacycode.com/blog/key-points-of-working-effectively-with-legacy-code/" class="external-link">The
@@ -1337,7 +1349,7 @@ any links that you are not going to use.
   "url": "https://carpentries-incubator.github.io/fortran-unit-testing/instructor/2-refactor-fortran.html",
   "identifier": "https://carpentries-incubator.github.io/fortran-unit-testing/instructor/2-refactor-fortran.html",
   "dateCreated": "2025-05-09",
-  "dateModified": "2026-05-01",
+  "dateModified": "2026-05-05",
   "datePublished": "2026-05-05"
 }
 

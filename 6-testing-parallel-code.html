@@ -327,7 +327,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Testing parallel code</h1>
-        <p>Last updated on 2026-05-01 |
+        <p>Last updated on 2026-05-05 |
 
         <a href="https://github.com/carpentries-incubator/fortran-unit-testing/edit/main/episodes/6-testing-parallel-code.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -364,22 +364,22 @@ code.</li>
 </div>
 <section><h2 class="section-heading" id="whats-the-difference">What’s the difference?<a class="anchor" aria-label="anchor" href="#whats-the-difference"></a></h2>
 <hr class="half-width"><p>Depending on the parallelisation tool and strategy employed, the
-implementation of parallel code can be very different to that of serial
-code. This is especially true for code which utilises the message
-passing interface (MPI). These codes almost always contain some
-functionality in which processes, or ranks, communicate by exchanging
-messages. This message passing is often complex and will always benefit
-from testing.</p>
+implementation of parallel code can be different to that of serial code.
+This is especially true for code which utilises the message passing
+interface (MPI). These codes almost always contain some functionality in
+which processes, or ranks, communicate by exchanging messages. This
+message passing is often complex and will always benefit from
+testing.</p>
 <p>There is added complexity when testing MPI code compared to serial as
 the logical path through the code is changed depending on the number of
 ranks with which the code is executed. Therefore, it is important that
 we test for a range of numbers of ranks. This will require controlling
 the number of ranks running the src and is not something we want to
-implement ourselves. Thankfully, pFUnit can handle this for us.</p>
+implement ourselves. pFUnit can handle this for us.</p>
 </section><section><h2 class="section-heading" id="tips-for-writing-testable-mpi-code">Tips for writing testable MPI code<a class="anchor" aria-label="anchor" href="#tips-for-writing-testable-mpi-code"></a></h2>
 <hr class="half-width"><div class="section level3">
-<h3 id="where-possible-separate-calls-to-the-mpi-library-into-procedures-">Where possible, separate calls to the MPI library into
-procedures.<a class="anchor" aria-label="anchor" href="#where-possible-separate-calls-to-the-mpi-library-into-procedures-"></a></h3>
+<h3 id="where-possible-separate-calls-to-the-mpi-library-into-procedures">Where possible, separate calls to the MPI library into
+procedures<a class="anchor" aria-label="anchor" href="#where-possible-separate-calls-to-the-mpi-library-into-procedures"></a></h3>
 <p>If a procedure does not contain any calls to the MPI library, then it
 can be tested with a serial unit test. Therefore, separating MPI calls
 into their own units makes for a simpler test suite for most of your
@@ -387,8 +387,8 @@ logic. Only, procedures with MPI library calls will require MPI enabled
 pFUnit tests.</p>
 </div>
 <div class="section level3">
-<h3 id="pass-the-mpi-communicator-information-into-each-mpi-procedure-to-be-tested-">Pass the MPI communicator information into each mpi procedure to be
-tested.<a class="anchor" aria-label="anchor" href="#pass-the-mpi-communicator-information-into-each-mpi-procedure-to-be-tested-"></a></h3>
+<h3 id="pass-the-mpi-communicator-information-into-each-mpi-procedure-to-be-tested">Pass the MPI communicator information into each mpi procedure to be
+tested<a class="anchor" aria-label="anchor" href="#pass-the-mpi-communicator-information-into-each-mpi-procedure-to-be-tested"></a></h3>
 <p>If we pass the MPI communicator into a procedure, we can define this
 to be whatever we wish in our tests. This allows us to use the
 communicator provided by pFUnit or some other communicator specific to
@@ -401,7 +401,7 @@ approach.</p>
 <hr class="half-width"><div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
-  <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Derived types: </h3>
+  <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Derived types </h3>
 </button>
 <div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
@@ -514,15 +514,14 @@ to work with MPI.</p>
 <div id="accordionSpoiler2" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
-  <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Test Suite: </h3>
+  <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Test Suite </h3>
 </button>
 <div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
 <div class="accordion-body">
 <p>Now that we have updated our derived types, we must update how we
 populate our test parameter sets within the test suite. There is
-actually very little that needs to change, all we must do is set how
-many MPI ranks we want each parameter set to be run with. For
-example,</p>
+actually little that needs to change, all we must do is set how many MPI
+ranks we want each parameter set to be run with. For example,</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -608,7 +607,7 @@ to work with your new derived types.</p>
 <div id="accordionSpoiler3" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
-  <h3 class="accordion-header" id="headingSpoiler3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Test Logic: </h3>
+  <h3 class="accordion-header" id="headingSpoiler3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Test Logic </h3>
 </button>
 <div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
 <div class="accordion-body">
@@ -702,7 +701,7 @@ to work with the new src procedure signature.</p>
 <div id="accordionSpoiler4" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler4" aria-expanded="false" aria-controls="collapseSpoiler4">
-  <h3 class="accordion-header" id="headingSpoiler4">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Type Constructors: </h3>
+  <h3 class="accordion-header" id="headingSpoiler4">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Type Constructors </h3>
 </button>
 <div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
 <div class="accordion-body">
@@ -746,10 +745,10 @@ becomes,</p>
 <span id="cb8-18"><a href="#cb8-18" tabindex="-1" aria-label="code-block-8-18"></a></span>
 <span id="cb8-19"><a href="#cb8-19" tabindex="-1" aria-label="code-block-8-19"></a><span class="co"># Converts pre-processed test files into objects ready for building of the executable</span></span>
 <span id="cb8-20"><a href="#cb8-20" tabindex="-1" aria-label="code-block-8-20"></a><span class="dv">%.o:</span><span class="dt"> %.F90</span></span>
-<span id="cb8-21"><a href="#cb8-21" tabindex="-1" aria-label="code-block-8-21"></a>	<span class="ch">$(</span><span class="dt">FC</span><span class="ch">)</span> -c <span class="ch">$(</span><span class="dt">TEST_FLAGS</span><span class="ch">)</span> <span class="ch">$&lt;</span></span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1" aria-label="code-block-8-21"></a><span class="er"> </span><span class="ch">$(</span><span class="dt">FC</span><span class="ch">)</span> -c <span class="ch">$(</span><span class="dt">TEST_FLAGS</span><span class="ch">)</span> <span class="ch">$&lt;</span></span>
 <span id="cb8-22"><a href="#cb8-22" tabindex="-1" aria-label="code-block-8-22"></a></span>
 <span id="cb8-23"><a href="#cb8-23" tabindex="-1" aria-label="code-block-8-23"></a><span class="dv">clean:</span></span>
-<span id="cb8-24"><a href="#cb8-24" tabindex="-1" aria-label="code-block-8-24"></a>	\rm -f *.o *.mod *.F90 *.inc tests</span></code></pre>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1" aria-label="code-block-8-24"></a><span class="er"> </span>\rm -f *.o *.mod *.F90 *.inc tests</span></code></pre>
 </div>
 <p>With this, we can compile for MPI using the following command.</p>
 <div class="codewrapper sourceCode" id="cb9">
@@ -761,10 +760,10 @@ becomes,</p>
 <div class="section level3">
 <h3 id="integrating-with-cmake">Integrating with CMake<a class="anchor" aria-label="anchor" href="#integrating-with-cmake"></a></h3>
 <p>The difference between a serial test and an MPI test built using
-CMake is very minimal. For an MPI test <strong>add_pfunit_ctest</strong>
-will produce an executable which must be run with an appropriate MPI
-runner (i.e. <strong>mpirun</strong> or <strong>mpiexec</strong>). To
-achieve this, there is only one extra parameter we must pass into
+CMake is minimal. For an MPI test <strong>add_pfunit_ctest</strong> will
+produce an executable which must be run with an appropriate MPI runner
+(i.e. <strong>mpirun</strong> or <strong>mpiexec</strong>). To achieve
+this, there is only one extra parameter we must pass into
 <strong>add_pfunit_ctest</strong> as shown below.</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">CMAKE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -783,11 +782,11 @@ requested in the tests defined within <strong>test_srcs</strong>
 <strong>MPITestParameter</strong> constructor).</p>
 </div>
 </section><section><h2 class="section-heading" id="testing-more-complex-procedures">Testing more complex procedures<a class="anchor" aria-label="anchor" href="#testing-more-complex-procedures"></a></h2>
-<hr class="half-width"><p>So far we have been assuming our src procedure returns the same value
-to all ranks for any number of MPI ranks. We must do things slightly
-differently if we expect different values to be returned for different
-ranks. To handle this scenario we can make use of the functions provided
-by pFUnit, <strong>getNumProcesses()</strong> and
+<hr class="half-width"><p>Thus far we have been assuming our src procedure returns the same
+value to all ranks for any number of MPI ranks. We must do things
+slightly differently if we expect different values to be returned for
+different ranks. To handle this scenario we can make use of the
+functions provided by pFUnit, <strong>getNumProcesses()</strong> and
 <strong>getProcessRank()</strong>. However, these values are not set
 until the test case runs (i.e. until we are within the subroutine
 decorated with <strong><span class="citation">@Test</span></strong>).
@@ -947,7 +946,7 @@ any links that you are not going to use.
   "url": "https://carpentries-incubator.github.io/fortran-unit-testing/6-testing-parallel-code.html",
   "identifier": "https://carpentries-incubator.github.io/fortran-unit-testing/6-testing-parallel-code.html",
   "dateCreated": "2025-05-09",
-  "dateModified": "2026-05-01",
+  "dateModified": "2026-05-05",
   "datePublished": "2026-05-05"
 }
 

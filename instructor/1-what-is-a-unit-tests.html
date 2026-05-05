@@ -326,7 +326,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>What is a Unit Test</h1>
-        <p>Last updated on 2026-05-01 |
+        <p>Last updated on 2026-05-05 |
 
         <a href="https://github.com/carpentries-incubator/fortran-unit-testing/edit/main/episodes/1-what-is-a-unit-tests.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -432,14 +432,14 @@ the called unit against some expected value. However, it could be
 something more complex such as validating the contents of a database or
 outputted file.</li>
 </ul></li>
-</ul><div id="challenge-1-write-a-unit-test-in-pseudo-code." class="callout challenge">
+</ul><div id="challenge-1-write-a-unit-test-in-pseudo-code" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-1-write-a-unit-test-in-pseudo-code." class="callout-inner">
+<div id="challenge-1-write-a-unit-test-in-pseudo-code" class="callout-inner">
 <h3 class="callout-title">Challenge 1: Write a unit test in pseudo
-code.</h3>
+code</h3>
 <div class="callout-content">
 <p>Assuming you have a function <code>reverse_array</code> which
 reverses the order of an allocated array. Write a unit test in pseudo
@@ -452,20 +452,24 @@ code for <code>reverse_array</code> using the pattern above.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
-<pre><code>! Given
-Allocate the input array `input_array`
-Fill `input_array`, for example with `(1,2,3,4)`
-Allocate the expected output array `expected_output_array`
-Fill `expected_output_array` with the correct expected output, i.e., `(4,3,2,1)`
-
-! When
-Call `reverse_array` with `input_array`
-
-! Then
-for each element in `input_array`:
-   Assert that the corresponding element of `expected_output_array` matches that of `input_array`</code></pre>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">TXT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode txt" tabindex="0"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a>! Given</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a>Allocate the input array `input_array`</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a>Fill `input_array`, for example with `(1,2,3,4)`</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a>Allocate the expected output array `expected_output_array`</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a>Fill `expected_output_array` with the correct expected output, i.e., `(4,3,2,1)`</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a>! When</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1" aria-label="code-block-1-8"></a>Call `reverse_array` with `input_array`</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1" aria-label="code-block-1-9"></a></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1" aria-label="code-block-1-10"></a>! Then</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1" aria-label="code-block-1-11"></a>for each element in `input_array`:</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1" aria-label="code-block-1-12"></a>   Assert that the corresponding element of `expected_output_array` matches that of `input_array`</span></code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -490,7 +494,11 @@ have some well-defined end-to-end test cases which demonstrate that your
 code base works as expected. However, consider the case where this
 end-to-end test begins to fail. The message for this failure is likely
 to be something along the lines of</p>
-<pre><code>Expected my_special_number to be 1.234 but got 5.678</code></pre>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">TXT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode txt" tabindex="0"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a>Expected my_special_number to be 1.234 but got 5.678</span></code></pre>
+</div>
 <p>If you have a comprehensive understanding of your code, perhaps this
 is all you need. However, assuming the newest feature that caused this
 failure was not written by you, it’s going to be difficult to identify
@@ -498,7 +506,11 @@ what is going wrong without some lengthy debugging.</p>
 <p>Now imagine the situation where this developer added unit tests for
 their new code. When running these unit tests, you may see something
 like</p>
-<pre><code>test_populate_arrays Failed: Expected 1 for index 1 but got 0</code></pre>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">TXT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode txt" tabindex="0"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a>test_populate_arrays Failed: Expected 1 for index 1 but got 0</span></code></pre>
+</div>
 <p>This is much clearer. We immediately have an idea of what could be
 going wrong and the unit test itself will help us determine the
 problematic code to investigate.</p>
@@ -520,7 +532,7 @@ in the exercises repository.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>A solution is provided in <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/1-into-to-unit-tests/solution" class="external-link">1-into-to-unit-tests/solution</a>.</p>
 </div>
@@ -529,7 +541,7 @@ in the exercises repository.</p>
 </div>
 </section><section><h2 class="section-heading" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
 <hr class="half-width"><ul><li>David Thomas and Andrew Hunt (2019). <a href="https://search.worldcat.org/search?q=bn:9780135957059" class="external-link">The
-Pragmatic Programmer: your journey to mastery</a>, 20th Anniversary
+Pragmatic Programmer: your journey to mastery</a> , 20th Anniversary
 Edition, 2nd Edition. Addison-Wesley Professional.</li>
 </ul><!--
 Place links that you need to refer to multiple times across pages here. Delete
@@ -594,7 +606,7 @@ any links that you are not going to use.
   "url": "https://carpentries-incubator.github.io/fortran-unit-testing/instructor/1-what-is-a-unit-tests.html",
   "identifier": "https://carpentries-incubator.github.io/fortran-unit-testing/instructor/1-what-is-a-unit-tests.html",
   "dateCreated": "2025-05-09",
-  "dateModified": "2026-05-01",
+  "dateModified": "2026-05-05",
   "datePublished": "2026-05-05"
 }
 
