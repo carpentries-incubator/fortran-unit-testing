@@ -17,7 +17,8 @@ Objectives
 
 - [ ] Able to define the key aspects of a unit test (isolated, testing minimal functionality, fast, etc).
   - *Assessment:* Identify aspects of a test which does not follow all of these.
-- [ ] Understand the key anatomy of a unit test in any language (given-when-then, starting state, assertions, fixtures, expected outputs, etc).
+- [ ] Understand the key anatomy of a unit test in any language (given-when-then, starting state, assertions, fixtures, expected
+      outputs, etc).
   - *Assessment:* Write a unit test in sudo code.
 - [ ] Can explain the benefit of unit tests on top of integration/e2e tests.
   - Could use a narrative to highlight how an e2e failure does not show where in the code the bug exists.
@@ -76,4 +77,5 @@ Objectives
 
 - [ ] Understand what is different when testing parallel vs serial code.
   - *Assessment:* Provide a test and/or a command to run a test for serial code and ask what needs to change to test parallel code
-  - *Assessment:* Provide two versions of a code (serial and parallel) with a test for the serial version and ask learners to write a test for the parallel version.
+  - *Assessment:* Provide two versions of a code (serial and parallel) with a test for the serial version and ask learners to write
+    a test for the parallel version.

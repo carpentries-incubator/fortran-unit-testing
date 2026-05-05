@@ -21,7 +21,8 @@ To do this, click select the `<> Code` drop-down within the repository home page
 
 ### Running locally outside of container
 
-If you do not wish to use GitHub Codespaces or the VSCode devcontainer, you can build/install the relevant dependencies on your local machine.
+If you do not wish to use GitHub Codespaces or the VSCode devcontainer, you can build/install the relevant dependencies on your
+local machine.
 
 #### Software Setup
 

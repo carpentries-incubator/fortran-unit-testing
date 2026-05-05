@@ -27,9 +27,9 @@ best practice. Examples of what we mean by "bad practice" would be not limited t
 - Large, multi-purpose procedures.
 - Undocumented variables, procedures, modules and programs.
 
-To demonstrate the benefits of refactoring Fortran and how it can be done, we're going to help John to
-improve his Fortran implementation of the game of life. A copy of John's code can be found in the
-exercises repo at [2-refactoring-fortran/challenge](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/2-refactoring-fortran/challenge).
+To demonstrate the benefits of refactoring Fortran and how it can be done, we're going to help John to improve his Fortran
+implementation of the game of life. A copy of John's code can be found in the exercises repo at
+[2-refactoring-fortran/challenge](https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/2-refactoring-fortran/challenge).
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
 
@@ -37,7 +37,9 @@ exercises repo at [2-refactoring-fortran/challenge](https://github.com/carpentri
 
 Conway's Game of life is a cellular automaton devised by the British mathematician John Horton Conway in 1970 (Gardner, 1970).
 
-The universe of the Game of Life is an infinite, two-dimensional orthogonal grid of square cells, each of which is in one of two possible states, live or dead (or populated and unpopulated, respectively). Every cell interacts with its eight neighbours, which are the cells that are horizontally, vertically, or diagonally adjacent. At each step in time, the following transitions occur:
+The universe of the Game of Life is an infinite, two-dimensional orthogonal grid of square cells, each of which is in one of two
+possible states, live or dead (or populated and unpopulated, respectively). Every cell interacts with its eight neighbours, which
+are the cells that are horizontally, vertically, or diagonally adjacent. At each step in time, the following transitions occur:
 
 1. Any live cell with fewer than two live neighbours dies, as if by underpopulation.
 2. Any live cell with two or three live neighbours lives on to the next generation.
@@ -79,7 +81,8 @@ If there are no differences, we can assume we haven't broken anything.
 
 The next few sections will present some known refactorings.
 
-We'll show before and after code, present any new coding techniques needed to do the refactoring, and describe [code smells](https://en.wikipedia.org/wiki/Code_smell): how you know you need to refactor.
+We'll show before and after code, present any new coding techniques needed to do the refactoring, and describe
+[code smells](https://en.wikipedia.org/wiki/Code_smell) - how you know you need to refactor.
 
 ### 1. Replace magic numbers with constants
 
@@ -127,7 +130,8 @@ Replace all magic numbers in John's game of life code with constants.
 
 :::::::::::::::::::::::: solution
 
-This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/e9765a26a9e368571eb162771cd45cd3933c03c4)
+This can be achieved with the changes shown in this
+[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/e9765a26a9e368571eb162771cd45cd3933c03c4)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
@@ -172,7 +176,8 @@ which make it clear what they are.
 
 :::::::::::::::::::::::: solution
 
-This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/30cfcceb1fc80ef236230e21dae574bdebf64c87)
+This can be achieved with the changes shown in this
+[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/30cfcceb1fc80ef236230e21dae574bdebf64c87)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
@@ -338,7 +343,8 @@ Update John's code to reduce the responsibilities of any procedures to one
 
 :::::::::::::::::::::::: solution
 
-This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/fb06543e12e217e6f39ffc9df2f13108f64ca7ac)
+This can be achieved with the changes shown in this
+[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/fb06543e12e217e6f39ffc9df2f13108f64ca7ac)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
@@ -420,7 +426,8 @@ Update John's code to reduce the responsibilities of any procedures to one
 
 :::::::::::::::::::::::: solution
 
-This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/ee860cac1cc2b1c2f0f2ed99b2fe26060e576ce4)
+This can be achieved with the changes shown in this
+[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/ee860cac1cc2b1c2f0f2ed99b2fe26060e576ce4)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
@@ -537,7 +544,8 @@ Update John's code to move any repeated code into a procedure.
 
 :::::::::::::::::::::::: solution
 
-This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/da18b6af1a01c82235975ed1589d0496cf6b23f2)
+This can be achieved with the changes shown in this
+[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/da18b6af1a01c82235975ed1589d0496cf6b23f2)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
@@ -552,7 +560,8 @@ This can be achieved with the changes shown in this [commit](https://github.com/
 #### Benefits
 
 - Testing becomes much easier because your code is more isolated and thus less code is required within your tests to setup state.
-- You get more help from your compiler and it t is much clearer what your code is doing as you can provide more information about dummy arguments such as their `intent`.
+- You get more help from your compiler and it t is much clearer what your code is doing as you can provide more information about
+  dummy arguments such as their `intent`.
 
 :::::::::::::::::::::::::::::::::::::::::::: spoiler
 
@@ -614,7 +623,8 @@ with dummy arguments.
 
 :::::::::::::::::::::::: solution
 
-This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/02da8d0b614d7d7412a066fbdd3c249eb308f5a9)
+This can be achieved with the changes shown in this
+[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/02da8d0b614d7d7412a066fbdd3c249eb308f5a9)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
@@ -638,7 +648,7 @@ This can be achieved with the changes shown in this [commit](https://github.com/
 Using the example we have seen so far, we start with two files
 `my_matrix_prog.f90` and `process_marices_mod.f90`.
 
-```
+```txt
 |-- project/directory/
     |-- my_matrix_prog.f90
     |   |-- subroutine read_filename
@@ -658,7 +668,7 @@ Using the example we have seen so far, we start with two files
 If we split the procedures in these files across multiple modules which focus
 on different tasks, we could end up with something like this.
 
-```
+```txt
 |-- project/directory/
     |-- my_matrix_prog.f90
     |-- io.f90
@@ -685,7 +695,7 @@ Update John's code to separate code concepts into modules.
 
 You should end up with a module structure. For example, like this:
 
-```
+```txt
 |-- src/
     |-- main.f90
     |-- animation.f90
@@ -700,7 +710,8 @@ You should end up with a module structure. For example, like this:
         |-- subroutine read_model_from_file
 ```
 
-This can be achieved with the changes shown in this [commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/b4c6afcdb2e3a37c602051966e55ad764cdb6203)
+This can be achieved with the changes shown in this
+[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/b4c6afcdb2e3a37c602051966e55ad764cdb6203)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
@@ -721,5 +732,7 @@ If you don't have time to read the entire book, there is a good summary of the k
 
 ## References
 
-- Martin Gardner, 1970. [The fantastic combinations of John Conway’s new solitaire game “life” by Martin Gardner](https://web.stanford.edu/class/sts145/Library/life.pdf). Scientific American, 223, pp.120–123.
+- Martin Gardner, 1970.
+  [The fantastic combinations of John Conway’s new solitaire game “life” by Martin Gardner](https://web.stanford.edu/class/sts145/Library/life.pdf).
+  Scientific American, 223, pp.120–123.
 - Michael Feathers (2004). [Working Effectively with Legacy Code](https://search.worldcat.org/title/660166658). Pearson.

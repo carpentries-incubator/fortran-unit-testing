@@ -47,7 +47,7 @@ convert from Fahrenheit to Kelvin.
 
 Your test could look something like this:
 
-```
+```txt
 Set some input value of Fahrenheit, for example 32.0
 Call fahrenheit_to_celsius with this input
 Check that the output is equal to the expected value of 0.0

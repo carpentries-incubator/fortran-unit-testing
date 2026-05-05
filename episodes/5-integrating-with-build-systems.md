@@ -23,7 +23,7 @@ exercises:
 Let's look at the steps required to add pFUnit tests to a project built using Make.
 Firstly, assume we have the following file structure.
 
-```
+```txt
 |-- ROOT_DIR/
     | Makefile
     |-- src/
@@ -41,7 +41,7 @@ should do little regarding building the tests. However, it should…
 
 - Export relevant variables for the **tests/Makefile** to pick up.
 
-  ```
+  ```bash
   export SRC_BUILD_DIR
   export ROOT_DIR
   export SRC_OBJS
@@ -52,7 +52,7 @@ should do little regarding building the tests. However, it should…
 
 - Define targets which pass through to targets in the **tests/Makefile**.
 
-  ```
+  ```Makefile
   tests: $(SRC_OBJS)
    @echo "Building pFUnit test suite..."
    @$(MAKE) -C $(TEST_DIR) tests
@@ -64,11 +64,11 @@ should do little regarding building the tests. However, it should…
 
 ::::::::::::::::::::: spoiler
 
-#### Full file
+### Full file
 
 The full top level **Makefile** may look something like this:
 
-```
+```bash
 # Top level variables
 ROOT_DIR = $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 FC ?= gfortran
@@ -142,7 +142,7 @@ export LIBS
 
 The **tests/Makefile** would then look like this:
 
-```
+```bash
 PFUNIT_INCLUDE_DIR ?= /path/to/pfunit/include
 
 # Don't try to include if we're cleaning as this doesn't depend on pFUnit
@@ -259,7 +259,7 @@ A solution is provided in
 Let's now look at the steps required to add pFUnit tests to a project built using
 CMake. Similar to before, let's assume we have the following file structure.
 
-```
+```txt
 |-- ROOT_DIR/
     | CMakeLists.txt
     |-- src/
@@ -300,7 +300,7 @@ However, it should…
 
 ::::::::::::::::::::: spoiler
 
-#### Full file
+### Full file
 
 The full top level **CMakeLists.txt** may look something like this:
 
