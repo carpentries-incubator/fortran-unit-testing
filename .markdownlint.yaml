@@ -3,5 +3,4 @@
   "MD013": { "line_length": 132 },
   "MD024": false, # Multiple headings with the same content
   "MD041": false, # First line in a file should be a top-level heading
-  "MD052": false, # Reference links and images should use a label that is defined
 }
