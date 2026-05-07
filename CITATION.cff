@@ -11,7 +11,6 @@ message: >-
   when you refer to it in publications, and/or if you
   re-use, adapt, or expand on the content in your own
   training material.
-type: dataset
 authors:
   - given-names: Connor
     family-names: Aird
