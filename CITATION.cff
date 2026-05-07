@@ -17,12 +17,10 @@ authors:
     family-names: Aird
 abstract: >-
   This lesson aims to teach the basics of writing unit tests in Fortran
-  using a set of available frameworks - pFUnit, test-drive and veggies.
-  The lesson will cover the basics of unit testing, how to identify and
-  write testable Fortran code, how to write the unit tests for both
-  serial and parallel Fortran in all three frameworks and how to
-  integrate these tests into a Fortran project using both CMake and FPM
-  build systems.
+  using pFUnit. The lesson covers the basics of unit testing, how to
+  identify and write testable Fortran code, how to write the unit tests
+  for both serial and parallel Fortran and how to integrate these tests
+  into a Fortran project using both CMake and Make build systems.
 
   This lesson is aimed at learners who already understand the basics of
   programming in Fortran and wish to start increasing the maintainability
