@@ -1,4 +1,4 @@
-FROM ghcr.io/carpentries-incubator/fortran-unit-testing:main
+FROM ghcr.io/carpentries-incubator/intro-to-modern-fortran:main
 
 COPY --chown=vscode exercises/5-debugging-a-failing-test /home/vscode/5-debugging-a-failing-test
 
