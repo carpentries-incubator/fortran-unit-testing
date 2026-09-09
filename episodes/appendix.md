@@ -119,7 +119,7 @@ Replace all magic numbers in John's game of life code with constants.
 :::::::::::::::::::::::: solution
 
 This can be achieved with the changes shown in this
-[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/e9765a26a9e368571eb162771cd45cd3933c03c4)
+[commit](https://github.com/carpentries-incubator/fortran-unit-testing/commit/d22525d979b2d3192031b76f8bbfb0f54c366e72)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
@@ -168,7 +168,7 @@ which make it clear what they are.
 :::::::::::::::::::::::: solution
 
 This can be achieved with the changes shown in this
-[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/30cfcceb1fc80ef236230e21dae574bdebf64c87)
+[commit](https://github.com/carpentries-incubator/fortran-unit-testing/commit/c54fdbc97102e81865f0e55f18c65dba6a3c6ce0)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
@@ -338,7 +338,7 @@ Update John's code to reduce the responsibilities of any procedures to one
 :::::::::::::::::::::::: solution
 
 This can be achieved with the changes shown in this
-[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/fb06543e12e217e6f39ffc9df2f13108f64ca7ac)
+[commit](https://github.com/carpentries-incubator/fortran-unit-testing/commit/db409cb6726eba0d924ebf442306e749f1996f7a)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
@@ -424,7 +424,7 @@ Update John's code to reduce the responsibilities of any procedures to one
 :::::::::::::::::::::::: solution
 
 This can be achieved with the changes shown in this
-[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/ee860cac1cc2b1c2f0f2ed99b2fe26060e576ce4)
+[commit](https://github.com/carpentries-incubator/fortran-unit-testing/commit/3d27352423f2cffb4bbe4db71715141c6a8ba7c9)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
@@ -545,7 +545,7 @@ Update John's code to move any repeated code into a procedure.
 :::::::::::::::::::::::: solution
 
 This can be achieved with the changes shown in this
-[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/da18b6af1a01c82235975ed1589d0496cf6b23f2)
+[commit](https://github.com/carpentries-incubator/fortran-unit-testing/commit/b33ca1a97e0ee1e08e005a092efc02bcaf01ad6f)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
@@ -627,7 +627,7 @@ with dummy arguments.
 :::::::::::::::::::::::: solution
 
 This can be achieved with the changes shown in this
-[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/02da8d0b614d7d7412a066fbdd3c249eb308f5a9)
+[commit](https://github.com/carpentries-incubator/fortran-unit-testing/commit/faf05bea173abe08ec17d352ab1d0b6ebe563b45)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
@@ -717,7 +717,7 @@ You should end up with a module structure. For example, like this:
 ```
 
 This can be achieved with the changes shown in this
-[commit](https://github.com/UCL-ARC/fortran-unit-testing-exercises/commit/b4c6afcdb2e3a37c602051966e55ad764cdb6203)
+[commit](https://github.com/carpentries-incubator/fortran-unit-testing/commit/4b900c407f5f08f6b2b9267f1c99ce2b30969f87)
 
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::
