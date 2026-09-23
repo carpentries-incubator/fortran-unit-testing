@@ -329,7 +329,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>pFUnit basics</h1>
-        <p>Last updated on 2026-09-04 |
+        <p>Last updated on 2026-09-23 |
 
         <a href="https://github.com/carpentries-incubator/fortran-unit-testing/edit/main/episodes/pfunit-basics.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -393,36 +393,39 @@ failure back to us.</p>
 <p>Alternatively, if we were to use pFUnit, there is no longer a need to
 define this test runner because pFUnit handles that for us. Therefore,
 the most basic test we can define using pFunit becomes simple. For
-example, if we wanted to test the Fortran intrinsic function
-<strong>dot_product</strong>, we could write the following test.</p>
-<div class="codewrapper sourceCode" id="cb1">
+example, if we wanted to test the function <strong>dot</strong> which
+performs a dot product on two arrays, we could write the following
+test.</p>
+
+<div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="kw">module</span> test_dot_product_intrinsic</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a>    <span class="kw">use</span> funit</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a><span class="co">contains</span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a>    @Test</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a>    <span class="kw">subroutine</span> test_dot_product()</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a>        <span class="dt">integer</span> <span class="dt">::</span> a(<span class="dv">10</span>), b(<span class="dv">10</span>), c</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1" aria-label="code-block-1-8"></a></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1" aria-label="code-block-1-9"></a>        <span class="co">! Define inputs and expected outputs for the scenario we want to test</span></span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1" aria-label="code-block-1-10"></a>        a <span class="kw">=</span> <span class="kw">[</span><span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span><span class="kw">]</span></span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1" aria-label="code-block-1-11"></a>        b <span class="kw">=</span> <span class="kw">[</span><span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">16</span>,<span class="dv">17</span>,<span class="dv">18</span>,<span class="dv">19</span>,<span class="dv">20</span><span class="kw">]</span></span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1" aria-label="code-block-1-12"></a>        c <span class="kw">=</span> <span class="dv">935</span></span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1" aria-label="code-block-1-13"></a></span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1" aria-label="code-block-1-14"></a>        <span class="co">! Check that the call to dot_product returned what we expect</span></span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1" aria-label="code-block-1-15"></a>        @assertEqual(c, <span class="fu">dot_product</span>(a, b), message<span class="kw">=</span><span class="st">"Unexpected value returned for the dot_product"</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1" aria-label="code-block-1-16"></a></span>
-<span id="cb1-17"><a href="#cb1-17" tabindex="-1" aria-label="code-block-1-17"></a>    <span class="kw">end subroutine</span> test_dot_product</span>
-<span id="cb1-18"><a href="#cb1-18" tabindex="-1" aria-label="code-block-1-18"></a><span class="kw">end module</span> test_dot_product_intrinsic</span></code></pre>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="kw">module</span> test_dot</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a>    <span class="kw">use</span> matrix_ops, <span class="kw">only</span> : dot</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a>    <span class="kw">use</span> funit</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a><span class="co">contains</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a>    @Test</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a>    <span class="kw">subroutine</span> test_dot_product_one_to_twenty()</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1" aria-label="code-block-3-8"></a>        <span class="dt">integer</span> <span class="dt">::</span> a(<span class="dv">10</span>), b(<span class="dv">10</span>), c</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1" aria-label="code-block-3-9"></a></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1" aria-label="code-block-3-10"></a>        <span class="co">! Define inputs and expected outputs for the scenario we want to test</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1" aria-label="code-block-3-11"></a>        a <span class="kw">=</span> <span class="kw">[</span><span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span><span class="kw">]</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1" aria-label="code-block-3-12"></a>        b <span class="kw">=</span> <span class="kw">[</span><span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">16</span>,<span class="dv">17</span>,<span class="dv">18</span>,<span class="dv">19</span>,<span class="dv">20</span><span class="kw">]</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1" aria-label="code-block-3-13"></a>        c <span class="kw">=</span> <span class="dv">935</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1" aria-label="code-block-3-14"></a></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1" aria-label="code-block-3-15"></a>        <span class="co">! Check that the call to dot returned what we expect</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1" aria-label="code-block-3-16"></a>        @assertEqual(c, dot(a, b), message<span class="kw">=</span><span class="st">"Unexpected value returned from dot"</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1" aria-label="code-block-3-17"></a></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1" aria-label="code-block-3-18"></a>    <span class="kw">end subroutine</span> test_dot_product_one_to_twenty</span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1" aria-label="code-block-3-19"></a><span class="kw">end module</span> test_dot</span></code></pre>
 </div>
 <p>Here we have introduced some new syntax in the form of <strong><span class="citation">@Test</span></strong> and <strong><span class="citation">@AssertEqual</span></strong>. These are pFUnit
 pre-processor directives which simplify how we write tests:</p>
 <ul><li>
 <strong><span class="citation">@Test</span></strong> designates the
-subroutine <strong>test_dot_product</strong> as a test that should be
-ran on execution of your pFUnit test suite.</li>
+subroutine <strong>test_dot_product_one_to_twenty</strong> as a test
+that should be ran on execution of your pFUnit test suite.</li>
 <li>
 <strong><span class="citation">@AssertEqual</span></strong> is one
 of many assert directives provided by pFUnit. More specifically,
@@ -451,42 +454,44 @@ a tolerance.</p>
 </div>
 <p>If we then wish to add a new test case we can add another subroutine,
 again decorated with <strong><span class="citation">@Test</span></strong>:</p>
-<div class="codewrapper sourceCode" id="cb2">
+<div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="kw">module</span> test_dot_product_intrinsic</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a>    <span class="kw">use</span> funit</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1" aria-label="code-block-2-4"></a><span class="co">contains</span></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1" aria-label="code-block-2-5"></a>    @Test</span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1" aria-label="code-block-2-6"></a>    <span class="kw">subroutine</span> test_dot_product()</span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1" aria-label="code-block-2-7"></a>        <span class="dt">integer</span> <span class="dt">::</span> a(<span class="dv">10</span>), b(<span class="dv">10</span>), c</span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1" aria-label="code-block-2-8"></a></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1" aria-label="code-block-2-9"></a>        <span class="co">! Define inputs and expected outputs for the scenario we want to test</span></span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1" aria-label="code-block-2-10"></a>        a <span class="kw">=</span> <span class="kw">[</span><span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span><span class="kw">]</span></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1" aria-label="code-block-2-11"></a>        b <span class="kw">=</span> <span class="kw">[</span><span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">16</span>,<span class="dv">17</span>,<span class="dv">18</span>,<span class="dv">19</span>,<span class="dv">20</span><span class="kw">]</span></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1" aria-label="code-block-2-12"></a>        c <span class="kw">=</span> <span class="dv">935</span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1" aria-label="code-block-2-13"></a></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1" aria-label="code-block-2-14"></a>        <span class="co">! Check that the call to dot_product returned what we expect</span></span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1" aria-label="code-block-2-15"></a>        @AssertEqual(c, <span class="fu">dot_product</span>(a, b), message<span class="kw">=</span><span class="st">"Unexpected value returned for the dot_product"</span>)</span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1" aria-label="code-block-2-16"></a></span>
-<span id="cb2-17"><a href="#cb2-17" tabindex="-1" aria-label="code-block-2-17"></a>    <span class="kw">end subroutine</span> test_dot_product</span>
-<span id="cb2-18"><a href="#cb2-18" tabindex="-1" aria-label="code-block-2-18"></a></span>
-<span id="cb2-19"><a href="#cb2-19" tabindex="-1" aria-label="code-block-2-19"></a>    @Test</span>
-<span id="cb2-20"><a href="#cb2-20" tabindex="-1" aria-label="code-block-2-20"></a>    <span class="kw">subroutine</span> test_dot_product_all_zeros()</span>
-<span id="cb2-21"><a href="#cb2-21" tabindex="-1" aria-label="code-block-2-21"></a>        <span class="dt">integer</span> <span class="dt">::</span> a(<span class="dv">10</span>), b(<span class="dv">10</span>), c</span>
-<span id="cb2-22"><a href="#cb2-22" tabindex="-1" aria-label="code-block-2-22"></a></span>
-<span id="cb2-23"><a href="#cb2-23" tabindex="-1" aria-label="code-block-2-23"></a>        <span class="co">! Define inputs and expected outputs for the scenario we want to test</span></span>
-<span id="cb2-24"><a href="#cb2-24" tabindex="-1" aria-label="code-block-2-24"></a>        a <span class="kw">=</span> <span class="dv">0</span></span>
-<span id="cb2-25"><a href="#cb2-25" tabindex="-1" aria-label="code-block-2-25"></a>        b <span class="kw">=</span> <span class="dv">0</span></span>
-<span id="cb2-26"><a href="#cb2-26" tabindex="-1" aria-label="code-block-2-26"></a>        c <span class="kw">=</span> <span class="dv">0</span></span>
-<span id="cb2-27"><a href="#cb2-27" tabindex="-1" aria-label="code-block-2-27"></a></span>
-<span id="cb2-28"><a href="#cb2-28" tabindex="-1" aria-label="code-block-2-28"></a>        <span class="co">! Check that the call to dot_product returned what we expect</span></span>
-<span id="cb2-29"><a href="#cb2-29" tabindex="-1" aria-label="code-block-2-29"></a>        @AssertEqual(c, <span class="fu">dot_product</span>(a, b), message<span class="kw">=</span><span class="st">"Unexpected value returned for the dot_product"</span>)</span>
-<span id="cb2-30"><a href="#cb2-30" tabindex="-1" aria-label="code-block-2-30"></a></span>
-<span id="cb2-31"><a href="#cb2-31" tabindex="-1" aria-label="code-block-2-31"></a>    <span class="kw">end subroutine</span> test_dot_product_all_zeros</span>
-<span id="cb2-32"><a href="#cb2-32" tabindex="-1" aria-label="code-block-2-32"></a><span class="kw">end module</span> test_dot_product_intrinsic</span></code></pre>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="kw">module</span> test_dot</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a>    <span class="kw">use</span> matrix_ops, <span class="kw">only</span> : dot</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a>    <span class="kw">use</span> funit</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1" aria-label="code-block-4-5"></a><span class="co">contains</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1" aria-label="code-block-4-6"></a>    @Test</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1" aria-label="code-block-4-7"></a>    <span class="kw">subroutine</span> test_dot_one_to_twenty()</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1" aria-label="code-block-4-8"></a>        <span class="dt">integer</span> <span class="dt">::</span> a(<span class="dv">10</span>), b(<span class="dv">10</span>), c</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1" aria-label="code-block-4-9"></a></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1" aria-label="code-block-4-10"></a>        <span class="co">! Define inputs and expected outputs for the scenario we want to test</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1" aria-label="code-block-4-11"></a>        a <span class="kw">=</span> <span class="kw">[</span><span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span><span class="kw">]</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1" aria-label="code-block-4-12"></a>        b <span class="kw">=</span> <span class="kw">[</span><span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">16</span>,<span class="dv">17</span>,<span class="dv">18</span>,<span class="dv">19</span>,<span class="dv">20</span><span class="kw">]</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1" aria-label="code-block-4-13"></a>        c <span class="kw">=</span> <span class="dv">935</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1" aria-label="code-block-4-14"></a></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1" aria-label="code-block-4-15"></a>        <span class="co">! Check that the call to dot returned what we expect</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1" aria-label="code-block-4-16"></a>        @assertEqual(c, dot(a, b), message<span class="kw">=</span><span class="st">"Unexpected value returned from dot"</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1" aria-label="code-block-4-17"></a></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1" aria-label="code-block-4-18"></a>    <span class="kw">end subroutine</span> test_dot_one_to_twenty</span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1" aria-label="code-block-4-19"></a></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1" aria-label="code-block-4-20"></a>    @Test</span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1" aria-label="code-block-4-21"></a>    <span class="kw">subroutine</span> test_dot_all_zeros()</span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1" aria-label="code-block-4-22"></a>        <span class="dt">integer</span> <span class="dt">::</span> a(<span class="dv">10</span>), b(<span class="dv">10</span>), c</span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1" aria-label="code-block-4-23"></a></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1" aria-label="code-block-4-24"></a>        <span class="co">! Define inputs and expected outputs for the scenario we want to test</span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1" aria-label="code-block-4-25"></a>        a <span class="kw">=</span> <span class="dv">0</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1" aria-label="code-block-4-26"></a>        b <span class="kw">=</span> <span class="dv">0</span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1" aria-label="code-block-4-27"></a>        c <span class="kw">=</span> <span class="dv">0</span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1" aria-label="code-block-4-28"></a></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1" aria-label="code-block-4-29"></a>        <span class="co">! Check that the call to dot_product returned what we expect</span></span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1" aria-label="code-block-4-30"></a>        @assertEqual(c, dot(a, b), message<span class="kw">=</span><span class="st">"Unexpected value returned from dot"</span>)</span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1" aria-label="code-block-4-31"></a></span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1" aria-label="code-block-4-32"></a>    <span class="kw">end subroutine</span> test_dot_all_zeros</span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1" aria-label="code-block-4-33"></a><span class="kw">end module</span> test_dot</span></code></pre>
 </div>
+
 <div id="challenge-test-temperature-conversions-using-pfunit" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
@@ -507,7 +512,7 @@ test for the temperature conversion using pFUnit.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>A solution is provided in <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/writing-your-first-unit-test/solution" class="external-link">exercises/writing-your-first-unit-test/solution</a>.</p>
 </div>
@@ -574,8 +579,8 @@ test for the temperature conversion using pFUnit.</p>
   "url": "https://carpentries-incubator.github.io/fortran-unit-testing/pfunit-basics.html",
   "identifier": "https://carpentries-incubator.github.io/fortran-unit-testing/pfunit-basics.html",
   "dateCreated": "2025-05-09",
-  "dateModified": "2026-09-04",
-  "datePublished": "2026-09-22"
+  "dateModified": "2026-09-23",
+  "datePublished": "2026-09-23"
 }
 
   </script><script>

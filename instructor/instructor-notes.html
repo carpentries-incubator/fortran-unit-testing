@@ -385,7 +385,138 @@ activity. Part 3 can be skipped if there is limited time.</p>
 <hr>
 <br></section><section id="writing-your-first-unit-test"><h2 class="section-heading"><a href="writing-your-first-unit-test.html">Writing your first unit test</a></h2>
 <hr class="half-width"></section><section id="pfunit-basics"><h2 class="section-heading"><a href="pfunit-basics.html">pFUnit basics</a></h2>
-<hr class="half-width"></section><section id="integrating-with-build-systems"><h2 class="section-heading"><a href="integrating-with-build-systems.html">Integrating with build systems</a></h2>
+<hr class="half-width">
+<h3 id="pfunit-basics-headingInstructor1">
+<a href="pfunit-basics.html#headingInstructor1">Instructor Note</a><a class="anchor" aria-label="anchor" href="#pfunit-basics-headingInstructor1"></a>
+</h3>
+<p>The <strong>dot</strong> function should only be a wrapper around the
+intrinsic function <strong>dot_product</strong> to keep the example
+simple but incorporate compiling src and tests together:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="kw">module</span> matrix_ops</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a><span class="co">contains</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a>    <span class="co">!&gt; Returns the dot product (a.b) of the two inputted arrays a and b</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a>    <span class="dt">integer</span> <span class="kw">function</span> dot(a, b)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a>        <span class="co">!&gt; The two arrays to be dotted together</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a>        <span class="dt">integer</span> <span class="dt">::</span> a(:), b(:)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1" aria-label="code-block-1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1" aria-label="code-block-1-9"></a>        dot <span class="kw">=</span> <span class="fu">dot_product</span>(a, b)</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1" aria-label="code-block-1-10"></a>    <span class="kw">end function</span> dot</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1" aria-label="code-block-1-11"></a><span class="kw">end module</span> matrix_ops</span></code></pre>
+</div>
+<p>When writing the pFUnit version of the unit test for the dot product,
+begin from this standard Fortran version to highlight the benefits of
+pFUnit.</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="kw">program</span> test_dot</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a>    <span class="kw">use</span> matrix_ops, <span class="kw">only</span> : dot</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1" aria-label="code-block-2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1" aria-label="code-block-2-5"></a>    <span class="dt">integer</span> <span class="dt">::</span> i</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1" aria-label="code-block-2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1" aria-label="code-block-2-7"></a>    <span class="co">! Declare passed and failure message arrays to be set by a test subroutine(s)</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1" aria-label="code-block-2-8"></a>    <span class="dt">logical</span> <span class="dt">::</span> passed(<span class="dv">1</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1" aria-label="code-block-2-9"></a>    <span class="dt">character(len=200)</span> <span class="dt">::</span> failure_message(<span class="dv">1</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1" aria-label="code-block-2-10"></a></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1" aria-label="code-block-2-11"></a>    <span class="co">! Define set of tests for the dot_product</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1" aria-label="code-block-2-12"></a>    <span class="kw">call</span> test_dot_one_to_twenty(passed(<span class="dv">1</span>), failure_message(<span class="dv">1</span>))</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1" aria-label="code-block-2-13"></a></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1" aria-label="code-block-2-14"></a>    <span class="kw">if</span> (<span class="fu">all</span>(passed)) <span class="kw">then</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1" aria-label="code-block-2-15"></a>        <span class="fu">write(*</span>,<span class="fu">*)</span> <span class="st">"All tests passed!"</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1" aria-label="code-block-2-16"></a>    <span class="kw">else</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1" aria-label="code-block-2-17"></a>      <span class="kw">do</span> i <span class="kw">=</span> <span class="dv">1</span>, <span class="fu">size</span>(passed)</span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1" aria-label="code-block-2-18"></a>          <span class="kw">if</span> (<span class="op">.not.</span> passed(i)) <span class="kw">then</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1" aria-label="code-block-2-19"></a>              <span class="fu">write(*</span>,<span class="fu">*)</span> <span class="st">"FAIL: "</span>, <span class="fu">trim</span>(failure_message(i))</span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1" aria-label="code-block-2-20"></a>          <span class="kw">end if</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1" aria-label="code-block-2-21"></a>      <span class="kw">end do</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1" aria-label="code-block-2-22"></a>      <span class="kw">stop</span> <span class="dv">1</span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1" aria-label="code-block-2-23"></a>    <span class="kw">end if</span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1" aria-label="code-block-2-24"></a></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1" aria-label="code-block-2-25"></a><span class="co">contains</span></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1" aria-label="code-block-2-26"></a>    <span class="co">!&gt; Unit test subroutine for dot</span></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1" aria-label="code-block-2-27"></a>    <span class="kw">subroutine</span> test_dot_one_to_twenty(passed, failure_message)</span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1" aria-label="code-block-2-28"></a>        <span class="co">!&gt; A logical to track whether the test passed or not</span></span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1" aria-label="code-block-2-29"></a>        <span class="dt">logical</span>, <span class="dt">intent(out)</span> <span class="dt">::</span> passed</span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1" aria-label="code-block-2-30"></a>        <span class="co">!&gt; A failure message to be displayed if passed is false</span></span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1" aria-label="code-block-2-31"></a>        <span class="dt">character(len=200)</span>, <span class="dt">intent(out)</span> <span class="dt">::</span> failure_message</span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1" aria-label="code-block-2-32"></a></span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1" aria-label="code-block-2-33"></a>        <span class="dt">integer</span> <span class="dt">::</span> a(<span class="dv">10</span>), b(<span class="dv">10</span>), expected_c, actual_c</span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1" aria-label="code-block-2-34"></a></span>
+<span id="cb2-35"><a href="#cb2-35" tabindex="-1" aria-label="code-block-2-35"></a>        <span class="co">! Define inputs and expected outputs for the scenario we want to test</span></span>
+<span id="cb2-36"><a href="#cb2-36" tabindex="-1" aria-label="code-block-2-36"></a>        a <span class="kw">=</span> <span class="kw">[</span><span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span><span class="kw">]</span></span>
+<span id="cb2-37"><a href="#cb2-37" tabindex="-1" aria-label="code-block-2-37"></a>        b <span class="kw">=</span> <span class="kw">[</span><span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">16</span>,<span class="dv">17</span>,<span class="dv">18</span>,<span class="dv">19</span>,<span class="dv">20</span><span class="kw">]</span></span>
+<span id="cb2-38"><a href="#cb2-38" tabindex="-1" aria-label="code-block-2-38"></a>        expected_c <span class="kw">=</span> <span class="dv">935</span></span>
+<span id="cb2-39"><a href="#cb2-39" tabindex="-1" aria-label="code-block-2-39"></a></span>
+<span id="cb2-40"><a href="#cb2-40" tabindex="-1" aria-label="code-block-2-40"></a>        actual_c <span class="kw">=</span> dot(a, b)</span>
+<span id="cb2-41"><a href="#cb2-41" tabindex="-1" aria-label="code-block-2-41"></a></span>
+<span id="cb2-42"><a href="#cb2-42" tabindex="-1" aria-label="code-block-2-42"></a>        <span class="co">! Check that the actual value matches the expected value</span></span>
+<span id="cb2-43"><a href="#cb2-43" tabindex="-1" aria-label="code-block-2-43"></a>        passed <span class="kw">=</span> expected_c <span class="op">==</span> actual_c</span>
+<span id="cb2-44"><a href="#cb2-44" tabindex="-1" aria-label="code-block-2-44"></a></span>
+<span id="cb2-45"><a href="#cb2-45" tabindex="-1" aria-label="code-block-2-45"></a>        <span class="co">! Populate the failure message</span></span>
+<span id="cb2-46"><a href="#cb2-46" tabindex="-1" aria-label="code-block-2-46"></a>        <span class="fu">write(</span>failure_message, <span class="st">'(A,I3,A,I3)'</span><span class="fu">)</span> <span class="st">"Expected "</span>, expected_c, <span class="st">" but got "</span>, actual_c</span>
+<span id="cb2-47"><a href="#cb2-47" tabindex="-1" aria-label="code-block-2-47"></a></span>
+<span id="cb2-48"><a href="#cb2-48" tabindex="-1" aria-label="code-block-2-48"></a>    <span class="kw">end subroutine</span> test_dot_one_to_twenty</span>
+<span id="cb2-49"><a href="#cb2-49" tabindex="-1" aria-label="code-block-2-49"></a><span class="kw">end program</span> test_dot</span></code></pre>
+</div>
+<p>This should be able to be compiled with the command
+<code>gfortran matrix_ops.f90 test_dot.f90</code></p>
+<hr>
+<br><h3 id="pfunit-basics-headingInstructor2">
+<a href="pfunit-basics.html#headingInstructor2">Instructor Note</a><a class="anchor" aria-label="anchor" href="#pfunit-basics-headingInstructor2"></a>
+</h3>
+<p>To build and run this pFUnit version. Use the
+<strong>CMakeLists.txt</strong> below:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">CMAKE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="kw">cmake_minimum_required</span>(<span class="ot">VERSION</span> <span class="dt">3.9</span> <span class="ot">FATAL_ERROR</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a><span class="co"># Set project name</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a><span class="kw">project</span>(</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1" aria-label="code-block-5-5"></a>  <span class="st">"matrix_ops"</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1" aria-label="code-block-5-6"></a>  <span class="ot">LANGUAGES</span> <span class="st">"Fortran"</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1" aria-label="code-block-5-7"></a>  <span class="ot">VERSION</span> <span class="st">"0.0.1"</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1" aria-label="code-block-5-8"></a>  <span class="ot">DESCRIPTION</span> <span class="st">"Library for matrix operations"</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1" aria-label="code-block-5-9"></a>)</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1" aria-label="code-block-5-10"></a></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1" aria-label="code-block-5-11"></a><span class="co"># Define a variable which stores a list of src files</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1" aria-label="code-block-5-12"></a><span class="kw">set</span>(SRC_DIR <span class="st">"</span><span class="dv">${PROJECT_SOURCE_DIR}</span><span class="st">"</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1" aria-label="code-block-5-13"></a><span class="kw">set</span>(PROJ_SRC_FILES <span class="st">"</span><span class="dv">${SRC_DIR}</span><span class="st">/matrix_ops.f90"</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1" aria-label="code-block-5-14"></a></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1" aria-label="code-block-5-15"></a><span class="co">#---------------------------</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1" aria-label="code-block-5-16"></a><span class="co"># Configure testing.</span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1" aria-label="code-block-5-17"></a><span class="co">#---------------------------</span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1" aria-label="code-block-5-18"></a><span class="kw">enable_testing</span>()</span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1" aria-label="code-block-5-19"></a></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1" aria-label="code-block-5-20"></a><span class="kw">find_package</span>(PFUNIT <span class="ot">REQUIRED</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1" aria-label="code-block-5-21"></a></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1" aria-label="code-block-5-22"></a><span class="co"># Create library for src code</span></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1" aria-label="code-block-5-23"></a><span class="kw">add_library</span>(<span class="bn">SUT</span> <span class="ot">STATIC</span> <span class="dv">${PROJ_SRC_FILES}</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1" aria-label="code-block-5-24"></a></span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1" aria-label="code-block-5-25"></a><span class="co"># List all test files</span></span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1" aria-label="code-block-5-26"></a><span class="kw">set</span>(test_srcs <span class="st">"</span><span class="dv">${PROJECT_SOURCE_DIR}</span><span class="st">/test_dot.pf"</span>)</span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1" aria-label="code-block-5-27"></a></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1" aria-label="code-block-5-28"></a><span class="co"># Add the test target</span></span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1" aria-label="code-block-5-29"></a><span class="fu">add_pfunit_ctest </span>(test_dot</span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1" aria-label="code-block-5-30"></a>  TEST_SOURCES <span class="dv">${test_srcs}</span></span>
+<span id="cb5-31"><a href="#cb5-31" tabindex="-1" aria-label="code-block-5-31"></a>  <span class="dv">LINK_LIBRARIES</span> SUT <span class="co"># your application library</span></span>
+<span id="cb5-32"><a href="#cb5-32" tabindex="-1" aria-label="code-block-5-32"></a>  )</span></code></pre>
+</div>
+<p>This can then be compiled with the following commands:</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">SH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode sh" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="fu">cmake</span> <span class="at">-B</span> build <span class="at">-DCMAKE_PREFIX_PATH</span><span class="op">=</span><span class="st">"/path/to/pfunit/build/installed"</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a><span class="fu">cmake</span> <span class="at">--build</span> build</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a><span class="ex">./build/test_dot</span></span></code></pre>
+</div>
+<hr>
+<br></section><section id="integrating-with-build-systems"><h2 class="section-heading"><a href="integrating-with-build-systems.html">Integrating with build systems</a></h2>
 <hr class="half-width"></section><section id="parameterising-pfunit-tests"><h2 class="section-heading"><a href="parameterising-pfunit-tests.html">Parameterising pFUnit tests</a></h2>
 <hr class="half-width"></section><section id="testing-parallel-code"><h2 class="section-heading"><a href="testing-parallel-code.html">Testing parallel code</a></h2>
 <hr class="half-width">
@@ -447,8 +578,8 @@ version to emphasize the similarities between the two.</p>
   "url": "https://carpentries-incubator.github.io/fortran-unit-testing/instructor/instructor-notes.html",
   "identifier": "https://carpentries-incubator.github.io/fortran-unit-testing/instructor/instructor-notes.html",
   "dateCreated": "2025-05-09",
-  "dateModified": "2026-09-22",
-  "datePublished": "2026-09-22"
+  "dateModified": "2026-09-23",
+  "datePublished": "2026-09-23"
 }
 
   </script><script>
