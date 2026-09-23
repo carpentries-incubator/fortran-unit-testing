@@ -81,7 +81,7 @@ program test_dot
     logical :: passed(1)
     character(len=200) :: failure_message(1)
 
-    ! Define set of tests for the dot_product
+    ! Define set of tests for dot
     call test_dot_one_to_twenty(passed(1), failure_message(1))
 
     if (all(passed)) then
