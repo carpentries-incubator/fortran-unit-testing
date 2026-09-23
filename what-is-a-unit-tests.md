@@ -127,15 +127,15 @@ test_populate_arrays Failed: Expected 1 for index 1 but got 0
 This is much clearer. We immediately have an idea of what could be going wrong and the unit test itself will help us determine the
 problematic code to investigate.
 
-::::::::::::::::::::::::::::::::::::: challenge
-
-## Challenge 2: Unit test bad practices
-
 ::: instructor
 
 Challenge 2 should be lead by the instructor and done as a class activity. Part 3 can be skipped if there is limited time.
 
 :::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 2: Unit test bad practices
 
 Take a look at the
 [Introduction to unit testing exercise][ex-intro-to-unit-tests]
