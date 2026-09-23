@@ -66,7 +66,7 @@ should do little regarding building the tests. However, it should…
 
 The full top level **Makefile** may look something like this:
 
-```bash
+```makefile
 # Top level variables
 ROOT_DIR = $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 FC ?= gfortran
@@ -131,7 +131,7 @@ export LIBS
 
 The **tests/Makefile** would then look like this:
 
-```bash
+```makefile
 PFUNIT_INCLUDE_DIR ?= /path/to/pfunit/include
 
 # Don't try to include if we're cleaning as this doesn't depend on pFUnit
