@@ -27,13 +27,11 @@ Firstly, assume we have the following file structure.
 |-- ROOT_DIR/
     | Makefile
     |-- src/
-    |   |-- main.f90
-    |   |-- something.f90
+    |   |-- matrix_ops.f90
     |
     |-- tests/
         |-- Makefile
-        |-- test_something.pf
-        |-- test_something_else.pf
+        |-- test_matrix_ops_dot.pf
 ```
 
 The top level **Makefile** is responsible for compiling the src code but
@@ -82,9 +80,7 @@ SRC_DIR = $(ROOT_DIR)/src
 BUILD_DIR = $(ROOT_DIR)/build
 
 # List src files
-SRC_FILES = \
-    something.f90 \
-    main.f90
+SRC_FILES = matrix_ops.f90
 
 # Map src files to .o files
 SRC_OBJS = $(patsubst %.f90, $(BUILD_DIR)/%.o, $(SRC_FILES))
@@ -93,13 +89,6 @@ SRC_OBJS = $(patsubst %.f90, $(BUILD_DIR)/%.o, $(SRC_FILES))
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.f90 | $(BUILD_DIR)
  @echo "Building $@"
  $(FC) -c -J $(BUILD_DIR) -o $@ $<
-
-# Build src executable
-$(BUILD_DIR)/a.exe: $(SRC_OBJS)
- $(FC) -o $@ $(FC_FLAGS) $^ $(LIBS)
-
-# Map exe target to building executable
-exe: $(BUILD_DIR)/a.exe
 
 # Ensure the build dirs exists
 $(BUILD_DIR):
@@ -152,10 +141,9 @@ TEST_FLAGS = -I$(BUILD_DIR) $(FC_FLAGS) $(LIBS) $(PFUNIT_EXTRA_FFLAGS)
 endif
 
 # Define variables to be picked up by make_pfunit_test
-tests_TESTS = \
-  test_something.pf \
-  test_something_else.pf
-tests_OTHER_SOURCES = $(filter-out $(BUILD_DIR)/main.o, $(SRC_OBJS))
+# Note that you will need to filter out the src program from the SRC_OBJS if one exists
+tests_TESTS = test_matrix_ops_dot.pf
+tests_OTHER_SOURCES = $(SRC_OBJS)
 tests_OTHER_LIBRARIES = $(TEST_FLAGS)
 
 # Triggers pre-processing and defines rule for building test executable
@@ -189,12 +177,12 @@ $ make tests
 $ ./tests/tests --verbose
 
 
- Start: <test_something_suite.test_do_something_1>
-.   end: <test_something_suite.test_do_something_1>
+ Start: <test_matrix_ops_dot.test_dot_one_to_twenty>
+.   end: <test_matrix_ops_dot.test_dot_one_to_twenty>
 
 
- Start: <test_something_else_suite.test_do_something_2>
-.   end: <test_something_else_suite.test_do_something_2>
+ Start: <test_matrix_ops_dot.test_dot_all_zeros>
+.   end: <test_matrix_ops_dot.test_dot_all_zeros>
 
 Time:         0.001 seconds
 
@@ -207,35 +195,13 @@ Time:         0.001 seconds
 In the output shown above we have ran using the **--verbose** flag. This flag
 includes the name of our test suites and test subroutines in the output. For
 example, we have **2 tests** which here indicates two test functions in total,
-**test_do_something_1** and **test_do_something_2**. However, we can see that
-these two test functions are each stored within their own test suite
-**test_something_suite** and **test_something_else_suite** respectively.
+**test_dot_one_to_twenty** and **test_dot_all_zeros**. However, we can see that
+these two test functions are both stored within the same test suite
+**test_matrix_ops_dot**.
 
 Here, we are defining a test suite as a single test module file (**.pf** file).
 Therefore, we can see that the name of the test suite comes from the name of
 the module. The name of the test is then taken from the name of the test subroutine.
-For example, **test_something.pf** would look like this.
-
-```f90
-module test_something
-    use something, only : do_something
-    use funit
-    implicit none
-
-contains
-
-    @Test
-    subroutine test_do_something_1()
-        integer :: input, actual_output
-
-        input = 1
-
-        call do_something(input, actual_output)
-
-        @assertEqual(2, actual_output, "Unexpected output from do_something")
-    end subroutine test_do_something_1
-end module test_something
-```
 
 :::::::::::::::::::::::::::::::::::: challenge
 
@@ -262,13 +228,11 @@ CMake. Similar to before, let's assume we have the following file structure.
 |-- ROOT_DIR/
     | CMakeLists.txt
     |-- src/
-    |   |-- main.f90
-    |   |__ ... Some module files containing src code
+    |   |-- matrix_ops.f90
     |
     |-- tests/
         |-- CMakeLists.txt
-        |-- test_something.pf
-        |-- test_something_else.pf
+        |-- test_matrix_ops_dot.pf
 ```
 
 Just like with Make, the top level **CMakeLists.txt** file is responsible for
@@ -280,8 +244,7 @@ However, it should…
   ```cmake
   set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
   set(PROJ_SRC_FILES
-    "${SRC_DIR}/main.f90"
-    "${SRC_DIR}/something.f90"
+    "${SRC_DIR}/matrix_ops.f90"
   )
   ```
 
@@ -308,21 +271,17 @@ cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
 # Set project name
 project(
-  "something_interesting"
+  "matrix_ops"
   LANGUAGES "Fortran"
   VERSION "0.0.1"
-  DESCRIPTION "Doing something"
+  DESCRIPTION "Library of matrix operations"
 )
 
 # Define a variable which stores a list of src files
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 set(PROJ_SRC_FILES
-  "${SRC_DIR}/main.f90"
-  "${SRC_DIR}/something.f90"
+  "${SRC_DIR}/matrix_ops.f90"
 )
-
-# Build src executables
-add_executable("${PROJECT_NAME}" "${PROJ_SRC_FILES}")
 
 # Enable testing.
 enable_testing()
@@ -338,21 +297,18 @@ The **tests/CMakeLists.txt** file would then look like this:
 ```cmake
 find_package(PFUNIT REQUIRED)
 
-# Filter out the main.f90 file. We can only have one main() function in our tests
-set(PROJ_SRC_FILES_EXEC_MAIN ${PROJ_SRC_FILES})
-list(FILTER PROJ_SRC_FILES_EXEC_MAIN EXCLUDE REGEX ".*main.f90")
 
 # Create library for src code
-add_library (SUT STATIC ${PROJ_SRC_FILES_EXEC_MAIN})
+# Note that you will need to filter out the src program from the SRC_OBJS if one exists
+add_library (SUT STATIC ${PROJ_SRC_FILES})
 
 # List all test files
 set(test_srcs
-  "${PROJECT_SOURCE_DIR}/tests/test_something.pf"
-  "${PROJECT_SOURCE_DIR}/tests/test_something_else.pf"
+  "${PROJECT_SOURCE_DIR}/tests/test_matrix_ops_dot.pf"
 )
 
 # Add the test target
-add_pfunit_ctest (test_something_interesting
+add_pfunit_ctest (test_matrix_ops_dot
   TEST_SOURCES ${test_srcs}
   LINK_LIBRARIES SUT # your application library
   )
@@ -362,13 +318,12 @@ add_pfunit_ctest (test_something_interesting
 
 - First, we find the pFUnit package to ensure the required libraries and cmake
   functions are available
-- We then filter the **main.f90** program file from the list of src files.
 - We store the src files in a library (**SUT**, stands for system under test)
   to be referenced later.
 - We list the test **.pf** files we wish to include within **test_srcs**.
 - We then create a test with pFUnit and CTest using the function provided by
   pFUnit, **add_pfunit_ctest**. Here we are…
-  - naming the test **test_something_interesting**.
+  - naming the test **test_matrix_ops_dot**.
   - informing pFUnit of the relevant src files via **TEST_SOURCES**.
   - linking to the src library via **LINK_LIBRARIES**.
 
@@ -379,7 +334,7 @@ We can then build our tests with the following commands
 ```sh
 cmake -B build -DCMAKE_PREFIX_PATH=/path/to/pfunit/build/installed
 cmake --build build
-ctest --test-dir build # or ./build/tests/test_something_interesting
+ctest --test-dir build # or ./build/tests/test_matrix_ops_dot
 ```
 
 :::::::::::::::::::: callout
@@ -388,7 +343,7 @@ ctest --test-dir build # or ./build/tests/test_something_interesting
 
 In this case we have called **add_pfunit_ctest** once with all of our **.pf**
 test files. This results in there being one CTest test (i.e. one executable
-**./build/tests/test_something**) which runs all tests. However, it may be
+**./build/tests/test_matrix_ops_dot**) which runs all tests. However, it may be
 preferable to call **add_pfunit_ctest** more than once, thus creating multiple
 executables to further divide up your tests.
 
@@ -396,11 +351,11 @@ Note that the tests can still be filtered by calling the executable itself and
 using pFUnit's inbuilt filtering option, like so.
 
 ```sh
-$ ./build/tests/test_something_interesting -f test_something_else -v
+$ ./build/tests/test_matrix_ops_dot -f test_dot_one_to_twenty -v
 
 
- Start: <test_something_else_suite.test_do_something_2>
-.   end: <test_something_else_suite.test_do_something_2>
+ Start: <test_matrix_ops_dot.test_dot_one_to_twenty>
+.   end: <test_matrix_ops_dot.test_dot_one_to_twenty>
 
 Time:         0.001 seconds
 
@@ -417,10 +372,10 @@ that the test suite names and test subroutine names are identical to when
 [built using make](#naming-our-tests-with-make). However, when using CMake we have
 control of one other name. The name of the CTest test. This name is set when we
 call **add_pfunit_ctest**. For example the below will create a test named
-**test_something_interesting**.
+**test_matrix_ops_dot**.
 
 ```cmake
-add_pfunit_ctest (test_something_interesting
+add_pfunit_ctest (test_matrix_ops_dot
   TEST_SOURCES ${test_srcs}
   LINK_LIBRARIES sut # your application library
   )
