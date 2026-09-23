@@ -403,7 +403,7 @@ test.</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>The <strong>dot</strong> function should only be a wrapper around the
 intrinsic function <strong>dot_product</strong> to keep the example
@@ -429,7 +429,7 @@ pFUnit.</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="kw">program</span> test_dot</span>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="kw">program</span> test_matrix_ops_dot</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a>    <span class="kw">use</span> matrix_ops, <span class="kw">only</span> : dot</span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
 <span id="cb2-4"><a href="#cb2-4" tabindex="-1" aria-label="code-block-2-4"></a></span>
@@ -439,7 +439,7 @@ pFUnit.</p>
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1" aria-label="code-block-2-8"></a>    <span class="dt">logical</span> <span class="dt">::</span> passed(<span class="dv">1</span>)</span>
 <span id="cb2-9"><a href="#cb2-9" tabindex="-1" aria-label="code-block-2-9"></a>    <span class="dt">character(len=200)</span> <span class="dt">::</span> failure_message(<span class="dv">1</span>)</span>
 <span id="cb2-10"><a href="#cb2-10" tabindex="-1" aria-label="code-block-2-10"></a></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1" aria-label="code-block-2-11"></a>    <span class="co">! Define set of tests for the dot_product</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1" aria-label="code-block-2-11"></a>    <span class="co">! Define set of tests for dot</span></span>
 <span id="cb2-12"><a href="#cb2-12" tabindex="-1" aria-label="code-block-2-12"></a>    <span class="kw">call</span> test_dot_one_to_twenty(passed(<span class="dv">1</span>), failure_message(<span class="dv">1</span>))</span>
 <span id="cb2-13"><a href="#cb2-13" tabindex="-1" aria-label="code-block-2-13"></a></span>
 <span id="cb2-14"><a href="#cb2-14" tabindex="-1" aria-label="code-block-2-14"></a>    <span class="kw">if</span> (<span class="fu">all</span>(passed)) <span class="kw">then</span></span>
@@ -477,7 +477,7 @@ pFUnit.</p>
 <span id="cb2-46"><a href="#cb2-46" tabindex="-1" aria-label="code-block-2-46"></a>        <span class="fu">write(</span>failure_message, <span class="st">'(A,I3,A,I3)'</span><span class="fu">)</span> <span class="st">"Expected "</span>, expected_c, <span class="st">" but got "</span>, actual_c</span>
 <span id="cb2-47"><a href="#cb2-47" tabindex="-1" aria-label="code-block-2-47"></a></span>
 <span id="cb2-48"><a href="#cb2-48" tabindex="-1" aria-label="code-block-2-48"></a>    <span class="kw">end subroutine</span> test_dot_one_to_twenty</span>
-<span id="cb2-49"><a href="#cb2-49" tabindex="-1" aria-label="code-block-2-49"></a><span class="kw">end program</span> test_dot</span></code></pre>
+<span id="cb2-49"><a href="#cb2-49" tabindex="-1" aria-label="code-block-2-49"></a><span class="kw">end program</span> test_matrix_ops_dot</span></code></pre>
 </div>
 <p>This should be able to be compiled with the command
 <code>gfortran matrix_ops.f90 test_dot.f90</code></p>
@@ -488,7 +488,7 @@ pFUnit.</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="kw">module</span> test_dot</span>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="kw">module</span> test_matrix_ops_dot</span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a>    <span class="kw">use</span> matrix_ops, <span class="kw">only</span> : dot</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a>    <span class="kw">use</span> funit</span>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
@@ -506,7 +506,7 @@ pFUnit.</p>
 <span id="cb3-16"><a href="#cb3-16" tabindex="-1" aria-label="code-block-3-16"></a>        @assertEqual(c, dot(a, b), message<span class="kw">=</span><span class="st">"Unexpected value returned from dot"</span>)</span>
 <span id="cb3-17"><a href="#cb3-17" tabindex="-1" aria-label="code-block-3-17"></a></span>
 <span id="cb3-18"><a href="#cb3-18" tabindex="-1" aria-label="code-block-3-18"></a>    <span class="kw">end subroutine</span> test_dot_product_one_to_twenty</span>
-<span id="cb3-19"><a href="#cb3-19" tabindex="-1" aria-label="code-block-3-19"></a><span class="kw">end module</span> test_dot</span></code></pre>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1" aria-label="code-block-3-19"></a><span class="kw">end module</span> test_matrix_ops_dot</span></code></pre>
 </div>
 <p>Here we have introduced some new syntax in the form of <strong><span class="citation">@Test</span></strong> and <strong><span class="citation">@AssertEqual</span></strong>. These are pFUnit
 pre-processor directives which simplify how we write tests:</p>
@@ -545,7 +545,7 @@ again decorated with <strong><span class="citation">@Test</span></strong>:</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="kw">module</span> test_dot</span>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="kw">module</span> test_matrix_ops_dot</span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a>    <span class="kw">use</span> matrix_ops, <span class="kw">only</span> : dot</span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a>    <span class="kw">use</span> funit</span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
@@ -577,14 +577,14 @@ again decorated with <strong><span class="citation">@Test</span></strong>:</p>
 <span id="cb4-30"><a href="#cb4-30" tabindex="-1" aria-label="code-block-4-30"></a>        @assertEqual(c, dot(a, b), message<span class="kw">=</span><span class="st">"Unexpected value returned from dot"</span>)</span>
 <span id="cb4-31"><a href="#cb4-31" tabindex="-1" aria-label="code-block-4-31"></a></span>
 <span id="cb4-32"><a href="#cb4-32" tabindex="-1" aria-label="code-block-4-32"></a>    <span class="kw">end subroutine</span> test_dot_all_zeros</span>
-<span id="cb4-33"><a href="#cb4-33" tabindex="-1" aria-label="code-block-4-33"></a><span class="kw">end module</span> test_dot</span></code></pre>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1" aria-label="code-block-4-33"></a><span class="kw">end module</span> test_matrix_ops_dot</span></code></pre>
 </div>
 <div id="accordionInstructor2" class="accordion instructor-note accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor2" aria-expanded="false" aria-controls="collapseInstructor2">
   <h3 class="accordion-header" id="headingInstructor2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor2" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor2" aria-labelledby="headingInstructor2">
+<div id="collapseInstructor2" class="accordion-collapse collapse" aria-labelledby="headingInstructor2" data-bs-parent="#accordionInstructor2">
 <div class="accordion-body">
 <p>To build and run this pFUnit version. Use the
 <strong>CMakeLists.txt</strong> below:</p>
@@ -656,7 +656,7 @@ test for the temperature conversion using pFUnit.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>A solution is provided in <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/writing-your-first-unit-test/solution" class="external-link">exercises/writing-your-first-unit-test/solution</a>.</p>
 </div>

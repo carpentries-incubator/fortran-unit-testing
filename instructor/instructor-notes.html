@@ -413,7 +413,7 @@ pFUnit.</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="kw">program</span> test_dot</span>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="kw">program</span> test_matrix_ops_dot</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a>    <span class="kw">use</span> matrix_ops, <span class="kw">only</span> : dot</span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
 <span id="cb2-4"><a href="#cb2-4" tabindex="-1" aria-label="code-block-2-4"></a></span>
@@ -423,7 +423,7 @@ pFUnit.</p>
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1" aria-label="code-block-2-8"></a>    <span class="dt">logical</span> <span class="dt">::</span> passed(<span class="dv">1</span>)</span>
 <span id="cb2-9"><a href="#cb2-9" tabindex="-1" aria-label="code-block-2-9"></a>    <span class="dt">character(len=200)</span> <span class="dt">::</span> failure_message(<span class="dv">1</span>)</span>
 <span id="cb2-10"><a href="#cb2-10" tabindex="-1" aria-label="code-block-2-10"></a></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1" aria-label="code-block-2-11"></a>    <span class="co">! Define set of tests for the dot_product</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1" aria-label="code-block-2-11"></a>    <span class="co">! Define set of tests for dot</span></span>
 <span id="cb2-12"><a href="#cb2-12" tabindex="-1" aria-label="code-block-2-12"></a>    <span class="kw">call</span> test_dot_one_to_twenty(passed(<span class="dv">1</span>), failure_message(<span class="dv">1</span>))</span>
 <span id="cb2-13"><a href="#cb2-13" tabindex="-1" aria-label="code-block-2-13"></a></span>
 <span id="cb2-14"><a href="#cb2-14" tabindex="-1" aria-label="code-block-2-14"></a>    <span class="kw">if</span> (<span class="fu">all</span>(passed)) <span class="kw">then</span></span>
@@ -461,7 +461,7 @@ pFUnit.</p>
 <span id="cb2-46"><a href="#cb2-46" tabindex="-1" aria-label="code-block-2-46"></a>        <span class="fu">write(</span>failure_message, <span class="st">'(A,I3,A,I3)'</span><span class="fu">)</span> <span class="st">"Expected "</span>, expected_c, <span class="st">" but got "</span>, actual_c</span>
 <span id="cb2-47"><a href="#cb2-47" tabindex="-1" aria-label="code-block-2-47"></a></span>
 <span id="cb2-48"><a href="#cb2-48" tabindex="-1" aria-label="code-block-2-48"></a>    <span class="kw">end subroutine</span> test_dot_one_to_twenty</span>
-<span id="cb2-49"><a href="#cb2-49" tabindex="-1" aria-label="code-block-2-49"></a><span class="kw">end program</span> test_dot</span></code></pre>
+<span id="cb2-49"><a href="#cb2-49" tabindex="-1" aria-label="code-block-2-49"></a><span class="kw">end program</span> test_matrix_ops_dot</span></code></pre>
 </div>
 <p>This should be able to be compiled with the command
 <code>gfortran matrix_ops.f90 test_dot.f90</code></p>

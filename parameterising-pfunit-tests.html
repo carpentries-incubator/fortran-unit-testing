@@ -329,7 +329,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Parameterising pFUnit tests</h1>
-        <p>Last updated on 2026-09-04 |
+        <p>Last updated on 2026-09-23 |
 
         <a href="https://github.com/carpentries-incubator/fortran-unit-testing/edit/main/episodes/parameterising-pfunit-tests.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -374,100 +374,101 @@ so:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="kw">module</span> test_dot_product_intrinsic</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a>    <span class="kw">use</span> funit</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a><span class="co">contains</span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a>    @Test</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a>    <span class="kw">subroutine</span> test_dot_product()</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a>        <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> a(:), b(:)</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1" aria-label="code-block-1-8"></a>        <span class="dt">integer</span> <span class="dt">::</span> c</span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1" aria-label="code-block-1-9"></a></span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1" aria-label="code-block-1-10"></a>        <span class="co">! allocate a and b</span></span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1" aria-label="code-block-1-11"></a>        <span class="kw">allocate</span>(a(<span class="dv">10</span>), b(<span class="dv">10</span>))</span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1" aria-label="code-block-1-12"></a></span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1" aria-label="code-block-1-13"></a>        <span class="co">! Define inputs and expected outputs for the scenario we want to test</span></span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1" aria-label="code-block-1-14"></a>        a <span class="kw">=</span> <span class="kw">[</span><span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span><span class="kw">]</span></span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1" aria-label="code-block-1-15"></a>        b <span class="kw">=</span> <span class="kw">[</span><span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">16</span>,<span class="dv">17</span>,<span class="dv">18</span>,<span class="dv">19</span>,<span class="dv">20</span><span class="kw">]</span></span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1" aria-label="code-block-1-16"></a>        c <span class="kw">=</span> <span class="dv">935</span></span>
-<span id="cb1-17"><a href="#cb1-17" tabindex="-1" aria-label="code-block-1-17"></a></span>
-<span id="cb1-18"><a href="#cb1-18" tabindex="-1" aria-label="code-block-1-18"></a>        <span class="co">! Check that the call to dot_product returned what we expect</span></span>
-<span id="cb1-19"><a href="#cb1-19" tabindex="-1" aria-label="code-block-1-19"></a>        @assertEqual(c, <span class="fu">dot_product</span>(a, b), message<span class="kw">=</span><span class="st">"Unexpected value returned for the dot_product"</span>)</span>
-<span id="cb1-20"><a href="#cb1-20" tabindex="-1" aria-label="code-block-1-20"></a></span>
-<span id="cb1-21"><a href="#cb1-21" tabindex="-1" aria-label="code-block-1-21"></a>        <span class="co">! Deallocate to cleanup (not technically necessary)</span></span>
-<span id="cb1-22"><a href="#cb1-22" tabindex="-1" aria-label="code-block-1-22"></a>        <span class="kw">deallocate</span>(a, b)</span>
-<span id="cb1-23"><a href="#cb1-23" tabindex="-1" aria-label="code-block-1-23"></a></span>
-<span id="cb1-24"><a href="#cb1-24" tabindex="-1" aria-label="code-block-1-24"></a>    <span class="kw">end subroutine</span> test_dot_product</span>
-<span id="cb1-25"><a href="#cb1-25" tabindex="-1" aria-label="code-block-1-25"></a></span>
-<span id="cb1-26"><a href="#cb1-26" tabindex="-1" aria-label="code-block-1-26"></a>    @Test</span>
-<span id="cb1-27"><a href="#cb1-27" tabindex="-1" aria-label="code-block-1-27"></a>    <span class="kw">subroutine</span> test_dot_product_all_zeros()</span>
-<span id="cb1-28"><a href="#cb1-28" tabindex="-1" aria-label="code-block-1-28"></a>        <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> a(:), b(:)</span>
-<span id="cb1-29"><a href="#cb1-29" tabindex="-1" aria-label="code-block-1-29"></a>        <span class="dt">integer</span> <span class="dt">::</span> c</span>
-<span id="cb1-30"><a href="#cb1-30" tabindex="-1" aria-label="code-block-1-30"></a></span>
-<span id="cb1-31"><a href="#cb1-31" tabindex="-1" aria-label="code-block-1-31"></a>        <span class="co">! allocate a and b</span></span>
-<span id="cb1-32"><a href="#cb1-32" tabindex="-1" aria-label="code-block-1-32"></a>        <span class="kw">allocate</span>(a(<span class="dv">10</span>), b(<span class="dv">10</span>))</span>
-<span id="cb1-33"><a href="#cb1-33" tabindex="-1" aria-label="code-block-1-33"></a></span>
-<span id="cb1-34"><a href="#cb1-34" tabindex="-1" aria-label="code-block-1-34"></a>        <span class="co">! Define inputs and expected outputs for the scenario we want to test</span></span>
-<span id="cb1-35"><a href="#cb1-35" tabindex="-1" aria-label="code-block-1-35"></a>        a <span class="kw">=</span> <span class="dv">0</span></span>
-<span id="cb1-36"><a href="#cb1-36" tabindex="-1" aria-label="code-block-1-36"></a>        b <span class="kw">=</span> <span class="dv">0</span></span>
-<span id="cb1-37"><a href="#cb1-37" tabindex="-1" aria-label="code-block-1-37"></a>        c <span class="kw">=</span> <span class="dv">0</span></span>
-<span id="cb1-38"><a href="#cb1-38" tabindex="-1" aria-label="code-block-1-38"></a></span>
-<span id="cb1-39"><a href="#cb1-39" tabindex="-1" aria-label="code-block-1-39"></a>        <span class="co">! Check that the call to dot_product returned what we expect</span></span>
-<span id="cb1-40"><a href="#cb1-40" tabindex="-1" aria-label="code-block-1-40"></a>        @assertEqual(c, <span class="fu">dot_product</span>(a, b), message<span class="kw">=</span><span class="st">"Unexpected value returned for the dot_product"</span>)</span>
-<span id="cb1-41"><a href="#cb1-41" tabindex="-1" aria-label="code-block-1-41"></a></span>
-<span id="cb1-42"><a href="#cb1-42" tabindex="-1" aria-label="code-block-1-42"></a>        <span class="co">! Deallocate to cleanup (not technically necessary)</span></span>
-<span id="cb1-43"><a href="#cb1-43" tabindex="-1" aria-label="code-block-1-43"></a>        <span class="kw">deallocate</span>(a, b)</span>
-<span id="cb1-44"><a href="#cb1-44" tabindex="-1" aria-label="code-block-1-44"></a></span>
-<span id="cb1-45"><a href="#cb1-45" tabindex="-1" aria-label="code-block-1-45"></a>    <span class="kw">end subroutine</span> test_dot_product_all_zeros</span>
-<span id="cb1-46"><a href="#cb1-46" tabindex="-1" aria-label="code-block-1-46"></a><span class="kw">end module</span> test_dot_product_intrinsic</span></code></pre>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="kw">module</span> test_matrix_ops_dot</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a>    <span class="kw">use</span> matrix_ops, <span class="kw">only</span> : dot</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a>    <span class="kw">use</span> funit</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a><span class="co">contains</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a>    @Test</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a>    <span class="kw">subroutine</span> test_dot_one_to_twenty()</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1" aria-label="code-block-1-8"></a>        <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> a(:), b(:)</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1" aria-label="code-block-1-9"></a>        <span class="dt">integer</span> <span class="dt">::</span> c</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1" aria-label="code-block-1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1" aria-label="code-block-1-11"></a>        <span class="co">! allocate a and b</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1" aria-label="code-block-1-12"></a>        <span class="kw">allocate</span>(a(<span class="dv">10</span>), b(<span class="dv">10</span>))</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1" aria-label="code-block-1-13"></a></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1" aria-label="code-block-1-14"></a>        <span class="co">! Define inputs and expected outputs for the scenario we want to test</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1" aria-label="code-block-1-15"></a>        a <span class="kw">=</span> <span class="kw">[</span><span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span><span class="kw">]</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1" aria-label="code-block-1-16"></a>        b <span class="kw">=</span> <span class="kw">[</span><span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">16</span>,<span class="dv">17</span>,<span class="dv">18</span>,<span class="dv">19</span>,<span class="dv">20</span><span class="kw">]</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1" aria-label="code-block-1-17"></a>        c <span class="kw">=</span> <span class="dv">935</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1" aria-label="code-block-1-18"></a></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1" aria-label="code-block-1-19"></a>        <span class="co">! Check that the call to dot returned what we expect</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1" aria-label="code-block-1-20"></a>        @assertEqual(c, dot(a, b), message<span class="kw">=</span><span class="st">"Unexpected value returned from dot"</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1" aria-label="code-block-1-21"></a></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1" aria-label="code-block-1-22"></a>        <span class="co">! Deallocate to cleanup (not technically necessary)</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1" aria-label="code-block-1-23"></a>        <span class="kw">deallocate</span>(a, b)</span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1" aria-label="code-block-1-24"></a></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1" aria-label="code-block-1-25"></a>    <span class="kw">end subroutine</span> test_dot_one_to_twenty</span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1" aria-label="code-block-1-26"></a></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1" aria-label="code-block-1-27"></a>    @Test</span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1" aria-label="code-block-1-28"></a>    <span class="kw">subroutine</span> test_dot_all_zeros()</span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1" aria-label="code-block-1-29"></a>        <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> a(:), b(:)</span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1" aria-label="code-block-1-30"></a>        <span class="dt">integer</span> <span class="dt">::</span> c</span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1" aria-label="code-block-1-31"></a></span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1" aria-label="code-block-1-32"></a>        <span class="co">! allocate a and b</span></span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1" aria-label="code-block-1-33"></a>        <span class="kw">allocate</span>(a(<span class="dv">10</span>), b(<span class="dv">10</span>))</span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1" aria-label="code-block-1-34"></a></span>
+<span id="cb1-35"><a href="#cb1-35" tabindex="-1" aria-label="code-block-1-35"></a>        <span class="co">! Define inputs and expected outputs for the scenario we want to test</span></span>
+<span id="cb1-36"><a href="#cb1-36" tabindex="-1" aria-label="code-block-1-36"></a>        a <span class="kw">=</span> <span class="dv">0</span></span>
+<span id="cb1-37"><a href="#cb1-37" tabindex="-1" aria-label="code-block-1-37"></a>        b <span class="kw">=</span> <span class="dv">0</span></span>
+<span id="cb1-38"><a href="#cb1-38" tabindex="-1" aria-label="code-block-1-38"></a>        c <span class="kw">=</span> <span class="dv">0</span></span>
+<span id="cb1-39"><a href="#cb1-39" tabindex="-1" aria-label="code-block-1-39"></a></span>
+<span id="cb1-40"><a href="#cb1-40" tabindex="-1" aria-label="code-block-1-40"></a>        <span class="co">! Check that the call to dot returned what we expect</span></span>
+<span id="cb1-41"><a href="#cb1-41" tabindex="-1" aria-label="code-block-1-41"></a>        @assertEqual(c, dot(a, b), message<span class="kw">=</span><span class="st">"Unexpected value returned from dot"</span>)</span>
+<span id="cb1-42"><a href="#cb1-42" tabindex="-1" aria-label="code-block-1-42"></a></span>
+<span id="cb1-43"><a href="#cb1-43" tabindex="-1" aria-label="code-block-1-43"></a>        <span class="co">! Deallocate to cleanup (not technically necessary)</span></span>
+<span id="cb1-44"><a href="#cb1-44" tabindex="-1" aria-label="code-block-1-44"></a>        <span class="kw">deallocate</span>(a, b)</span>
+<span id="cb1-45"><a href="#cb1-45" tabindex="-1" aria-label="code-block-1-45"></a></span>
+<span id="cb1-46"><a href="#cb1-46" tabindex="-1" aria-label="code-block-1-46"></a>    <span class="kw">end subroutine</span> test_dot_all_zeros</span>
+<span id="cb1-47"><a href="#cb1-47" tabindex="-1" aria-label="code-block-1-47"></a><span class="kw">end module</span> test_matrix_ops_dot</span></code></pre>
 </div>
 <p>However, it is generally better to minimise repeated code. Therefore,
 we can make use of another pFUnit pre-processor directive <strong><span class="citation">@TestCase</span></strong>:</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="kw">module</span> test_dot_product_intrinsic</span>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="kw">module</span> test_matrix_ops_dot</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a>    <span class="kw">use</span> funit</span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
 <span id="cb2-4"><a href="#cb2-4" tabindex="-1" aria-label="code-block-2-4"></a></span>
 <span id="cb2-5"><a href="#cb2-5" tabindex="-1" aria-label="code-block-2-5"></a>    <span class="co">!&gt; Custom test case type allowing a single definition of setup and tearDown logic</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1" aria-label="code-block-2-6"></a>    @TestCase(constructor<span class="kw">=</span>dot_product_test_case_constructor)</span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1" aria-label="code-block-2-7"></a>    <span class="dt">type</span>, extends(TestCase) <span class="dt">::</span> dot_product_test_case</span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1" aria-label="code-block-2-8"></a>        <span class="co">!&gt; The input array `a` to be passed to dot_product</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1" aria-label="code-block-2-6"></a>    @TestCase(constructor<span class="kw">=</span>dot_test_case_constructor)</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1" aria-label="code-block-2-7"></a>    <span class="dt">type</span>, extends(TestCase) <span class="dt">::</span> dot_test_case</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1" aria-label="code-block-2-8"></a>        <span class="co">!&gt; The input array `a` to be passed to dot</span></span>
 <span id="cb2-9"><a href="#cb2-9" tabindex="-1" aria-label="code-block-2-9"></a>        <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> a(:)</span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1" aria-label="code-block-2-10"></a>        <span class="co">!&gt; The input array `b` to be passed to dot_product</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1" aria-label="code-block-2-10"></a>        <span class="co">!&gt; The input array `b` to be passed to dot</span></span>
 <span id="cb2-11"><a href="#cb2-11" tabindex="-1" aria-label="code-block-2-11"></a>        <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> b(:)</span>
 <span id="cb2-12"><a href="#cb2-12" tabindex="-1" aria-label="code-block-2-12"></a>    <span class="kw">contains</span></span>
 <span id="cb2-13"><a href="#cb2-13" tabindex="-1" aria-label="code-block-2-13"></a>        <span class="co">!&gt; A type-bound procedure which will run after each test which, essentially,</span></span>
 <span id="cb2-14"><a href="#cb2-14" tabindex="-1" aria-label="code-block-2-14"></a>        <span class="co">!&gt; acts like a destructor for this type</span></span>
 <span id="cb2-15"><a href="#cb2-15" tabindex="-1" aria-label="code-block-2-15"></a>        <span class="kw">procedure</span> <span class="dt">::</span> tearDown</span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1" aria-label="code-block-2-16"></a>    <span class="dt">end type</span> dot_product_test_case</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1" aria-label="code-block-2-16"></a>    <span class="dt">end type</span> dot_test_case</span>
 <span id="cb2-17"><a href="#cb2-17" tabindex="-1" aria-label="code-block-2-17"></a></span>
 <span id="cb2-18"><a href="#cb2-18" tabindex="-1" aria-label="code-block-2-18"></a><span class="co">contains</span></span>
 <span id="cb2-19"><a href="#cb2-19" tabindex="-1" aria-label="code-block-2-19"></a></span>
 <span id="cb2-20"><a href="#cb2-20" tabindex="-1" aria-label="code-block-2-20"></a>    <span class="co">!&gt; Constructor for our custom test case type which allocates arrays `a` and `b`</span></span>
-<span id="cb2-21"><a href="#cb2-21" tabindex="-1" aria-label="code-block-2-21"></a>    <span class="kw">function</span> dot_product_test_case_constructor() <span class="kw">result</span>(newTestCase)</span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1" aria-label="code-block-2-21"></a>    <span class="kw">function</span> dot_test_case_constructor() <span class="kw">result</span>(newTestCase)</span>
 <span id="cb2-22"><a href="#cb2-22" tabindex="-1" aria-label="code-block-2-22"></a>        <span class="co">!&gt; The new instance of our custom test case type to be constructed</span></span>
-<span id="cb2-23"><a href="#cb2-23" tabindex="-1" aria-label="code-block-2-23"></a>        <span class="dt">type(dot_product_test_case)</span> <span class="dt">::</span> newTestCase</span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1" aria-label="code-block-2-23"></a>        <span class="dt">type(dot_test_case)</span> <span class="dt">::</span> newTestCase</span>
 <span id="cb2-24"><a href="#cb2-24" tabindex="-1" aria-label="code-block-2-24"></a></span>
 <span id="cb2-25"><a href="#cb2-25" tabindex="-1" aria-label="code-block-2-25"></a>        <span class="kw">allocate</span>(newTestCase<span class="op">%</span>a(<span class="dv">10</span>))</span>
 <span id="cb2-26"><a href="#cb2-26" tabindex="-1" aria-label="code-block-2-26"></a>        <span class="kw">allocate</span>(newTestCase<span class="op">%</span>b(<span class="dv">10</span>))</span>
-<span id="cb2-27"><a href="#cb2-27" tabindex="-1" aria-label="code-block-2-27"></a>    <span class="kw">end function</span> dot_product_test_case_constructor</span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1" aria-label="code-block-2-27"></a>    <span class="kw">end function</span> dot_test_case_constructor</span>
 <span id="cb2-28"><a href="#cb2-28" tabindex="-1" aria-label="code-block-2-28"></a></span>
 <span id="cb2-29"><a href="#cb2-29" tabindex="-1" aria-label="code-block-2-29"></a>    <span class="co">!&gt; Essentially a destructor for our custom test case type which deallocates</span></span>
 <span id="cb2-30"><a href="#cb2-30" tabindex="-1" aria-label="code-block-2-30"></a>    <span class="co">!&gt; arrays `a` and `b`</span></span>
 <span id="cb2-31"><a href="#cb2-31" tabindex="-1" aria-label="code-block-2-31"></a>    <span class="kw">subroutine</span> tearDown(this)</span>
 <span id="cb2-32"><a href="#cb2-32" tabindex="-1" aria-label="code-block-2-32"></a>        <span class="co">!&gt; The instance of our custom test case type which we want to teardown</span></span>
-<span id="cb2-33"><a href="#cb2-33" tabindex="-1" aria-label="code-block-2-33"></a>        class(dot_product_test_case), <span class="dt">intent(inout)</span> <span class="dt">::</span> this</span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1" aria-label="code-block-2-33"></a>        class(dot_test_case), <span class="dt">intent(inout)</span> <span class="dt">::</span> this</span>
 <span id="cb2-34"><a href="#cb2-34" tabindex="-1" aria-label="code-block-2-34"></a></span>
 <span id="cb2-35"><a href="#cb2-35" tabindex="-1" aria-label="code-block-2-35"></a>        <span class="kw">deallocate</span>(this<span class="op">%</span>a)</span>
 <span id="cb2-36"><a href="#cb2-36" tabindex="-1" aria-label="code-block-2-36"></a>        <span class="kw">deallocate</span>(this<span class="op">%</span>b)</span>
 <span id="cb2-37"><a href="#cb2-37" tabindex="-1" aria-label="code-block-2-37"></a>    <span class="kw">end subroutine</span> tearDown</span>
 <span id="cb2-38"><a href="#cb2-38" tabindex="-1" aria-label="code-block-2-38"></a></span>
 <span id="cb2-39"><a href="#cb2-39" tabindex="-1" aria-label="code-block-2-39"></a>    @Test</span>
-<span id="cb2-40"><a href="#cb2-40" tabindex="-1" aria-label="code-block-2-40"></a>    <span class="kw">subroutine</span> test_dot_product(this)</span>
+<span id="cb2-40"><a href="#cb2-40" tabindex="-1" aria-label="code-block-2-40"></a>    <span class="kw">subroutine</span> test_dot_one_to_twenty(this)</span>
 <span id="cb2-41"><a href="#cb2-41" tabindex="-1" aria-label="code-block-2-41"></a>        <span class="co">!&gt; The instance of our test case type for this test</span></span>
-<span id="cb2-42"><a href="#cb2-42" tabindex="-1" aria-label="code-block-2-42"></a>        class(dot_product_test_case), <span class="dt">intent(inout)</span> <span class="dt">::</span> this</span>
+<span id="cb2-42"><a href="#cb2-42" tabindex="-1" aria-label="code-block-2-42"></a>        class(dot_test_case), <span class="dt">intent(inout)</span> <span class="dt">::</span> this</span>
 <span id="cb2-43"><a href="#cb2-43" tabindex="-1" aria-label="code-block-2-43"></a>        <span class="dt">integer</span> <span class="dt">::</span> c</span>
 <span id="cb2-44"><a href="#cb2-44" tabindex="-1" aria-label="code-block-2-44"></a></span>
 <span id="cb2-45"><a href="#cb2-45" tabindex="-1" aria-label="code-block-2-45"></a>        <span class="co">! Define inputs and expected outputs for the scenario we want to test</span></span>
@@ -475,14 +476,14 @@ we can make use of another pFUnit pre-processor directive <strong><span class="c
 <span id="cb2-47"><a href="#cb2-47" tabindex="-1" aria-label="code-block-2-47"></a>        this<span class="op">%</span>b <span class="kw">=</span> <span class="kw">[</span><span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">16</span>,<span class="dv">17</span>,<span class="dv">18</span>,<span class="dv">19</span>,<span class="dv">20</span><span class="kw">]</span></span>
 <span id="cb2-48"><a href="#cb2-48" tabindex="-1" aria-label="code-block-2-48"></a>        c <span class="kw">=</span> <span class="dv">935</span></span>
 <span id="cb2-49"><a href="#cb2-49" tabindex="-1" aria-label="code-block-2-49"></a></span>
-<span id="cb2-50"><a href="#cb2-50" tabindex="-1" aria-label="code-block-2-50"></a>        <span class="co">! Check that the call to dot_product returned what we expect</span></span>
-<span id="cb2-51"><a href="#cb2-51" tabindex="-1" aria-label="code-block-2-51"></a>        @assertEqual(c, <span class="fu">dot_product</span>(this<span class="op">%</span>a, this<span class="op">%</span>b), message<span class="kw">=</span><span class="st">"Unexpected value returned for the dot_product"</span>)</span>
-<span id="cb2-52"><a href="#cb2-52" tabindex="-1" aria-label="code-block-2-52"></a>    <span class="kw">end subroutine</span> test_dot_product</span>
+<span id="cb2-50"><a href="#cb2-50" tabindex="-1" aria-label="code-block-2-50"></a>        <span class="co">! Check that the call to dot returned what we expect</span></span>
+<span id="cb2-51"><a href="#cb2-51" tabindex="-1" aria-label="code-block-2-51"></a>        @assertEqual(c, dot(this<span class="op">%</span>a, this<span class="op">%</span>b), message<span class="kw">=</span><span class="st">"Unexpected value returned from dot"</span>)</span>
+<span id="cb2-52"><a href="#cb2-52" tabindex="-1" aria-label="code-block-2-52"></a>    <span class="kw">end subroutine</span> test_dot_one_to_twenty</span>
 <span id="cb2-53"><a href="#cb2-53" tabindex="-1" aria-label="code-block-2-53"></a></span>
 <span id="cb2-54"><a href="#cb2-54" tabindex="-1" aria-label="code-block-2-54"></a>    @Test</span>
-<span id="cb2-55"><a href="#cb2-55" tabindex="-1" aria-label="code-block-2-55"></a>    <span class="kw">subroutine</span> test_dot_product_all_zeros(this)</span>
+<span id="cb2-55"><a href="#cb2-55" tabindex="-1" aria-label="code-block-2-55"></a>    <span class="kw">subroutine</span> test_dot_all_zeros(this)</span>
 <span id="cb2-56"><a href="#cb2-56" tabindex="-1" aria-label="code-block-2-56"></a>        <span class="co">!&gt; The instance of our test case type for this test</span></span>
-<span id="cb2-57"><a href="#cb2-57" tabindex="-1" aria-label="code-block-2-57"></a>        class(dot_product_test_case), <span class="dt">intent(inout)</span> <span class="dt">::</span> this</span>
+<span id="cb2-57"><a href="#cb2-57" tabindex="-1" aria-label="code-block-2-57"></a>        class(dot_test_case), <span class="dt">intent(inout)</span> <span class="dt">::</span> this</span>
 <span id="cb2-58"><a href="#cb2-58" tabindex="-1" aria-label="code-block-2-58"></a>        <span class="dt">integer</span> <span class="dt">::</span> c</span>
 <span id="cb2-59"><a href="#cb2-59" tabindex="-1" aria-label="code-block-2-59"></a></span>
 <span id="cb2-60"><a href="#cb2-60" tabindex="-1" aria-label="code-block-2-60"></a>        <span class="co">! Define inputs and expected outputs for the scenario we want to test</span></span>
@@ -490,24 +491,23 @@ we can make use of another pFUnit pre-processor directive <strong><span class="c
 <span id="cb2-62"><a href="#cb2-62" tabindex="-1" aria-label="code-block-2-62"></a>        this<span class="op">%</span>b <span class="kw">=</span> <span class="dv">0</span></span>
 <span id="cb2-63"><a href="#cb2-63" tabindex="-1" aria-label="code-block-2-63"></a>        c <span class="kw">=</span> <span class="dv">0</span></span>
 <span id="cb2-64"><a href="#cb2-64" tabindex="-1" aria-label="code-block-2-64"></a></span>
-<span id="cb2-65"><a href="#cb2-65" tabindex="-1" aria-label="code-block-2-65"></a>        <span class="co">! Check that the call to dot_product returned what we expect</span></span>
-<span id="cb2-66"><a href="#cb2-66" tabindex="-1" aria-label="code-block-2-66"></a>        @assertEqual(c, <span class="fu">dot_product</span>(this<span class="op">%</span>a, this<span class="op">%</span>b), message<span class="kw">=</span><span class="st">"Unexpected value returned for the dot_product"</span>)</span>
-<span id="cb2-67"><a href="#cb2-67" tabindex="-1" aria-label="code-block-2-67"></a>    <span class="kw">end subroutine</span> test_dot_product_all_zeros</span>
-<span id="cb2-68"><a href="#cb2-68" tabindex="-1" aria-label="code-block-2-68"></a><span class="kw">end module</span> test_dot_product_intrinsic</span></code></pre>
+<span id="cb2-65"><a href="#cb2-65" tabindex="-1" aria-label="code-block-2-65"></a>        <span class="co">! Check that the call to dot returned what we expect</span></span>
+<span id="cb2-66"><a href="#cb2-66" tabindex="-1" aria-label="code-block-2-66"></a>        @assertEqual(c, dot(this<span class="op">%</span>a, this<span class="op">%</span>b), message<span class="kw">=</span><span class="st">"Unexpected value returned from dot"</span>)</span>
+<span id="cb2-67"><a href="#cb2-67" tabindex="-1" aria-label="code-block-2-67"></a>    <span class="kw">end subroutine</span> test_dot_all_zeros</span>
+<span id="cb2-68"><a href="#cb2-68" tabindex="-1" aria-label="code-block-2-68"></a><span class="kw">end module</span> test_matrix_ops_dot</span></code></pre>
 </div>
 <p>There are a few key things we have done in the above code:</p>
-<ul><li>Defined our own custom derived type
-<strong>dot_product_test_case</strong> which contains the two arrays
-<strong>a</strong> and <strong>b</strong> as type-bound parameters.</li>
+<ul><li>Defined our own custom derived type <strong>dot_test_case</strong>
+which contains the two arrays <strong>a</strong> and <strong>b</strong>
+as type-bound parameters.</li>
 <li>
-<strong>dot_product_test_case</strong> also contains a type-bound
-procedures <strong>tearDown</strong> which deallocates
-<strong>a</strong> and <strong>b</strong>.</li>
+<strong>dot_test_case</strong> also contains a type-bound procedures
+<strong>tearDown</strong> which deallocates <strong>a</strong> and
+<strong>b</strong>.</li>
 <li>To first allocate <strong>a</strong> and <strong>b</strong> we have
-defined a constructor
-<strong>dot_product_test_case_constructor</strong>.</li>
+defined a constructor <strong>dot_test_case_constructor</strong>.</li>
 <li>These two procedures, <strong>tearDown</strong> and
-<strong>dot_product_test_case_constructor</strong>, allow us to move the
+<strong>dot_test_case_constructor</strong>, allow us to move the
 previously repeated logic to one location.</li>
 <li>Finally, to ensure our new custom type is understood and used
 correctly by pFUnit, we must include two things in it’s definition:
@@ -515,32 +515,32 @@ correctly by pFUnit, we must include two things in it’s definition:
 <strong>TestCase</strong>.</li>
 <li>Decorate this new type with the pre-processor directive
 <strong><span class="citation">@TestCase</span></strong>, ensuring that
-we pass <strong>dot_product_test_case_constructor</strong> as the
+we pass <strong>dot_test_case_constructor</strong> as the
 constructor.</li>
 </ol></li>
 </ul></section><section><h2 class="section-heading" id="parameterising-tests">Parameterising tests<a class="anchor" aria-label="anchor" href="#parameterising-tests"></a></h2>
 <hr class="half-width"><p>By defining a custom test case type, we have begun to reduce
 repetition within our test. However, there is further repetition to be
 removed. For example, in both <strong><span class="citation">@Test</span></strong>’s we are calling
-<strong>dot_product</strong> and running the same assertion. To remove
-this, we can paramaterise our test. This is done by defining a new
-custom type <strong>dot_product_test_parameters</strong>:</p>
+<strong>dot</strong> and running the same assertion. To remove this, we
+can paramaterise our test. This is done by defining a new custom type
+<strong>dot_test_parameters</strong>:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="kw">module</span> test_dot_product_intrinsic</span>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="kw">module</span> test_matrix_ops_dot</span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a>    <span class="kw">use</span> funit</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a></span>
 <span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a>    <span class="co">!&gt; Custom test parameters type containing all of the inputs and expected</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a>    <span class="co">!! outputs of the intrinsic dot_product</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a>    <span class="co">!! outputs of dot</span></span>
 <span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a>    @TestParameter</span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1" aria-label="code-block-3-8"></a>    <span class="dt">type</span>, extends(AbstractTestParameter) <span class="dt">::</span> dot_product_test_parameters</span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1" aria-label="code-block-3-9"></a>        <span class="co">!&gt; The input array `a` to be passed to dot_product</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1" aria-label="code-block-3-8"></a>    <span class="dt">type</span>, extends(AbstractTestParameter) <span class="dt">::</span> dot_test_parameters</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1" aria-label="code-block-3-9"></a>        <span class="co">!&gt; The input array `a` to be passed to dot</span></span>
 <span id="cb3-10"><a href="#cb3-10" tabindex="-1" aria-label="code-block-3-10"></a>        <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> a(:)</span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1" aria-label="code-block-3-11"></a>        <span class="co">!&gt; The input array `b` to be passed to dot_product</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1" aria-label="code-block-3-11"></a>        <span class="co">!&gt; The input array `b` to be passed to dot</span></span>
 <span id="cb3-12"><a href="#cb3-12" tabindex="-1" aria-label="code-block-3-12"></a>        <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> b(:)</span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1" aria-label="code-block-3-13"></a>        <span class="co">!&gt; The expected value to be returned from dot_product</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1" aria-label="code-block-3-13"></a>        <span class="co">!&gt; The expected value to be returned from dot</span></span>
 <span id="cb3-14"><a href="#cb3-14" tabindex="-1" aria-label="code-block-3-14"></a>        <span class="dt">integer</span> <span class="dt">::</span> expected_dot_product</span>
 <span id="cb3-15"><a href="#cb3-15" tabindex="-1" aria-label="code-block-3-15"></a>        <span class="co">!&gt; A description of the test to be outputted for logging</span></span>
 <span id="cb3-16"><a href="#cb3-16" tabindex="-1" aria-label="code-block-3-16"></a>        <span class="dt">character(len=100)</span> <span class="dt">::</span> description</span>
@@ -548,25 +548,25 @@ custom type <strong>dot_product_test_parameters</strong>:</p>
 <span id="cb3-18"><a href="#cb3-18" tabindex="-1" aria-label="code-block-3-18"></a>        <span class="co">!&gt; The required type-bound procedure for converting an instance</span></span>
 <span id="cb3-19"><a href="#cb3-19" tabindex="-1" aria-label="code-block-3-19"></a>        <span class="co">!&gt; of this type to a string for logging</span></span>
 <span id="cb3-20"><a href="#cb3-20" tabindex="-1" aria-label="code-block-3-20"></a>        <span class="kw">procedure</span> <span class="dt">::</span> toString</span>
-<span id="cb3-21"><a href="#cb3-21" tabindex="-1" aria-label="code-block-3-21"></a>    <span class="dt">end type</span> dot_product_test_parameters</span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1" aria-label="code-block-3-21"></a>    <span class="dt">end type</span> dot_test_parameters</span>
 <span id="cb3-22"><a href="#cb3-22" tabindex="-1" aria-label="code-block-3-22"></a></span>
 <span id="cb3-23"><a href="#cb3-23" tabindex="-1" aria-label="code-block-3-23"></a>    <span class="co">!&gt; Custom test case type allowing a single definition of tearDown logic.</span></span>
 <span id="cb3-24"><a href="#cb3-24" tabindex="-1" aria-label="code-block-3-24"></a>    <span class="co">!! If teardown is not required, This could also be thought of as boilerplate</span></span>
 <span id="cb3-25"><a href="#cb3-25" tabindex="-1" aria-label="code-block-3-25"></a>    <span class="co">!! required to make the parameters available within our @Test.</span></span>
-<span id="cb3-26"><a href="#cb3-26" tabindex="-1" aria-label="code-block-3-26"></a>    @TestCase(constructor<span class="kw">=</span>dot_product_test_case_constructor)</span>
-<span id="cb3-27"><a href="#cb3-27" tabindex="-1" aria-label="code-block-3-27"></a>    <span class="dt">type</span>, extends(ParameterizedTestCase) <span class="dt">::</span> dot_product_test_case</span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1" aria-label="code-block-3-26"></a>    @TestCase(constructor<span class="kw">=</span>dot_test_case_constructor)</span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1" aria-label="code-block-3-27"></a>    <span class="dt">type</span>, extends(ParameterizedTestCase) <span class="dt">::</span> dot_test_case</span>
 <span id="cb3-28"><a href="#cb3-28" tabindex="-1" aria-label="code-block-3-28"></a>        <span class="co">!&gt; The instance of our test parameters type to be used within the test logic</span></span>
-<span id="cb3-29"><a href="#cb3-29" tabindex="-1" aria-label="code-block-3-29"></a>        <span class="dt">type(dot_product_test_parameters)</span> <span class="dt">::</span> params</span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1" aria-label="code-block-3-29"></a>        <span class="dt">type(dot_test_parameters)</span> <span class="dt">::</span> params</span>
 <span id="cb3-30"><a href="#cb3-30" tabindex="-1" aria-label="code-block-3-30"></a>    <span class="kw">contains</span></span>
 <span id="cb3-31"><a href="#cb3-31" tabindex="-1" aria-label="code-block-3-31"></a>        <span class="kw">procedure</span> <span class="dt">::</span> tearDown</span>
-<span id="cb3-32"><a href="#cb3-32" tabindex="-1" aria-label="code-block-3-32"></a>    <span class="dt">end type</span> dot_product_test_case</span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1" aria-label="code-block-3-32"></a>    <span class="dt">end type</span> dot_test_case</span>
 <span id="cb3-33"><a href="#cb3-33" tabindex="-1" aria-label="code-block-3-33"></a></span>
 <span id="cb3-34"><a href="#cb3-34" tabindex="-1" aria-label="code-block-3-34"></a><span class="co">contains</span></span>
 <span id="cb3-35"><a href="#cb3-35" tabindex="-1" aria-label="code-block-3-35"></a></span>
 <span id="cb3-36"><a href="#cb3-36" tabindex="-1" aria-label="code-block-3-36"></a>    <span class="co">!&gt; Trims and returns the description of the parameter set. The string returned</span></span>
 <span id="cb3-37"><a href="#cb3-37" tabindex="-1" aria-label="code-block-3-37"></a>    <span class="co">!! by this function will be included by pFUnit in the name of this test</span></span>
 <span id="cb3-38"><a href="#cb3-38" tabindex="-1" aria-label="code-block-3-38"></a>    <span class="kw">function</span> toString(this) <span class="kw">result</span>(string)</span>
-<span id="cb3-39"><a href="#cb3-39" tabindex="-1" aria-label="code-block-3-39"></a>        class (dot_product_test_parameters), <span class="dt">intent(in)</span> <span class="dt">::</span> this</span>
+<span id="cb3-39"><a href="#cb3-39" tabindex="-1" aria-label="code-block-3-39"></a>        class (dot_test_parameters), <span class="dt">intent(in)</span> <span class="dt">::</span> this</span>
 <span id="cb3-40"><a href="#cb3-40" tabindex="-1" aria-label="code-block-3-40"></a>        <span class="dt">character(:)</span>, <span class="dt">allocatable</span> <span class="dt">::</span> string</span>
 <span id="cb3-41"><a href="#cb3-41" tabindex="-1" aria-label="code-block-3-41"></a></span>
 <span id="cb3-42"><a href="#cb3-42" tabindex="-1" aria-label="code-block-3-42"></a>        string <span class="kw">=</span> <span class="fu">trim</span>(this<span class="op">%</span>description)</span>
@@ -574,18 +574,18 @@ custom type <strong>dot_product_test_parameters</strong>:</p>
 <span id="cb3-44"><a href="#cb3-44" tabindex="-1" aria-label="code-block-3-44"></a></span>
 <span id="cb3-45"><a href="#cb3-45" tabindex="-1" aria-label="code-block-3-45"></a>    <span class="co">!&gt; Boilerplate constructor required to convert our custom parameters type to</span></span>
 <span id="cb3-46"><a href="#cb3-46" tabindex="-1" aria-label="code-block-3-46"></a>    <span class="co">!! the test case type.</span></span>
-<span id="cb3-47"><a href="#cb3-47" tabindex="-1" aria-label="code-block-3-47"></a>    <span class="kw">function</span> dot_product_test_case_constructor(testParameters) <span class="kw">result</span>(newTestCase)</span>
-<span id="cb3-48"><a href="#cb3-48" tabindex="-1" aria-label="code-block-3-48"></a>        <span class="dt">type(dot_product_test_parameters)</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> testParameters</span>
-<span id="cb3-49"><a href="#cb3-49" tabindex="-1" aria-label="code-block-3-49"></a>        <span class="dt">type(dot_product_test_case)</span> <span class="dt">::</span> newTestCase</span>
+<span id="cb3-47"><a href="#cb3-47" tabindex="-1" aria-label="code-block-3-47"></a>    <span class="kw">function</span> dot_test_case_constructor(testParameters) <span class="kw">result</span>(newTestCase)</span>
+<span id="cb3-48"><a href="#cb3-48" tabindex="-1" aria-label="code-block-3-48"></a>        <span class="dt">type(dot_test_parameters)</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> testParameters</span>
+<span id="cb3-49"><a href="#cb3-49" tabindex="-1" aria-label="code-block-3-49"></a>        <span class="dt">type(dot_test_case)</span> <span class="dt">::</span> newTestCase</span>
 <span id="cb3-50"><a href="#cb3-50" tabindex="-1" aria-label="code-block-3-50"></a></span>
 <span id="cb3-51"><a href="#cb3-51" tabindex="-1" aria-label="code-block-3-51"></a>        newTestCase<span class="op">%</span>params <span class="kw">=</span> testParameters</span>
-<span id="cb3-52"><a href="#cb3-52" tabindex="-1" aria-label="code-block-3-52"></a>    <span class="kw">end function</span> dot_product_test_case_constructor</span>
+<span id="cb3-52"><a href="#cb3-52" tabindex="-1" aria-label="code-block-3-52"></a>    <span class="kw">end function</span> dot_test_case_constructor</span>
 <span id="cb3-53"><a href="#cb3-53" tabindex="-1" aria-label="code-block-3-53"></a></span>
 <span id="cb3-54"><a href="#cb3-54" tabindex="-1" aria-label="code-block-3-54"></a>    <span class="co">!&gt; Essentially a destructor for our custom test case type which deallocates</span></span>
 <span id="cb3-55"><a href="#cb3-55" tabindex="-1" aria-label="code-block-3-55"></a>    <span class="co">!! arrays `a` and `b`</span></span>
 <span id="cb3-56"><a href="#cb3-56" tabindex="-1" aria-label="code-block-3-56"></a>    <span class="kw">subroutine</span> tearDown(this)</span>
 <span id="cb3-57"><a href="#cb3-57" tabindex="-1" aria-label="code-block-3-57"></a>        <span class="co">!&gt; The instance of our custom test case type which we want to teardown</span></span>
-<span id="cb3-58"><a href="#cb3-58" tabindex="-1" aria-label="code-block-3-58"></a>        class(dot_product_test_case), <span class="dt">intent(inout)</span> <span class="dt">::</span> this</span>
+<span id="cb3-58"><a href="#cb3-58" tabindex="-1" aria-label="code-block-3-58"></a>        class(dot_test_case), <span class="dt">intent(inout)</span> <span class="dt">::</span> this</span>
 <span id="cb3-59"><a href="#cb3-59" tabindex="-1" aria-label="code-block-3-59"></a></span>
 <span id="cb3-60"><a href="#cb3-60" tabindex="-1" aria-label="code-block-3-60"></a>        <span class="kw">deallocate</span>(this<span class="op">%</span>params<span class="op">%</span>a)</span>
 <span id="cb3-61"><a href="#cb3-61" tabindex="-1" aria-label="code-block-3-61"></a>        <span class="kw">deallocate</span>(this<span class="op">%</span>params<span class="op">%</span>b)</span>
@@ -593,9 +593,9 @@ custom type <strong>dot_product_test_parameters</strong>:</p>
 <span id="cb3-63"><a href="#cb3-63" tabindex="-1" aria-label="code-block-3-63"></a></span>
 <span id="cb3-64"><a href="#cb3-64" tabindex="-1" aria-label="code-block-3-64"></a>    <span class="co">!&gt; The test suite in which parameter sets (inputs and expected outputs) for each</span></span>
 <span id="cb3-65"><a href="#cb3-65" tabindex="-1" aria-label="code-block-3-65"></a>    <span class="co">!! test are defined.</span></span>
-<span id="cb3-66"><a href="#cb3-66" tabindex="-1" aria-label="code-block-3-66"></a>    <span class="kw">function</span> dot_product_test_suite() <span class="kw">result</span>(parameter_sets)</span>
+<span id="cb3-66"><a href="#cb3-66" tabindex="-1" aria-label="code-block-3-66"></a>    <span class="kw">function</span> dot_test_suite() <span class="kw">result</span>(parameter_sets)</span>
 <span id="cb3-67"><a href="#cb3-67" tabindex="-1" aria-label="code-block-3-67"></a>        <span class="co">!&gt; The array of parameter sets to be returned</span></span>
-<span id="cb3-68"><a href="#cb3-68" tabindex="-1" aria-label="code-block-3-68"></a>        <span class="dt">type(dot_product_test_parameters)</span> <span class="dt">::</span> parameter_sets(<span class="dv">2</span>)</span>
+<span id="cb3-68"><a href="#cb3-68" tabindex="-1" aria-label="code-block-3-68"></a>        <span class="dt">type(dot_test_parameters)</span> <span class="dt">::</span> parameter_sets(<span class="dv">2</span>)</span>
 <span id="cb3-69"><a href="#cb3-69" tabindex="-1" aria-label="code-block-3-69"></a></span>
 <span id="cb3-70"><a href="#cb3-70" tabindex="-1" aria-label="code-block-3-70"></a>        <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> a(:), b(:)</span>
 <span id="cb3-71"><a href="#cb3-71" tabindex="-1" aria-label="code-block-3-71"></a>        <span class="dt">integer</span> <span class="dt">::</span> c</span>
@@ -607,30 +607,30 @@ custom type <strong>dot_product_test_parameters</strong>:</p>
 <span id="cb3-77"><a href="#cb3-77" tabindex="-1" aria-label="code-block-3-77"></a>        a <span class="kw">=</span> <span class="kw">[</span><span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span><span class="kw">]</span></span>
 <span id="cb3-78"><a href="#cb3-78" tabindex="-1" aria-label="code-block-3-78"></a>        b <span class="kw">=</span> <span class="kw">[</span><span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">16</span>,<span class="dv">17</span>,<span class="dv">18</span>,<span class="dv">19</span>,<span class="dv">20</span><span class="kw">]</span></span>
 <span id="cb3-79"><a href="#cb3-79" tabindex="-1" aria-label="code-block-3-79"></a>        c <span class="kw">=</span> <span class="dv">935</span></span>
-<span id="cb3-80"><a href="#cb3-80" tabindex="-1" aria-label="code-block-3-80"></a>        <span class="co">! Here `dot_product_test_parameters` is a default constructor generated by our</span></span>
+<span id="cb3-80"><a href="#cb3-80" tabindex="-1" aria-label="code-block-3-80"></a>        <span class="co">! Here `dot_test_parameters` is a default constructor generated by our</span></span>
 <span id="cb3-81"><a href="#cb3-81" tabindex="-1" aria-label="code-block-3-81"></a>        <span class="co">! type definition</span></span>
-<span id="cb3-82"><a href="#cb3-82" tabindex="-1" aria-label="code-block-3-82"></a>        parameter_sets(<span class="dv">1</span>) <span class="kw">=</span> dot_product_test_parameters(a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
+<span id="cb3-82"><a href="#cb3-82" tabindex="-1" aria-label="code-block-3-82"></a>        parameter_sets(<span class="dv">1</span>) <span class="kw">=</span> dot_test_parameters(a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
 <span id="cb3-83"><a href="#cb3-83" tabindex="-1" aria-label="code-block-3-83"></a></span>
 <span id="cb3-84"><a href="#cb3-84" tabindex="-1" aria-label="code-block-3-84"></a>        <span class="co">! Parameter set 2</span></span>
 <span id="cb3-85"><a href="#cb3-85" tabindex="-1" aria-label="code-block-3-85"></a>        a <span class="kw">=</span> <span class="dv">0</span></span>
 <span id="cb3-86"><a href="#cb3-86" tabindex="-1" aria-label="code-block-3-86"></a>        b <span class="kw">=</span> <span class="dv">0</span></span>
 <span id="cb3-87"><a href="#cb3-87" tabindex="-1" aria-label="code-block-3-87"></a>        c <span class="kw">=</span> <span class="dv">0</span></span>
-<span id="cb3-88"><a href="#cb3-88" tabindex="-1" aria-label="code-block-3-88"></a>        parameter_sets(<span class="dv">2</span>) <span class="kw">=</span> dot_product_test_parameters(a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
+<span id="cb3-88"><a href="#cb3-88" tabindex="-1" aria-label="code-block-3-88"></a>        parameter_sets(<span class="dv">2</span>) <span class="kw">=</span> dot_test_parameters(a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
 <span id="cb3-89"><a href="#cb3-89" tabindex="-1" aria-label="code-block-3-89"></a></span>
 <span id="cb3-90"><a href="#cb3-90" tabindex="-1" aria-label="code-block-3-90"></a>        <span class="co">! Deallocate the temporary stores of a and b for completeness</span></span>
 <span id="cb3-91"><a href="#cb3-91" tabindex="-1" aria-label="code-block-3-91"></a>        <span class="kw">deallocate</span>(a, b)</span>
-<span id="cb3-92"><a href="#cb3-92" tabindex="-1" aria-label="code-block-3-92"></a>    <span class="kw">end function</span> dot_product_test_suite</span>
+<span id="cb3-92"><a href="#cb3-92" tabindex="-1" aria-label="code-block-3-92"></a>    <span class="kw">end function</span> dot_test_suite</span>
 <span id="cb3-93"><a href="#cb3-93" tabindex="-1" aria-label="code-block-3-93"></a></span>
 <span id="cb3-94"><a href="#cb3-94" tabindex="-1" aria-label="code-block-3-94"></a></span>
-<span id="cb3-95"><a href="#cb3-95" tabindex="-1" aria-label="code-block-3-95"></a>    @Test(testParameters<span class="kw">={</span>dot_product_test_suite()<span class="kw">}</span>)</span>
-<span id="cb3-96"><a href="#cb3-96" tabindex="-1" aria-label="code-block-3-96"></a>    <span class="kw">subroutine</span> test_dot_product(this)</span>
+<span id="cb3-95"><a href="#cb3-95" tabindex="-1" aria-label="code-block-3-95"></a>    @Test(testParameters<span class="kw">={</span>dot_test_suite()<span class="kw">}</span>)</span>
+<span id="cb3-96"><a href="#cb3-96" tabindex="-1" aria-label="code-block-3-96"></a>    <span class="kw">subroutine</span> test_dot(this)</span>
 <span id="cb3-97"><a href="#cb3-97" tabindex="-1" aria-label="code-block-3-97"></a>        <span class="co">!&gt; The instance of our test case type for this test</span></span>
-<span id="cb3-98"><a href="#cb3-98" tabindex="-1" aria-label="code-block-3-98"></a>        class(dot_product_test_case), <span class="dt">intent(inout)</span> <span class="dt">::</span> this</span>
+<span id="cb3-98"><a href="#cb3-98" tabindex="-1" aria-label="code-block-3-98"></a>        class(dot_test_case), <span class="dt">intent(inout)</span> <span class="dt">::</span> this</span>
 <span id="cb3-99"><a href="#cb3-99" tabindex="-1" aria-label="code-block-3-99"></a></span>
-<span id="cb3-100"><a href="#cb3-100" tabindex="-1" aria-label="code-block-3-100"></a>        <span class="co">! Check that the call to dot_product returned what we expect</span></span>
-<span id="cb3-101"><a href="#cb3-101" tabindex="-1" aria-label="code-block-3-101"></a>        @AssertEqual(this<span class="op">%</span>params<span class="op">%</span>expected_dot_product, <span class="fu">dot_product</span>(this<span class="op">%</span><span class="co">params%a, this%params%b), message="Unexpected value returned for the dot_product")</span></span>
-<span id="cb3-102"><a href="#cb3-102" tabindex="-1" aria-label="code-block-3-102"></a>    <span class="kw">end subroutine</span> test_dot_product</span>
-<span id="cb3-103"><a href="#cb3-103" tabindex="-1" aria-label="code-block-3-103"></a><span class="kw">end module</span> test_dot_product_intrinsic</span></code></pre>
+<span id="cb3-100"><a href="#cb3-100" tabindex="-1" aria-label="code-block-3-100"></a>        <span class="co">! Check that the call to dot returned what we expect</span></span>
+<span id="cb3-101"><a href="#cb3-101" tabindex="-1" aria-label="code-block-3-101"></a>        @AssertEqual(this<span class="op">%</span>params<span class="op">%</span>expected_dot_product, dot(this<span class="op">%</span>params<span class="op">%</span>a<span class="co">, this%params%b), message="Unexpected value returned from dot")</span></span>
+<span id="cb3-102"><a href="#cb3-102" tabindex="-1" aria-label="code-block-3-102"></a>    <span class="kw">end subroutine</span> test_dot</span>
+<span id="cb3-103"><a href="#cb3-103" tabindex="-1" aria-label="code-block-3-103"></a><span class="kw">end module</span> test_matrix_ops_dot</span></code></pre>
 </div>
 <p>There is a lot of new aspects being introduced in the above test so
 let’s break them down.</p>
@@ -639,22 +639,22 @@ let’s break them down.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> 1. Test parameters type </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
 <p>First of all, we have defined a new custom type
-<strong>dot_product_test_parameters</strong></p>
+<strong>dot_test_parameters</strong></p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="co">!&gt; Custom test parameters type containing all of the inputs and expected</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="co">!&gt; outputs of the intrinsic dot_product</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="co">!&gt; outputs of dot</span></span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a>@TestParameter</span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a><span class="dt">type</span>, extends(AbstractTestParameter) <span class="dt">::</span> dot_product_test_parameters</span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1" aria-label="code-block-4-5"></a>    <span class="co">!&gt; The input array `a` to be passed to dot_product</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a><span class="dt">type</span>, extends(AbstractTestParameter) <span class="dt">::</span> dot_test_parameters</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1" aria-label="code-block-4-5"></a>    <span class="co">!&gt; The input array `a` to be passed to dot</span></span>
 <span id="cb4-6"><a href="#cb4-6" tabindex="-1" aria-label="code-block-4-6"></a>    <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> a(:)</span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1" aria-label="code-block-4-7"></a>    <span class="co">!&gt; The input array `b` to be passed to dot_product</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1" aria-label="code-block-4-7"></a>    <span class="co">!&gt; The input array `b` to be passed to dot</span></span>
 <span id="cb4-8"><a href="#cb4-8" tabindex="-1" aria-label="code-block-4-8"></a>    <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> b(:)</span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1" aria-label="code-block-4-9"></a>    <span class="co">!&gt; The expected value to be returned from dot_product</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1" aria-label="code-block-4-9"></a>    <span class="co">!&gt; The expected value to be returned from dot</span></span>
 <span id="cb4-10"><a href="#cb4-10" tabindex="-1" aria-label="code-block-4-10"></a>    <span class="dt">integer</span> <span class="dt">::</span> expected_dot_product</span>
 <span id="cb4-11"><a href="#cb4-11" tabindex="-1" aria-label="code-block-4-11"></a>    <span class="co">!&gt; A description of the test to be outputted for logging</span></span>
 <span id="cb4-12"><a href="#cb4-12" tabindex="-1" aria-label="code-block-4-12"></a>    <span class="dt">character(len=100)</span> <span class="dt">::</span> description</span>
@@ -662,18 +662,18 @@ let’s break them down.</p>
 <span id="cb4-14"><a href="#cb4-14" tabindex="-1" aria-label="code-block-4-14"></a>    <span class="co">!&gt; The required type-bound procedure for converting an instance</span></span>
 <span id="cb4-15"><a href="#cb4-15" tabindex="-1" aria-label="code-block-4-15"></a>    <span class="co">!&gt; of this type to a string for logging</span></span>
 <span id="cb4-16"><a href="#cb4-16" tabindex="-1" aria-label="code-block-4-16"></a>    <span class="kw">procedure</span> <span class="dt">::</span> toString</span>
-<span id="cb4-17"><a href="#cb4-17" tabindex="-1" aria-label="code-block-4-17"></a><span class="dt">end type</span> dot_product_test_parameters</span></code></pre>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1" aria-label="code-block-4-17"></a><span class="dt">end type</span> dot_test_parameters</span></code></pre>
 </div>
 <p>The key features of this the type
-<strong>dot_product_test_parameters</strong> are</p>
+<strong>dot_test_parameters</strong> are</p>
 <ul><li>It is decorated with the directive <strong><span class="citation">@TestParameter</span></strong> to inform the
 pre-processor that this is a test parameter type.</li>
 <li>It extends the type <strong>AbstractTestParameter</strong> provided
 by the pFUnit library to allow the pfunit test runner to utlisise this
 custom type.</li>
 <li>All inputs (<strong>a</strong> and <strong>b</strong>) and expected
-outputs (<strong>expected_dot_product</strong>) of
-<strong>dot_product</strong> are define as type-bound variables.</li>
+outputs (<strong>expected_dot_product</strong>) of <strong>dot</strong>
+are define as type-bound variables.</li>
 <li>The type-bound variable <strong>description</strong> and procedure
 <strong>toString</strong> allow conversion of a single test parameter
 instance to a character array for logging (see below).</li>
@@ -688,7 +688,7 @@ procedure called <strong>toString</strong>:</p>
 <pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="co">!&gt; Trims and returns the description of the parameter set. The string returned</span></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="co">!&gt; by this function will be included by pFUnit in the name of this test</span></span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a><span class="kw">function</span> toString(this) <span class="kw">result</span>(string)</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a>    class (dot_product_test_parameters), <span class="dt">intent(in)</span> <span class="dt">::</span> this</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a>    class (dot_test_parameters), <span class="dt">intent(in)</span> <span class="dt">::</span> this</span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1" aria-label="code-block-5-5"></a>    <span class="dt">character(:)</span>, <span class="dt">allocatable</span> <span class="dt">::</span> string</span>
 <span id="cb5-6"><a href="#cb5-6" tabindex="-1" aria-label="code-block-5-6"></a></span>
 <span id="cb5-7"><a href="#cb5-7" tabindex="-1" aria-label="code-block-5-7"></a>    string <span class="kw">=</span> <span class="fu">trim</span>(this<span class="op">%</span>description)</span>
@@ -706,14 +706,14 @@ to define this string in its entirety.</p>
 <div class="callout-content">
 <p>All derived types in Fortran are given a default constructor of the
 same name which can be invoked like a function. For example, we can
-create an instance of our type
-<strong>dot_product_test_parameters</strong> like so:</p>
+create an instance of our type <strong>dot_test_parameters</strong> like
+so:</p>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">FORTRAN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="dt">type(dot_product_test_parameters)</span> <span class="dt">::</span> testParameters</span>
+<pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="dt">type(dot_test_parameters)</span> <span class="dt">::</span> testParameters</span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a></span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a>testParameters <span class="kw">=</span> dot_product_test_parameters(a, b, expected_dot_product,<span class="co"> "10x10 incrementing values")</span></span></code></pre>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a>testParameters <span class="kw">=</span> dot_test_parameters(a, b, expected_dot_product, <span class="st">"10x10 incrementing values"</span>)</span></code></pre>
 </div>
 </div>
 </div>
@@ -737,7 +737,7 @@ Unit Test Syntax exercise</a>. Complete tasks 1 and 2.1.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>A solution is provided in <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/fortran-unit-test-syntax/solution" class="external-link">exercises/fortran-unit-test-syntax/solution</a>.</p>
 </div>
@@ -754,7 +754,7 @@ Unit Test Syntax exercise</a>. Complete tasks 1 and 2.1.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
   <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> 2. Parameterising the test case </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
 <div class="accordion-body">
 <p>Now that we have a new test parameter type, we must update our test
 case type to make use of it:</p>
@@ -764,13 +764,13 @@ case type to make use of it:</p>
 <pre class="sourceCode fortran" tabindex="0"><code class="sourceCode fortranfixed"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="co">!&gt; Custom test case type allowing a single definition of tearDown logic.</span></span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a><span class="co">!! If teardown is not required, This could also be thought of as boilerplate</span></span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a><span class="co">!! required to make the parameters available within our @Test.</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a>@TestCase(constructor<span class="kw">=</span>dot_product_test_case_constructor)</span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a><span class="dt">type</span>, extends(ParameterizedTestCase) <span class="dt">::</span> dot_product_test_case</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a>@TestCase(constructor<span class="kw">=</span>dot_test_case_constructor)</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a><span class="dt">type</span>, extends(ParameterizedTestCase) <span class="dt">::</span> dot_test_case</span>
 <span id="cb7-6"><a href="#cb7-6" tabindex="-1" aria-label="code-block-7-6"></a>    <span class="co">!&gt; The instance of our test parameters type to be used within the test logic</span></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1" aria-label="code-block-7-7"></a>    <span class="dt">type(dot_product_test_parameters)</span> <span class="dt">::</span> params</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1" aria-label="code-block-7-7"></a>    <span class="dt">type(dot_test_parameters)</span> <span class="dt">::</span> params</span>
 <span id="cb7-8"><a href="#cb7-8" tabindex="-1" aria-label="code-block-7-8"></a><span class="co">contains</span></span>
 <span id="cb7-9"><a href="#cb7-9" tabindex="-1" aria-label="code-block-7-9"></a>    <span class="kw">procedure</span> <span class="dt">::</span> tearDown</span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1" aria-label="code-block-7-10"></a><span class="dt">end type</span> dot_product_test_case</span></code></pre>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1" aria-label="code-block-7-10"></a><span class="dt">end type</span> dot_test_case</span></code></pre>
 </div>
 <p>The key points to highlight are:</p>
 <ul><li>We are now extending the base type
@@ -783,22 +783,22 @@ same.</li>
 </ul><div class="section level4">
 <h4 id="test-case-constructor">Test case constructor<a class="anchor" aria-label="anchor" href="#test-case-constructor"></a></h4>
 <p>Whilst <strong>teardown</strong> remains almost unchanged,
-<strong>dot_product_test_case_constructor</strong> has changed
-considerably. We now no longer use this as a mechanism to setup state
-but instead we are converting an instance of our parameter type
-(<strong>dot_product_test_parameters</strong>) into an instance of our
-test case type (<strong>dot_product_test_case</strong>).</p>
+<strong>dot_test_case_constructor</strong> has changed considerably. We
+now no longer use this as a mechanism to setup state but instead we are
+converting an instance of our parameter type
+(<strong>dot_test_parameters</strong>) into an instance of our test case
+type (<strong>dot_test_case</strong>).</p>
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="co">!&gt; Boilerplate constructor required to convert our custom parameters type to</span></span>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a><span class="co">!! the test case type.</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a><span class="kw">function</span> dot_product_test_case_constructor(testParameters) <span class="kw">result</span>(newTestCase)</span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a>    <span class="dt">type(dot_product_test_parameters)</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> testParameters</span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a>    <span class="dt">type(dot_product_test_case)</span> <span class="dt">::</span> newTestCase</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a><span class="kw">function</span> dot_test_case_constructor(testParameters) <span class="kw">result</span>(newTestCase)</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a>    <span class="dt">type(dot_test_parameters)</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> testParameters</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a>    <span class="dt">type(dot_test_case)</span> <span class="dt">::</span> newTestCase</span>
 <span id="cb8-6"><a href="#cb8-6" tabindex="-1" aria-label="code-block-8-6"></a></span>
 <span id="cb8-7"><a href="#cb8-7" tabindex="-1" aria-label="code-block-8-7"></a>    newTestCase<span class="op">%</span>params <span class="kw">=</span> testParameters</span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1" aria-label="code-block-8-8"></a><span class="kw">end function</span> dot_product_test_case_constructor</span></code></pre>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1" aria-label="code-block-8-8"></a><span class="kw">end function</span> dot_test_case_constructor</span></code></pre>
 </div>
 <div id="setting-up-state" class="callout">
 <div class="callout-square">
@@ -826,21 +826,20 @@ type-bound procedure within our test case type called
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
   <h3 class="accordion-header" id="headingSpoiler3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> 3. Defining a suite of tests / parameter sets </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
 <div class="accordion-body">
 <p>We now are able to parameterise our test case. To do this we define a
-function (<strong>dot_product_test_suite</strong>) which returns an
-array of our custom test parameter type -
-<strong>dot_product_test_parameters</strong> - which we call the test
-suite.</p>
+function (<strong>dot_test_suite</strong>) which returns an array of our
+custom test parameter type - <strong>dot_test_parameters</strong> -
+which we call the test suite.</p>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="co">!&gt; The test suite in which parameter sets (inputs and expected outputs) for each</span></span>
 <span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a><span class="co">!! test are defined.</span></span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a><span class="kw">function</span> dot_product_test_suite() <span class="kw">result</span>(parameter_sets)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a><span class="kw">function</span> dot_test_suite() <span class="kw">result</span>(parameter_sets)</span>
 <span id="cb9-4"><a href="#cb9-4" tabindex="-1" aria-label="code-block-9-4"></a>    <span class="co">!&gt; The array of parameter sets to be returned</span></span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a>    <span class="dt">type(dot_product_test_parameters)</span> <span class="dt">::</span> parameter_sets(<span class="dv">2</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a>    <span class="dt">type(dot_test_parameters)</span> <span class="dt">::</span> parameter_sets(<span class="dv">2</span>)</span>
 <span id="cb9-6"><a href="#cb9-6" tabindex="-1" aria-label="code-block-9-6"></a></span>
 <span id="cb9-7"><a href="#cb9-7" tabindex="-1" aria-label="code-block-9-7"></a>    <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> a(:), b(:)</span>
 <span id="cb9-8"><a href="#cb9-8" tabindex="-1" aria-label="code-block-9-8"></a>    <span class="dt">integer</span> <span class="dt">::</span> c</span>
@@ -852,23 +851,23 @@ suite.</p>
 <span id="cb9-14"><a href="#cb9-14" tabindex="-1" aria-label="code-block-9-14"></a>    a <span class="kw">=</span> <span class="kw">[</span><span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span><span class="kw">]</span></span>
 <span id="cb9-15"><a href="#cb9-15" tabindex="-1" aria-label="code-block-9-15"></a>    b <span class="kw">=</span> <span class="kw">[</span><span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">16</span>,<span class="dv">17</span>,<span class="dv">18</span>,<span class="dv">19</span>,<span class="dv">20</span><span class="kw">]</span></span>
 <span id="cb9-16"><a href="#cb9-16" tabindex="-1" aria-label="code-block-9-16"></a>    c <span class="kw">=</span> <span class="dv">935</span></span>
-<span id="cb9-17"><a href="#cb9-17" tabindex="-1" aria-label="code-block-9-17"></a>    <span class="co">! Here `dot_product_test_parameters` is a default constructor generated by our</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1" aria-label="code-block-9-17"></a>    <span class="co">! Here `dot_test_parameters` is a default constructor generated by our</span></span>
 <span id="cb9-18"><a href="#cb9-18" tabindex="-1" aria-label="code-block-9-18"></a>    <span class="co">! type definition</span></span>
-<span id="cb9-19"><a href="#cb9-19" tabindex="-1" aria-label="code-block-9-19"></a>    parameter_sets(<span class="dv">1</span>) <span class="kw">=</span> dot_product_test_parameters(a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1" aria-label="code-block-9-19"></a>    parameter_sets(<span class="dv">1</span>) <span class="kw">=</span> dot_test_parameters(a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
 <span id="cb9-20"><a href="#cb9-20" tabindex="-1" aria-label="code-block-9-20"></a></span>
 <span id="cb9-21"><a href="#cb9-21" tabindex="-1" aria-label="code-block-9-21"></a>    <span class="co">! Parameter set 2</span></span>
 <span id="cb9-22"><a href="#cb9-22" tabindex="-1" aria-label="code-block-9-22"></a>    a <span class="kw">=</span> <span class="dv">0</span></span>
 <span id="cb9-23"><a href="#cb9-23" tabindex="-1" aria-label="code-block-9-23"></a>    b <span class="kw">=</span> <span class="dv">0</span></span>
 <span id="cb9-24"><a href="#cb9-24" tabindex="-1" aria-label="code-block-9-24"></a>    c <span class="kw">=</span> <span class="dv">0</span></span>
-<span id="cb9-25"><a href="#cb9-25" tabindex="-1" aria-label="code-block-9-25"></a>    parameter_sets(<span class="dv">2</span>) <span class="kw">=</span> dot_product_test_parameters(a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
+<span id="cb9-25"><a href="#cb9-25" tabindex="-1" aria-label="code-block-9-25"></a>    parameter_sets(<span class="dv">2</span>) <span class="kw">=</span> dot_test_parameters(a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
 <span id="cb9-26"><a href="#cb9-26" tabindex="-1" aria-label="code-block-9-26"></a></span>
 <span id="cb9-27"><a href="#cb9-27" tabindex="-1" aria-label="code-block-9-27"></a>    <span class="co">! Deallocate the temporary stores of a and b for completeness</span></span>
 <span id="cb9-28"><a href="#cb9-28" tabindex="-1" aria-label="code-block-9-28"></a>    <span class="kw">deallocate</span>(a, b)</span>
-<span id="cb9-29"><a href="#cb9-29" tabindex="-1" aria-label="code-block-9-29"></a><span class="kw">end function</span> dot_product_test_suite</span></code></pre>
+<span id="cb9-29"><a href="#cb9-29" tabindex="-1" aria-label="code-block-9-29"></a><span class="kw">end function</span> dot_test_suite</span></code></pre>
 </div>
 <p>Let’s look at the key aspects of this function:</p>
-<ul><li>We return an array of <strong>dot_product_test_parameters</strong>
-where each element is a single test case.</li>
+<ul><li>We return an array of <strong>dot_test_parameters</strong> where
+each element is a single test case.</li>
 <li>This is now where we allocate <strong>a</strong> and
 <strong>b</strong>.</li>
 </ul><div id="challenge-parameterising-tests-with-pfunit-part-2" class="callout challenge">
@@ -890,7 +889,7 @@ Unit Test Syntax exercises</a>, Complete task 2.2.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>A solution is provided in <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/fortran-unit-test-syntax/solution" class="external-link">exercises/fortran-unit-test-syntax/solution</a>.</p>
 </div>
@@ -906,31 +905,30 @@ Unit Test Syntax exercises</a>, Complete task 2.2.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler4" aria-expanded="false" aria-controls="collapseSpoiler4">
   <h3 class="accordion-header" id="headingSpoiler4">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> 4. Passing the test suite into the @Test </h3>
 </button>
-<div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
+<div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
 <div class="accordion-body">
 <p>Since we are now defining our inputs and expected outputs within our
-custom type <strong>dot_product_test_parameters</strong> and setting
-their values in <strong>dot_product_test_suite</strong>, we can simplify
-the contents of our test subroutine:</p>
+custom type <strong>dot_test_parameters</strong> and setting their
+values in <strong>dot_test_suite</strong>, we can simplify the contents
+of our test subroutine:</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a>@Test(testParameters<span class="kw">={</span>dot_product_test_suite()<span class="kw">}</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a><span class="kw">subroutine</span> test_dot_product(this)</span>
+<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a>@Test(testParameters<span class="kw">={</span>dot_test_suite()<span class="kw">}</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a><span class="kw">subroutine</span> test_dot(this)</span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1" aria-label="code-block-10-3"></a>    <span class="co">!&gt; The instance of our test case type for this test</span></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1" aria-label="code-block-10-4"></a>    <span class="dt">class(dot_product_test_case)</span>, <span class="dt">intent(inout)</span> <span class="dt">::</span> this</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1" aria-label="code-block-10-4"></a>    <span class="dt">class(dot_test_case)</span>, <span class="dt">intent(inout)</span> <span class="dt">::</span> this</span>
 <span id="cb10-5"><a href="#cb10-5" tabindex="-1" aria-label="code-block-10-5"></a></span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1" aria-label="code-block-10-6"></a>    <span class="co">! Check that the call to dot_product returned what we expect</span></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1" aria-label="code-block-10-7"></a>    @AssertEqual(this<span class="op">%</span>params<span class="op">%</span>expected_dot_product, <span class="fu">dot_product</span>(this<span class="op">%</span>params<span class="op">%</span>a, this<span class="op">%</span>params<span class="op">%</span>b), message<span class="kw">=</span><span class="st">"Unexpected value returned for the dot_product"</span>)</span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1" aria-label="code-block-10-8"></a><span class="kw">end subroutine</span> test_dot_product</span></code></pre>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1" aria-label="code-block-10-6"></a>    <span class="co">! Check that the call to dot returned what we expect</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1" aria-label="code-block-10-7"></a>    @AssertEqual(this<span class="op">%</span>params<span class="op">%</span>expected_dot_product, dot(this<span class="op">%</span>params<span class="op">%</span>a, this<span class="op">%</span>params<span class="op">%</span>b), message<span class="kw">=</span><span class="st">"Unexpected value returned from dot"</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1" aria-label="code-block-10-8"></a><span class="kw">end subroutine</span> test_dot</span></code></pre>
 </div>
 <p>The key aspects are:</p>
 <ul><li>The <strong><span class="citation">@Test</span></strong> directive
 now takes a <strong>testParameters</strong> value which we return from
-our test suite <strong>dot_product_test_suite</strong>.</li>
+our test suite <strong>dot_test_suite</strong>.</li>
 <li>We no longer set any inputs or expected outputs within this test
-subroutine but simply just call <strong>dot_product</strong> and
-<strong><span class="citation">@AssertEqual</span></strong>.</li>
+subroutine but simply just call <strong>dot</strong> and <strong><span class="citation">@AssertEqual</span></strong>.</li>
 </ul><div id="challenge-parameterising-tests-with-pfunit-part-3" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
@@ -950,7 +948,7 @@ exercise][exercises-challenge], complete task 3.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>A solution is provided in <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/fortran-unit-test-syntax/solution" class="external-link">exercises/fortran-unit-test-syntax/solution</a>.</p>
 </div>
@@ -1021,7 +1019,7 @@ exercise][exercises-challenge], complete task 3.</p>
   "url": "https://carpentries-incubator.github.io/fortran-unit-testing/parameterising-pfunit-tests.html",
   "identifier": "https://carpentries-incubator.github.io/fortran-unit-testing/parameterising-pfunit-tests.html",
   "dateCreated": "2025-05-09",
-  "dateModified": "2026-09-04",
+  "dateModified": "2026-09-23",
   "datePublished": "2026-09-23"
 }
 
