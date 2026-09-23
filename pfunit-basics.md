@@ -71,7 +71,7 @@ When writing the pFUnit version of the unit test for the dot product, begin from
 benefits of pFUnit.
 
 ```fortran
-program test_dot
+program test_matrix_ops_dot
     use matrix_ops, only : dot
     implicit none
 
@@ -81,7 +81,7 @@ program test_dot
     logical :: passed(1)
     character(len=200) :: failure_message(1)
 
-    ! Define set of tests for the dot_product
+    ! Define set of tests for dot
     call test_dot_one_to_twenty(passed(1), failure_message(1))
 
     if (all(passed)) then
@@ -119,7 +119,7 @@ contains
         write(failure_message, '(A,I3,A,I3)') "Expected ", expected_c, " but got ", actual_c
 
     end subroutine test_dot_one_to_twenty
-end program test_dot
+end program test_matrix_ops_dot
 ```
 
 This should be able to be compiled with the command `gfortran matrix_ops.f90 test_dot.f90`
@@ -127,7 +127,7 @@ This should be able to be compiled with the command `gfortran matrix_ops.f90 tes
 :::
 
 ```fortran
-module test_dot
+module test_matrix_ops_dot
     use matrix_ops, only : dot
     use funit
     implicit none
@@ -145,7 +145,7 @@ contains
         @assertEqual(c, dot(a, b), message="Unexpected value returned from dot")
 
     end subroutine test_dot_product_one_to_twenty
-end module test_dot
+end module test_matrix_ops_dot
 ```
 
 Here we have introduced some new syntax in the form of **@Test** and **@AssertEqual**. These are pFUnit pre-processor directives
@@ -170,7 +170,7 @@ For floating point values, @AssertEqual no longer carries out an exact compariso
 If we then wish to add a new test case we can add another subroutine, again decorated with **@Test**:
 
 ```fortran
-module test_dot
+module test_matrix_ops_dot
     use matrix_ops, only : dot
     use funit
     implicit none
@@ -202,7 +202,7 @@ contains
         @assertEqual(c, dot(a, b), message="Unexpected value returned from dot")
 
     end subroutine test_dot_all_zeros
-end module test_dot
+end module test_matrix_ops_dot
 ```
 
 ::: instructor
