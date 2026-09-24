@@ -691,7 +691,7 @@ that it can convert from Fahrenheit to Kelvin.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>Your test could look something like this:</p>
 <div class="codewrapper sourceCode" id="cb1">
@@ -746,7 +746,7 @@ your first unit test exercise</a>.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>A solution is provided in <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/writing-your-first-unit-test/solution" class="external-link">exercises/writing-your-first-unit-test/solution</a>.</p>
 </div>
@@ -1098,7 +1098,7 @@ test for the temperature conversion using pFUnit.</p>
 </div>
 </section></section><section id="aio-integrating-with-build-systems"><p>Content from <a href="integrating-with-build-systems.html">Integrating with build systems</a></p>
 <hr>
-<p>Last updated on 2026-09-04 |
+<p>Last updated on 2026-09-24 |
 
         <a href="https://github.com/carpentries-incubator/fortran-unit-testing/edit/main/episodes/integrating-with-build-systems.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1145,13 +1145,11 @@ structure.</p>
 <pre class="sourceCode txt" tabindex="0"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a>|-- ROOT_DIR/</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a>    | Makefile</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a>    |-- src/</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a>    |   |-- main.f90</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a>    |   |-- something.f90</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a>    |</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a>    |-- tests/</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1" aria-label="code-block-1-8"></a>        |-- Makefile</span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1" aria-label="code-block-1-9"></a>        |-- test_something.pf</span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1" aria-label="code-block-1-10"></a>        |-- test_something_else.pf</span></code></pre>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a>    |   |-- matrix_ops.f90</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a>    |</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a>    |-- tests/</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a>        |-- Makefile</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1" aria-label="code-block-1-8"></a>        |-- test_matrix_ops_dot.pf</span></code></pre>
 </div>
 <p>The top level <strong>Makefile</strong> is responsible for compiling
 the src code but should do little regarding building the tests. However,
@@ -1192,80 +1190,71 @@ to pick up.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Full file </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <p>The full top level <strong>Makefile</strong> may look something like
 this:</p>
 <div class="codewrapper sourceCode" id="cb4">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">MAKEFILE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="co"># Top level variables</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="ex">ROOT_DIR</span> = <span class="va">$(</span><span class="ex">shell</span> dirname <span class="va">$(</span><span class="fu">realpath</span> <span class="va">$(</span><span class="ex">firstword</span> <span class="va">$(</span><span class="ex">MAKEFILE_LIST</span><span class="va">))))</span></span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a><span class="ex">FC</span> <span class="pp">?</span>= gfortran</span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a><span class="ex">FC_FLAGS</span> = <span class="co">#... Some flags required for compilation</span></span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1" aria-label="code-block-4-5"></a><span class="ex">LIBS</span> = <span class="co">#... Some libs to link to</span></span>
+<pre class="sourceCode makefile" tabindex="0"><code class="sourceCode makefile"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="co"># Top level variables</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="dt">ROOT_DIR</span> <span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="kw">shell</span><span class="st"> dirname </span><span class="ch">$(</span><span class="kw">realpath</span><span class="st"> </span><span class="ch">$(</span><span class="kw">firstword</span><span class="st"> </span><span class="ch">$(</span><span class="dt">MAKEFILE_LIST</span><span class="ch">))))</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a><span class="dt">FC</span> <span class="ch">?=</span><span class="st"> gfortran</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a><span class="dt">FC_FLAGS</span> <span class="ch">=</span><span class="st"> </span><span class="co">#... Some flags required for compilation</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1" aria-label="code-block-4-5"></a><span class="dt">LIBS</span> <span class="ch">=</span><span class="st"> </span><span class="co">#... Some libs to link to</span></span>
 <span id="cb4-6"><a href="#cb4-6" tabindex="-1" aria-label="code-block-4-6"></a></span>
 <span id="cb4-7"><a href="#cb4-7" tabindex="-1" aria-label="code-block-4-7"></a><span class="co">#------------------------------------#</span></span>
 <span id="cb4-8"><a href="#cb4-8" tabindex="-1" aria-label="code-block-4-8"></a><span class="co">#      Targets for compiling src     #</span></span>
 <span id="cb4-9"><a href="#cb4-9" tabindex="-1" aria-label="code-block-4-9"></a><span class="co">#------------------------------------#</span></span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1" aria-label="code-block-4-10"></a><span class="ex">SRC_DIR</span> = <span class="va">$(</span><span class="ex">ROOT_DIR</span><span class="va">)</span>/src</span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1" aria-label="code-block-4-11"></a><span class="ex">BUILD_DIR</span> = <span class="va">$(</span><span class="ex">ROOT_DIR</span><span class="va">)</span>/build</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1" aria-label="code-block-4-10"></a><span class="dt">SRC_DIR</span> <span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="dt">ROOT_DIR</span><span class="ch">)</span><span class="st">/src</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1" aria-label="code-block-4-11"></a><span class="dt">BUILD_DIR</span> <span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="dt">ROOT_DIR</span><span class="ch">)</span><span class="st">/build</span></span>
 <span id="cb4-12"><a href="#cb4-12" tabindex="-1" aria-label="code-block-4-12"></a></span>
 <span id="cb4-13"><a href="#cb4-13" tabindex="-1" aria-label="code-block-4-13"></a><span class="co"># List src files</span></span>
-<span id="cb4-14"><a href="#cb4-14" tabindex="-1" aria-label="code-block-4-14"></a><span class="ex">SRC_FILES</span> = <span class="dt">\</span></span>
-<span id="cb4-15"><a href="#cb4-15" tabindex="-1" aria-label="code-block-4-15"></a>    something.f90 <span class="dt">\</span></span>
-<span id="cb4-16"><a href="#cb4-16" tabindex="-1" aria-label="code-block-4-16"></a>    main.f90</span>
-<span id="cb4-17"><a href="#cb4-17" tabindex="-1" aria-label="code-block-4-17"></a></span>
-<span id="cb4-18"><a href="#cb4-18" tabindex="-1" aria-label="code-block-4-18"></a><span class="co"># Map src files to .o files</span></span>
-<span id="cb4-19"><a href="#cb4-19" tabindex="-1" aria-label="code-block-4-19"></a><span class="ex">SRC_OBJS</span> = <span class="va">$(</span><span class="ex">patsubst</span> %.f90, <span class="va">$(</span><span class="ex">BUILD_DIR</span><span class="va">)</span>/%.o, <span class="va">$(</span><span class="ex">SRC_FILES</span><span class="va">))</span></span>
-<span id="cb4-20"><a href="#cb4-20" tabindex="-1" aria-label="code-block-4-20"></a></span>
-<span id="cb4-21"><a href="#cb4-21" tabindex="-1" aria-label="code-block-4-21"></a><span class="co"># Build src .o files</span></span>
-<span id="cb4-22"><a href="#cb4-22" tabindex="-1" aria-label="code-block-4-22"></a><span class="va">$(</span><span class="ex">BUILD_DIR</span><span class="va">)</span><span class="ex">/%.o:</span> <span class="va">$(</span><span class="ex">SRC_DIR</span><span class="va">)</span>/%.f90 <span class="kw">|</span> <span class="va">$(</span><span class="ex">BUILD_DIR</span><span class="va">)</span></span>
-<span id="cb4-23"><a href="#cb4-23" tabindex="-1" aria-label="code-block-4-23"></a> <span class="ex">@echo</span> <span class="st">"Building </span><span class="va">$@</span><span class="st">"</span></span>
-<span id="cb4-24"><a href="#cb4-24" tabindex="-1" aria-label="code-block-4-24"></a> <span class="va">$(</span><span class="ex">FC</span><span class="va">)</span> <span class="at">-c</span> <span class="at">-J</span> <span class="va">$(</span><span class="ex">BUILD_DIR</span><span class="va">)</span> <span class="at">-o</span> <span class="va">$@</span> $<span class="op">&lt;</span></span>
-<span id="cb4-25"><a href="#cb4-25" tabindex="-1" aria-label="code-block-4-25"></a></span>
-<span id="cb4-26"><a href="#cb4-26" tabindex="-1" aria-label="code-block-4-26"></a><span class="co"># Build src executable</span></span>
-<span id="cb4-27"><a href="#cb4-27" tabindex="-1" aria-label="code-block-4-27"></a><span class="va">$(</span><span class="ex">BUILD_DIR</span><span class="va">)</span><span class="ex">/a.exe:</span> <span class="va">$(</span><span class="ex">SRC_OBJS</span><span class="va">)</span></span>
-<span id="cb4-28"><a href="#cb4-28" tabindex="-1" aria-label="code-block-4-28"></a> <span class="va">$(</span><span class="ex">FC</span><span class="va">)</span> <span class="at">-o</span> <span class="va">$@</span> <span class="va">$(</span><span class="ex">FC_FLAGS</span><span class="va">)</span> $^ <span class="va">$(</span><span class="ex">LIBS</span><span class="va">)</span></span>
-<span id="cb4-29"><a href="#cb4-29" tabindex="-1" aria-label="code-block-4-29"></a></span>
-<span id="cb4-30"><a href="#cb4-30" tabindex="-1" aria-label="code-block-4-30"></a><span class="co"># Map exe target to building executable</span></span>
-<span id="cb4-31"><a href="#cb4-31" tabindex="-1" aria-label="code-block-4-31"></a><span class="ex">exe:</span> <span class="va">$(</span><span class="ex">BUILD_DIR</span><span class="va">)</span>/a.exe</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1" aria-label="code-block-4-14"></a><span class="dt">SRC_FILES</span> <span class="ch">=</span><span class="st"> matrix_ops.f90</span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1" aria-label="code-block-4-15"></a></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1" aria-label="code-block-4-16"></a><span class="co"># Map src files to .o files</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1" aria-label="code-block-4-17"></a><span class="dt">SRC_OBJS</span> <span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="kw">patsubst</span><span class="st"> %.f90</span><span class="kw">,</span><span class="st"> </span><span class="ch">$(</span><span class="dt">BUILD_DIR</span><span class="ch">)</span><span class="st">/%.o</span><span class="kw">,</span><span class="st"> </span><span class="ch">$(</span><span class="dt">SRC_FILES</span><span class="ch">))</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1" aria-label="code-block-4-18"></a></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1" aria-label="code-block-4-19"></a><span class="co"># Build src .o files</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1" aria-label="code-block-4-20"></a><span class="dv">$(BUILD_DIR)/%.o:</span><span class="dt"> </span><span class="ch">$(</span><span class="dt">SRC_DIR</span><span class="ch">)</span><span class="dt">/%.f90 | </span><span class="ch">$(</span><span class="dt">BUILD_DIR</span><span class="ch">)</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1" aria-label="code-block-4-21"></a><span class="er"> </span><span class="ch">@</span><span class="fu">echo </span><span class="st">"Building </span><span class="ch">$@</span><span class="st">"</span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1" aria-label="code-block-4-22"></a> <span class="ch">$(</span><span class="dt">FC</span><span class="ch">)</span> -c -J <span class="ch">$(</span><span class="dt">BUILD_DIR</span><span class="ch">)</span> -o <span class="ch">$@</span> <span class="ch">$&lt;</span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1" aria-label="code-block-4-23"></a></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1" aria-label="code-block-4-24"></a><span class="co"># Ensure the build dirs exists</span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1" aria-label="code-block-4-25"></a><span class="dv">$(BUILD_DIR):</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1" aria-label="code-block-4-26"></a><span class="er"> </span>mkdir -p <span class="ch">$@</span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1" aria-label="code-block-4-27"></a></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1" aria-label="code-block-4-28"></a><span class="co">#------------------------------------#</span></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1" aria-label="code-block-4-29"></a><span class="co">#         Targets for testing        #</span></span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1" aria-label="code-block-4-30"></a><span class="co">#------------------------------------#</span></span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1" aria-label="code-block-4-31"></a><span class="dt">TEST_DIR</span> <span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="dt">ROOT_DIR</span><span class="ch">)</span><span class="st">/tests</span></span>
 <span id="cb4-32"><a href="#cb4-32" tabindex="-1" aria-label="code-block-4-32"></a></span>
-<span id="cb4-33"><a href="#cb4-33" tabindex="-1" aria-label="code-block-4-33"></a><span class="co"># Ensure the build dirs exists</span></span>
-<span id="cb4-34"><a href="#cb4-34" tabindex="-1" aria-label="code-block-4-34"></a><span class="va">$(</span><span class="ex">BUILD_DIR</span><span class="va">)</span><span class="ex">:</span></span>
-<span id="cb4-35"><a href="#cb4-35" tabindex="-1" aria-label="code-block-4-35"></a> <span class="fu">mkdir</span> <span class="at">-p</span> <span class="va">$@</span></span>
-<span id="cb4-36"><a href="#cb4-36" tabindex="-1" aria-label="code-block-4-36"></a></span>
-<span id="cb4-37"><a href="#cb4-37" tabindex="-1" aria-label="code-block-4-37"></a><span class="co">#------------------------------------#</span></span>
-<span id="cb4-38"><a href="#cb4-38" tabindex="-1" aria-label="code-block-4-38"></a><span class="co">#         Targets for testing        #</span></span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1" aria-label="code-block-4-33"></a><span class="co"># Include make command from tests Makefile</span></span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1" aria-label="code-block-4-34"></a><span class="dv">tests:</span><span class="dt"> </span><span class="ch">$(</span><span class="dt">SRC_OBJS</span><span class="ch">)</span></span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1" aria-label="code-block-4-35"></a><span class="er"> </span><span class="ch">@</span><span class="fu">echo </span><span class="st">"Building pFUnit test suite..."</span></span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1" aria-label="code-block-4-36"></a> <span class="ch">@$(</span><span class="dt">MAKE</span><span class="ch">)</span><span class="fu"> -C </span><span class="ch">$(</span><span class="dt">TEST_DIR</span><span class="ch">)</span><span class="fu"> tests</span></span>
+<span id="cb4-37"><a href="#cb4-37" tabindex="-1" aria-label="code-block-4-37"></a></span>
+<span id="cb4-38"><a href="#cb4-38" tabindex="-1" aria-label="code-block-4-38"></a></span>
 <span id="cb4-39"><a href="#cb4-39" tabindex="-1" aria-label="code-block-4-39"></a><span class="co">#------------------------------------#</span></span>
-<span id="cb4-40"><a href="#cb4-40" tabindex="-1" aria-label="code-block-4-40"></a><span class="ex">TEST_DIR</span> = <span class="va">$(</span><span class="ex">ROOT_DIR</span><span class="va">)</span>/tests</span>
-<span id="cb4-41"><a href="#cb4-41" tabindex="-1" aria-label="code-block-4-41"></a></span>
-<span id="cb4-42"><a href="#cb4-42" tabindex="-1" aria-label="code-block-4-42"></a><span class="co"># Include make command from tests Makefile</span></span>
-<span id="cb4-43"><a href="#cb4-43" tabindex="-1" aria-label="code-block-4-43"></a><span class="ex">tests:</span> <span class="va">$(</span><span class="ex">SRC_OBJS</span><span class="va">)</span></span>
-<span id="cb4-44"><a href="#cb4-44" tabindex="-1" aria-label="code-block-4-44"></a> <span class="ex">@echo</span> <span class="st">"Building pFUnit test suite..."</span></span>
-<span id="cb4-45"><a href="#cb4-45" tabindex="-1" aria-label="code-block-4-45"></a> <span class="ex">@</span><span class="va">$(</span><span class="ex">MAKE</span><span class="va">)</span> <span class="at">-C</span> <span class="va">$(</span><span class="ex">TEST_DIR</span><span class="va">)</span> tests</span>
+<span id="cb4-40"><a href="#cb4-40" tabindex="-1" aria-label="code-block-4-40"></a><span class="co">#        Targets for cleaning        #</span></span>
+<span id="cb4-41"><a href="#cb4-41" tabindex="-1" aria-label="code-block-4-41"></a><span class="co">#------------------------------------#</span></span>
+<span id="cb4-42"><a href="#cb4-42" tabindex="-1" aria-label="code-block-4-42"></a><span class="co"># Define target for cleaning the build dir</span></span>
+<span id="cb4-43"><a href="#cb4-43" tabindex="-1" aria-label="code-block-4-43"></a><span class="dv">clean:</span></span>
+<span id="cb4-44"><a href="#cb4-44" tabindex="-1" aria-label="code-block-4-44"></a><span class="er"> </span>rm -rf <span class="ch">$(</span><span class="dt">BUILD_DIR</span><span class="ch">)</span></span>
+<span id="cb4-45"><a href="#cb4-45" tabindex="-1" aria-label="code-block-4-45"></a> <span class="ch">$(</span><span class="dt">MAKE</span><span class="ch">)</span> -C <span class="ch">$(</span><span class="dt">TEST_DIR</span><span class="ch">)</span> clean</span>
 <span id="cb4-46"><a href="#cb4-46" tabindex="-1" aria-label="code-block-4-46"></a></span>
-<span id="cb4-47"><a href="#cb4-47" tabindex="-1" aria-label="code-block-4-47"></a></span>
-<span id="cb4-48"><a href="#cb4-48" tabindex="-1" aria-label="code-block-4-48"></a><span class="co">#------------------------------------#</span></span>
-<span id="cb4-49"><a href="#cb4-49" tabindex="-1" aria-label="code-block-4-49"></a><span class="co">#        Targets for cleaning        #</span></span>
-<span id="cb4-50"><a href="#cb4-50" tabindex="-1" aria-label="code-block-4-50"></a><span class="co">#------------------------------------#</span></span>
-<span id="cb4-51"><a href="#cb4-51" tabindex="-1" aria-label="code-block-4-51"></a><span class="co"># Define target for cleaning the build dir</span></span>
-<span id="cb4-52"><a href="#cb4-52" tabindex="-1" aria-label="code-block-4-52"></a><span class="ex">clean:</span></span>
-<span id="cb4-53"><a href="#cb4-53" tabindex="-1" aria-label="code-block-4-53"></a> <span class="fu">rm</span> <span class="at">-rf</span> <span class="va">$(</span><span class="ex">BUILD_DIR</span><span class="va">)</span></span>
-<span id="cb4-54"><a href="#cb4-54" tabindex="-1" aria-label="code-block-4-54"></a> <span class="va">$(</span><span class="ex">MAKE</span><span class="va">)</span> <span class="at">-C</span> <span class="va">$(</span><span class="ex">TEST_DIR</span><span class="va">)</span> clean</span>
-<span id="cb4-55"><a href="#cb4-55" tabindex="-1" aria-label="code-block-4-55"></a></span>
-<span id="cb4-56"><a href="#cb4-56" tabindex="-1" aria-label="code-block-4-56"></a><span class="ex">.PHONY:</span> clean</span>
-<span id="cb4-57"><a href="#cb4-57" tabindex="-1" aria-label="code-block-4-57"></a></span>
-<span id="cb4-58"><a href="#cb4-58" tabindex="-1" aria-label="code-block-4-58"></a><span class="co">#--------------------------------------#</span></span>
-<span id="cb4-59"><a href="#cb4-59" tabindex="-1" aria-label="code-block-4-59"></a><span class="co"># Export variables for child Makefiles #</span></span>
-<span id="cb4-60"><a href="#cb4-60" tabindex="-1" aria-label="code-block-4-60"></a><span class="co">#--------------------------------------#</span></span>
-<span id="cb4-61"><a href="#cb4-61" tabindex="-1" aria-label="code-block-4-61"></a><span class="co"># Export variables for the other Makefiles to use</span></span>
-<span id="cb4-62"><a href="#cb4-62" tabindex="-1" aria-label="code-block-4-62"></a><span class="bu">export</span> <span class="va">BUILD_DIR</span></span>
-<span id="cb4-63"><a href="#cb4-63" tabindex="-1" aria-label="code-block-4-63"></a><span class="bu">export</span> <span class="va">ROOT_DIR</span></span>
-<span id="cb4-64"><a href="#cb4-64" tabindex="-1" aria-label="code-block-4-64"></a><span class="bu">export</span> <span class="va">SRC_OBJS</span></span>
-<span id="cb4-65"><a href="#cb4-65" tabindex="-1" aria-label="code-block-4-65"></a><span class="bu">export</span> <span class="va">FC</span></span>
-<span id="cb4-66"><a href="#cb4-66" tabindex="-1" aria-label="code-block-4-66"></a><span class="bu">export</span> <span class="va">FC_FLAGS</span></span>
-<span id="cb4-67"><a href="#cb4-67" tabindex="-1" aria-label="code-block-4-67"></a><span class="bu">export</span> <span class="va">LIBS</span></span></code></pre>
+<span id="cb4-47"><a href="#cb4-47" tabindex="-1" aria-label="code-block-4-47"></a><span class="ot">.PHONY:</span><span class="dt"> clean</span></span>
+<span id="cb4-48"><a href="#cb4-48" tabindex="-1" aria-label="code-block-4-48"></a></span>
+<span id="cb4-49"><a href="#cb4-49" tabindex="-1" aria-label="code-block-4-49"></a><span class="co">#--------------------------------------#</span></span>
+<span id="cb4-50"><a href="#cb4-50" tabindex="-1" aria-label="code-block-4-50"></a><span class="co"># Export variables for child Makefiles #</span></span>
+<span id="cb4-51"><a href="#cb4-51" tabindex="-1" aria-label="code-block-4-51"></a><span class="co">#--------------------------------------#</span></span>
+<span id="cb4-52"><a href="#cb4-52" tabindex="-1" aria-label="code-block-4-52"></a><span class="co"># Export variables for the other Makefiles to use</span></span>
+<span id="cb4-53"><a href="#cb4-53" tabindex="-1" aria-label="code-block-4-53"></a><span class="kw">export</span><span class="dt"> BUILD_DIR</span></span>
+<span id="cb4-54"><a href="#cb4-54" tabindex="-1" aria-label="code-block-4-54"></a><span class="kw">export</span><span class="dt"> ROOT_DIR</span></span>
+<span id="cb4-55"><a href="#cb4-55" tabindex="-1" aria-label="code-block-4-55"></a><span class="kw">export</span><span class="dt"> SRC_OBJS</span></span>
+<span id="cb4-56"><a href="#cb4-56" tabindex="-1" aria-label="code-block-4-56"></a><span class="kw">export</span><span class="dt"> FC</span></span>
+<span id="cb4-57"><a href="#cb4-57" tabindex="-1" aria-label="code-block-4-57"></a><span class="kw">export</span><span class="dt"> FC_FLAGS</span></span>
+<span id="cb4-58"><a href="#cb4-58" tabindex="-1" aria-label="code-block-4-58"></a><span class="kw">export</span><span class="dt"> LIBS</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -1273,32 +1262,31 @@ this:</p>
 </div>
 <p>The <strong>tests/Makefile</strong> would then look like this:</p>
 <div class="codewrapper sourceCode" id="cb5">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<h3 class="code-label">MAKEFILE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="ex">PFUNIT_INCLUDE_DIR</span> <span class="pp">?</span>= /path/to/pfunit/include</span>
+<pre class="sourceCode makefile" tabindex="0"><code class="sourceCode makefile"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="dt">PFUNIT_INCLUDE_DIR</span> <span class="ch">?=</span><span class="st"> /path/to/pfunit/include</span></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a></span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a><span class="co"># Don't try to include if we're cleaning as this doesn't depend on pFUnit</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a><span class="ex">ifneq</span> <span class="er">(</span><span class="va">$(</span><span class="ex">MAKECMDGOALS</span><span class="va">)</span><span class="ex">,clean</span><span class="kw">)</span></span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1" aria-label="code-block-5-5"></a><span class="ex">include</span> <span class="va">$(</span><span class="ex">PFUNIT_INCLUDE_DIR</span><span class="va">)</span>/PFUNIT.mk</span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1" aria-label="code-block-5-6"></a><span class="ex">TEST_FLAGS</span> = <span class="at">-I</span><span class="va">$(</span><span class="ex">BUILD_DIR</span><span class="va">)</span> <span class="va">$(</span><span class="ex">FC_FLAGS</span><span class="va">)</span> <span class="va">$(</span><span class="ex">LIBS</span><span class="va">)</span> <span class="va">$(</span><span class="ex">PFUNIT_EXTRA_FFLAGS</span><span class="va">)</span></span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1" aria-label="code-block-5-7"></a><span class="ex">endif</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a><span class="cf">ifneq</span> (<span class="ch">$(</span><span class="dt">MAKECMDGOALS</span><span class="ch">)</span>,clean)</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1" aria-label="code-block-5-5"></a><span class="kw">include</span> <span class="ch">$(</span><span class="dt">PFUNIT_INCLUDE_DIR</span><span class="ch">)</span>/PFUNIT.mk</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1" aria-label="code-block-5-6"></a><span class="dt">TEST_FLAGS</span> <span class="ch">=</span><span class="st"> -I</span><span class="ch">$(</span><span class="dt">BUILD_DIR</span><span class="ch">)</span><span class="st"> </span><span class="ch">$(</span><span class="dt">FC_FLAGS</span><span class="ch">)</span><span class="st"> </span><span class="ch">$(</span><span class="dt">LIBS</span><span class="ch">)</span><span class="st"> </span><span class="ch">$(</span><span class="dt">PFUNIT_EXTRA_FFLAGS</span><span class="ch">)</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1" aria-label="code-block-5-7"></a><span class="cf">endif</span></span>
 <span id="cb5-8"><a href="#cb5-8" tabindex="-1" aria-label="code-block-5-8"></a></span>
 <span id="cb5-9"><a href="#cb5-9" tabindex="-1" aria-label="code-block-5-9"></a><span class="co"># Define variables to be picked up by make_pfunit_test</span></span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1" aria-label="code-block-5-10"></a><span class="ex">tests_TESTS</span> = <span class="dt">\</span></span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1" aria-label="code-block-5-11"></a>  test_something.pf <span class="dt">\</span></span>
-<span id="cb5-12"><a href="#cb5-12" tabindex="-1" aria-label="code-block-5-12"></a>  test_something_else.pf</span>
-<span id="cb5-13"><a href="#cb5-13" tabindex="-1" aria-label="code-block-5-13"></a><span class="ex">tests_OTHER_SOURCES</span> = <span class="va">$(</span><span class="ex">filter-out</span> <span class="va">$(</span><span class="ex">BUILD_DIR</span><span class="va">)</span>/main.o, <span class="va">$(</span><span class="ex">SRC_OBJS</span><span class="va">))</span></span>
-<span id="cb5-14"><a href="#cb5-14" tabindex="-1" aria-label="code-block-5-14"></a><span class="ex">tests_OTHER_LIBRARIES</span> = <span class="va">$(</span><span class="ex">TEST_FLAGS</span><span class="va">)</span></span>
-<span id="cb5-15"><a href="#cb5-15" tabindex="-1" aria-label="code-block-5-15"></a></span>
-<span id="cb5-16"><a href="#cb5-16" tabindex="-1" aria-label="code-block-5-16"></a><span class="co"># Triggers pre-processing and defines rule for building test executable</span></span>
-<span id="cb5-17"><a href="#cb5-17" tabindex="-1" aria-label="code-block-5-17"></a><span class="va">$(</span><span class="bu">eval</span> <span class="va">$(</span><span class="ex">call</span> make_pfunit_test,tests<span class="va">))</span></span>
-<span id="cb5-18"><a href="#cb5-18" tabindex="-1" aria-label="code-block-5-18"></a></span>
-<span id="cb5-19"><a href="#cb5-19" tabindex="-1" aria-label="code-block-5-19"></a><span class="co"># Converts pre-processed test files into objects ready for building of the executable</span></span>
-<span id="cb5-20"><a href="#cb5-20" tabindex="-1" aria-label="code-block-5-20"></a><span class="ex">%.o:</span> %.F90</span>
-<span id="cb5-21"><a href="#cb5-21" tabindex="-1" aria-label="code-block-5-21"></a> <span class="va">$(</span><span class="ex">FC</span><span class="va">)</span> <span class="at">-c</span> <span class="va">$(</span><span class="ex">TEST_FLAGS</span><span class="va">)</span> $<span class="op">&lt;</span></span>
-<span id="cb5-22"><a href="#cb5-22" tabindex="-1" aria-label="code-block-5-22"></a></span>
-<span id="cb5-23"><a href="#cb5-23" tabindex="-1" aria-label="code-block-5-23"></a><span class="ex">clean:</span></span>
-<span id="cb5-24"><a href="#cb5-24" tabindex="-1" aria-label="code-block-5-24"></a> <span class="ex">\rm</span> <span class="at">-f</span> <span class="pp">*</span>.o <span class="pp">*</span>.mod <span class="pp">*</span>.F90 <span class="pp">*</span>.inc tests</span></code></pre>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1" aria-label="code-block-5-10"></a><span class="co"># Note that you will need to filter out the src program from the SRC_OBJS if one exists</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1" aria-label="code-block-5-11"></a><span class="dt">tests_TESTS</span> <span class="ch">=</span><span class="st"> test_matrix_ops_dot.pf</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1" aria-label="code-block-5-12"></a><span class="dt">tests_OTHER_SOURCES</span> <span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="dt">SRC_OBJS</span><span class="ch">)</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1" aria-label="code-block-5-13"></a><span class="dt">tests_OTHER_LIBRARIES</span> <span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="dt">TEST_FLAGS</span><span class="ch">)</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1" aria-label="code-block-5-14"></a></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1" aria-label="code-block-5-15"></a><span class="co"># Triggers pre-processing and defines rule for building test executable</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1" aria-label="code-block-5-16"></a><span class="ch">$(</span><span class="kw">eval</span><span class="st"> </span><span class="ch">$(</span><span class="kw">call</span><span class="st"> make_pfunit_test</span><span class="kw">,</span><span class="st">tests</span><span class="ch">))</span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1" aria-label="code-block-5-17"></a></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1" aria-label="code-block-5-18"></a><span class="co"># Converts pre-processed test files into objects ready for building of the executable</span></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1" aria-label="code-block-5-19"></a><span class="dv">%.o:</span><span class="dt"> %.F90</span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1" aria-label="code-block-5-20"></a><span class="er"> </span><span class="ch">$(</span><span class="dt">FC</span><span class="ch">)</span> -c <span class="ch">$(</span><span class="dt">TEST_FLAGS</span><span class="ch">)</span> <span class="ch">$&lt;</span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1" aria-label="code-block-5-21"></a></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1" aria-label="code-block-5-22"></a><span class="dv">clean:</span></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1" aria-label="code-block-5-23"></a><span class="er"> </span>\rm -f *.o *.mod *.F90 *.inc tests</span></code></pre>
 </div>
 <p><strong>Key points:</strong></p>
 <ul>
@@ -1344,12 +1332,12 @@ same flags as <strong>tests_OTHER_LIBRARIES</strong>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a><span class="ex">$</span> ./tests/tests <span class="at">--verbose</span></span>
 <span id="cb6-4"><a href="#cb6-4" tabindex="-1" aria-label="code-block-6-4"></a></span>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1" aria-label="code-block-6-5"></a></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1" aria-label="code-block-6-6"></a> <span class="ex">Start:</span> <span class="op">&lt;</span>test_something_suite.test_do_something_1<span class="op">&gt;</span></span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1" aria-label="code-block-6-7"></a><span class="bu">.</span>   end: <span class="op">&lt;</span>test_something_suite.test_do_something_1<span class="op">&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1" aria-label="code-block-6-6"></a> <span class="ex">Start:</span> <span class="op">&lt;</span>test_matrix_ops_dot.test_dot_one_to_twenty<span class="op">&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1" aria-label="code-block-6-7"></a><span class="bu">.</span>   end: <span class="op">&lt;</span>test_matrix_ops_dot.test_dot_one_to_twenty<span class="op">&gt;</span></span>
 <span id="cb6-8"><a href="#cb6-8" tabindex="-1" aria-label="code-block-6-8"></a></span>
 <span id="cb6-9"><a href="#cb6-9" tabindex="-1" aria-label="code-block-6-9"></a></span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1" aria-label="code-block-6-10"></a> <span class="ex">Start:</span> <span class="op">&lt;</span>test_something_else_suite.test_do_something_2<span class="op">&gt;</span></span>
-<span id="cb6-11"><a href="#cb6-11" tabindex="-1" aria-label="code-block-6-11"></a><span class="bu">.</span>   end: <span class="op">&lt;</span>test_something_else_suite.test_do_something_2<span class="op">&gt;</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1" aria-label="code-block-6-10"></a> <span class="ex">Start:</span> <span class="op">&lt;</span>test_matrix_ops_dot.test_dot_all_zeros<span class="op">&gt;</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1" aria-label="code-block-6-11"></a><span class="bu">.</span>   end: <span class="op">&lt;</span>test_matrix_ops_dot.test_dot_all_zeros<span class="op">&gt;</span></span>
 <span id="cb6-12"><a href="#cb6-12" tabindex="-1" aria-label="code-block-6-12"></a></span>
 <span id="cb6-13"><a href="#cb6-13" tabindex="-1" aria-label="code-block-6-13"></a><span class="ex">Time:</span>         0.001 seconds</span>
 <span id="cb6-14"><a href="#cb6-14" tabindex="-1" aria-label="code-block-6-14"></a></span>
@@ -1363,38 +1351,14 @@ same flags as <strong>tests_OTHER_LIBRARIES</strong>
 <strong>–verbose</strong> flag. This flag includes the name of our test
 suites and test subroutines in the output. For example, we have
 <strong>2 tests</strong> which here indicates two test functions in
-total, <strong>test_do_something_1</strong> and
-<strong>test_do_something_2</strong>. However, we can see that these two
-test functions are each stored within their own test suite
-<strong>test_something_suite</strong> and
-<strong>test_something_else_suite</strong> respectively.</p>
+total, <strong>test_dot_one_to_twenty</strong> and
+<strong>test_dot_all_zeros</strong>. However, we can see that these two
+test functions are both stored within the same test suite
+<strong>test_matrix_ops_dot</strong>.</p>
 <p>Here, we are defining a test suite as a single test module file
 (<strong>.pf</strong> file). Therefore, we can see that the name of the
 test suite comes from the name of the module. The name of the test is
-then taken from the name of the test subroutine. For example,
-<strong>test_something.pf</strong> would look like this.</p>
-<div class="codewrapper sourceCode" id="cb7">
-<h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="kw">module</span> test_something</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a>    <span class="kw">use</span> something, <span class="kw">only</span> : do_something</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a>    <span class="kw">use</span> funit</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1" aria-label="code-block-7-6"></a><span class="kw">contains</span></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1" aria-label="code-block-7-7"></a></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1" aria-label="code-block-7-8"></a>    @Test</span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1" aria-label="code-block-7-9"></a>    <span class="kw">subroutine</span> test_do_something_1()</span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1" aria-label="code-block-7-10"></a>        <span class="dt">integer</span> <span class="dt">::</span> input, actual_output</span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1" aria-label="code-block-7-11"></a></span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1" aria-label="code-block-7-12"></a>        input <span class="kw">=</span> <span class="dv">1</span></span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1" aria-label="code-block-7-13"></a></span>
-<span id="cb7-14"><a href="#cb7-14" tabindex="-1" aria-label="code-block-7-14"></a>        <span class="kw">call</span> do_something(input, actual_output)</span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1" aria-label="code-block-7-15"></a></span>
-<span id="cb7-16"><a href="#cb7-16" tabindex="-1" aria-label="code-block-7-16"></a>        @assertEqual(<span class="dv">2</span>, actual_output, <span class="st">"Unexpected output from do_something"</span>)</span>
-<span id="cb7-17"><a href="#cb7-17" tabindex="-1" aria-label="code-block-7-17"></a>    <span class="kw">end subroutine</span> test_do_something_1</span>
-<span id="cb7-18"><a href="#cb7-18" tabindex="-1" aria-label="code-block-7-18"></a><span class="kw">end module</span> test_something</span></code></pre>
-</div>
+then taken from the name of the test subroutine.</p>
 <div id="challenge-practice-integrating-with-make" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
@@ -1417,7 +1381,7 @@ exercise</strong> and integrate your test(s) with the
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>A solution is provided in <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/writing-your-first-unit-test/solution" class="external-link">exercises/writing-your-first-unit-test/solution</a>.</p>
 </div>
@@ -1431,19 +1395,17 @@ exercise</strong> and integrate your test(s) with the
 <p>Let’s now look at the steps required to add pFUnit tests to a project
 built using CMake. Similar to before, let’s assume we have the following
 file structure.</p>
-<div class="codewrapper sourceCode" id="cb8">
+<div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">TXT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode txt" tabindex="0"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a>|-- ROOT_DIR/</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a>    | CMakeLists.txt</span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a>    |-- src/</span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a>    |   |-- main.f90</span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a>    |   |__ ... Some module files containing src code</span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1" aria-label="code-block-8-6"></a>    |</span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1" aria-label="code-block-8-7"></a>    |-- tests/</span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1" aria-label="code-block-8-8"></a>        |-- CMakeLists.txt</span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1" aria-label="code-block-8-9"></a>        |-- test_something.pf</span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1" aria-label="code-block-8-10"></a>        |-- test_something_else.pf</span></code></pre>
+<pre class="sourceCode txt" tabindex="0"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a>|-- ROOT_DIR/</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a>    | CMakeLists.txt</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a>    |-- src/</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a>    |   |-- matrix_ops.f90</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a>    |</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1" aria-label="code-block-7-6"></a>    |-- tests/</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1" aria-label="code-block-7-7"></a>        |-- CMakeLists.txt</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1" aria-label="code-block-7-8"></a>        |-- test_matrix_ops_dot.pf</span></code></pre>
 </div>
 <p>Just like with Make, the top level <strong>CMakeLists.txt</strong>
 file is responsible for compiling the src code but should do little
@@ -1451,30 +1413,29 @@ regarding building the tests. However, it should…</p>
 <ul>
 <li>
 <p>Define a variable which stores a list of src files</p>
-<div class="codewrapper sourceCode" id="cb9">
+<div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">CMAKE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="kw">set</span>(SRC_DIR <span class="st">"</span><span class="dv">${PROJECT_SOURCE_DIR}</span><span class="st">/src"</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a><span class="kw">set</span>(PROJ_SRC_FILES</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a>  <span class="st">"</span><span class="dv">${SRC_DIR}</span><span class="st">/main.f90"</span></span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1" aria-label="code-block-9-4"></a>  <span class="st">"</span><span class="dv">${SRC_DIR}</span><span class="st">/something.f90"</span></span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a>)</span></code></pre>
+<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="kw">set</span>(SRC_DIR <span class="st">"</span><span class="dv">${PROJECT_SOURCE_DIR}</span><span class="st">/src"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a><span class="kw">set</span>(PROJ_SRC_FILES</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a>  <span class="st">"</span><span class="dv">${SRC_DIR}</span><span class="st">/matrix_ops.f90"</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a>)</span></code></pre>
 </div>
 </li>
 <li>
 <p>Enable testing.</p>
-<div class="codewrapper sourceCode" id="cb10">
+<div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">CMAKE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="kw">enable_testing</span>()</span></code></pre>
+<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="kw">enable_testing</span>()</span></code></pre>
 </div>
 </li>
 <li>
 <p>Add the <strong>tests/</strong> dir as a subdirectory.</p>
-<div class="codewrapper sourceCode" id="cb11">
+<div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">CMAKE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="kw">add_subdirectory</span>(<span class="st">"tests"</span>)</span></code></pre>
+<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="kw">add_subdirectory</span>(<span class="st">"tests"</span>)</span></code></pre>
 </div>
 </li>
 </ul>
@@ -1483,38 +1444,34 @@ regarding building the tests. However, it should…</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
   <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Full file </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
 <div class="accordion-body">
 <p>The full top level <strong>CMakeLists.txt</strong> may look something
 like this:</p>
-<div class="codewrapper sourceCode" id="cb12">
+<div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">CMAKE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="kw">cmake_minimum_required</span>(<span class="ot">VERSION</span> <span class="dt">3.9</span> <span class="ot">FATAL_ERROR</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1" aria-label="code-block-12-2"></a></span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1" aria-label="code-block-12-3"></a><span class="co"># Set project name</span></span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1" aria-label="code-block-12-4"></a><span class="kw">project</span>(</span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1" aria-label="code-block-12-5"></a>  <span class="st">"something_interesting"</span></span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1" aria-label="code-block-12-6"></a>  <span class="ot">LANGUAGES</span> <span class="st">"Fortran"</span></span>
-<span id="cb12-7"><a href="#cb12-7" tabindex="-1" aria-label="code-block-12-7"></a>  <span class="ot">VERSION</span> <span class="st">"0.0.1"</span></span>
-<span id="cb12-8"><a href="#cb12-8" tabindex="-1" aria-label="code-block-12-8"></a>  <span class="ot">DESCRIPTION</span> <span class="st">"Doing something"</span></span>
-<span id="cb12-9"><a href="#cb12-9" tabindex="-1" aria-label="code-block-12-9"></a>)</span>
-<span id="cb12-10"><a href="#cb12-10" tabindex="-1" aria-label="code-block-12-10"></a></span>
-<span id="cb12-11"><a href="#cb12-11" tabindex="-1" aria-label="code-block-12-11"></a><span class="co"># Define a variable which stores a list of src files</span></span>
-<span id="cb12-12"><a href="#cb12-12" tabindex="-1" aria-label="code-block-12-12"></a><span class="kw">set</span>(SRC_DIR <span class="st">"</span><span class="dv">${PROJECT_SOURCE_DIR}</span><span class="st">/src"</span>)</span>
-<span id="cb12-13"><a href="#cb12-13" tabindex="-1" aria-label="code-block-12-13"></a><span class="kw">set</span>(PROJ_SRC_FILES</span>
-<span id="cb12-14"><a href="#cb12-14" tabindex="-1" aria-label="code-block-12-14"></a>  <span class="st">"</span><span class="dv">${SRC_DIR}</span><span class="st">/main.f90"</span></span>
-<span id="cb12-15"><a href="#cb12-15" tabindex="-1" aria-label="code-block-12-15"></a>  <span class="st">"</span><span class="dv">${SRC_DIR}</span><span class="st">/something.f90"</span></span>
-<span id="cb12-16"><a href="#cb12-16" tabindex="-1" aria-label="code-block-12-16"></a>)</span>
-<span id="cb12-17"><a href="#cb12-17" tabindex="-1" aria-label="code-block-12-17"></a></span>
-<span id="cb12-18"><a href="#cb12-18" tabindex="-1" aria-label="code-block-12-18"></a><span class="co"># Build src executables</span></span>
-<span id="cb12-19"><a href="#cb12-19" tabindex="-1" aria-label="code-block-12-19"></a><span class="kw">add_executable</span>(<span class="st">"</span><span class="dv">${PROJECT_NAME}</span><span class="st">"</span> <span class="st">"</span><span class="dv">${PROJ_SRC_FILES}</span><span class="st">"</span>)</span>
-<span id="cb12-20"><a href="#cb12-20" tabindex="-1" aria-label="code-block-12-20"></a></span>
-<span id="cb12-21"><a href="#cb12-21" tabindex="-1" aria-label="code-block-12-21"></a><span class="co"># Enable testing.</span></span>
-<span id="cb12-22"><a href="#cb12-22" tabindex="-1" aria-label="code-block-12-22"></a><span class="kw">enable_testing</span>()</span>
-<span id="cb12-23"><a href="#cb12-23" tabindex="-1" aria-label="code-block-12-23"></a></span>
-<span id="cb12-24"><a href="#cb12-24" tabindex="-1" aria-label="code-block-12-24"></a><span class="co"># Add the tests dir as a subdirectory.</span></span>
-<span id="cb12-25"><a href="#cb12-25" tabindex="-1" aria-label="code-block-12-25"></a><span class="kw">add_subdirectory</span>(<span class="st">"tests"</span>)</span></code></pre>
+<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="kw">cmake_minimum_required</span>(<span class="ot">VERSION</span> <span class="dt">3.9</span> <span class="ot">FATAL_ERROR</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1" aria-label="code-block-11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1" aria-label="code-block-11-3"></a><span class="co"># Set project name</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1" aria-label="code-block-11-4"></a><span class="kw">project</span>(</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1" aria-label="code-block-11-5"></a>  <span class="st">"matrix_ops"</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1" aria-label="code-block-11-6"></a>  <span class="ot">LANGUAGES</span> <span class="st">"Fortran"</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1" aria-label="code-block-11-7"></a>  <span class="ot">VERSION</span> <span class="st">"0.0.1"</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1" aria-label="code-block-11-8"></a>  <span class="ot">DESCRIPTION</span> <span class="st">"Library of matrix operations"</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1" aria-label="code-block-11-9"></a>)</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1" aria-label="code-block-11-10"></a></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1" aria-label="code-block-11-11"></a><span class="co"># Define a variable which stores a list of src files</span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1" aria-label="code-block-11-12"></a><span class="kw">set</span>(SRC_DIR <span class="st">"</span><span class="dv">${PROJECT_SOURCE_DIR}</span><span class="st">/src"</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1" aria-label="code-block-11-13"></a><span class="kw">set</span>(PROJ_SRC_FILES</span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1" aria-label="code-block-11-14"></a>  <span class="st">"</span><span class="dv">${SRC_DIR}</span><span class="st">/matrix_ops.f90"</span></span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1" aria-label="code-block-11-15"></a>)</span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1" aria-label="code-block-11-16"></a></span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1" aria-label="code-block-11-17"></a><span class="co"># Enable testing.</span></span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1" aria-label="code-block-11-18"></a><span class="kw">enable_testing</span>()</span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1" aria-label="code-block-11-19"></a></span>
+<span id="cb11-20"><a href="#cb11-20" tabindex="-1" aria-label="code-block-11-20"></a><span class="co"># Add the tests dir as a subdirectory.</span></span>
+<span id="cb11-21"><a href="#cb11-21" tabindex="-1" aria-label="code-block-11-21"></a><span class="kw">add_subdirectory</span>(<span class="st">"tests"</span>)</span></code></pre>
 </div>
 </div>
 </div>
@@ -1522,36 +1479,31 @@ like this:</p>
 </div>
 <p>The <strong>tests/CMakeLists.txt</strong> file would then look like
 this:</p>
-<div class="codewrapper sourceCode" id="cb13">
+<div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">CMAKE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb13-1"><a href="#cb13-1" tabindex="-1" aria-label="code-block-13-1"></a><span class="kw">find_package</span>(PFUNIT <span class="ot">REQUIRED</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1" aria-label="code-block-13-2"></a></span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1" aria-label="code-block-13-3"></a><span class="co"># Filter out the main.f90 file. We can only have one main() function in our tests</span></span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1" aria-label="code-block-13-4"></a><span class="kw">set</span>(PROJ_SRC_FILES_EXEC_MAIN <span class="dv">${PROJ_SRC_FILES}</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1" aria-label="code-block-13-5"></a><span class="kw">list</span>(<span class="ot">FILTER</span> PROJ_SRC_FILES_EXEC_MAIN <span class="ot">EXCLUDE</span> <span class="ot">REGEX</span> <span class="st">".*main.f90"</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1" aria-label="code-block-13-6"></a></span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1" aria-label="code-block-13-7"></a><span class="co"># Create library for src code</span></span>
-<span id="cb13-8"><a href="#cb13-8" tabindex="-1" aria-label="code-block-13-8"></a><span class="kw">add_library</span> (<span class="bn">SUT</span> <span class="ot">STATIC</span> <span class="dv">${PROJ_SRC_FILES_EXEC_MAIN}</span>)</span>
-<span id="cb13-9"><a href="#cb13-9" tabindex="-1" aria-label="code-block-13-9"></a></span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1" aria-label="code-block-13-10"></a><span class="co"># List all test files</span></span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1" aria-label="code-block-13-11"></a><span class="kw">set</span>(test_srcs</span>
-<span id="cb13-12"><a href="#cb13-12" tabindex="-1" aria-label="code-block-13-12"></a>  <span class="st">"</span><span class="dv">${PROJECT_SOURCE_DIR}</span><span class="st">/tests/test_something.pf"</span></span>
-<span id="cb13-13"><a href="#cb13-13" tabindex="-1" aria-label="code-block-13-13"></a>  <span class="st">"</span><span class="dv">${PROJECT_SOURCE_DIR}</span><span class="st">/tests/test_something_else.pf"</span></span>
-<span id="cb13-14"><a href="#cb13-14" tabindex="-1" aria-label="code-block-13-14"></a>)</span>
-<span id="cb13-15"><a href="#cb13-15" tabindex="-1" aria-label="code-block-13-15"></a></span>
-<span id="cb13-16"><a href="#cb13-16" tabindex="-1" aria-label="code-block-13-16"></a><span class="co"># Add the test target</span></span>
-<span id="cb13-17"><a href="#cb13-17" tabindex="-1" aria-label="code-block-13-17"></a><span class="fu">add_pfunit_ctest </span>(test_something_interesting</span>
-<span id="cb13-18"><a href="#cb13-18" tabindex="-1" aria-label="code-block-13-18"></a>  TEST_SOURCES <span class="dv">${test_srcs}</span></span>
-<span id="cb13-19"><a href="#cb13-19" tabindex="-1" aria-label="code-block-13-19"></a>  <span class="dv">LINK_LIBRARIES</span> SUT <span class="co"># your application library</span></span>
-<span id="cb13-20"><a href="#cb13-20" tabindex="-1" aria-label="code-block-13-20"></a>  )</span></code></pre>
+<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="kw">find_package</span>(PFUNIT <span class="ot">REQUIRED</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1" aria-label="code-block-12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1" aria-label="code-block-12-3"></a></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1" aria-label="code-block-12-4"></a><span class="co"># Create library for src code</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1" aria-label="code-block-12-5"></a><span class="co"># Note that you will need to filter out the src program from the SRC_OBJS if one exists</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1" aria-label="code-block-12-6"></a><span class="kw">add_library</span> (<span class="bn">SUT</span> <span class="ot">STATIC</span> <span class="dv">${PROJ_SRC_FILES}</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1" aria-label="code-block-12-7"></a></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1" aria-label="code-block-12-8"></a><span class="co"># List all test files</span></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1" aria-label="code-block-12-9"></a><span class="kw">set</span>(test_srcs</span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1" aria-label="code-block-12-10"></a>  <span class="st">"</span><span class="dv">${PROJECT_SOURCE_DIR}</span><span class="st">/tests/test_matrix_ops_dot.pf"</span></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1" aria-label="code-block-12-11"></a>)</span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1" aria-label="code-block-12-12"></a></span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1" aria-label="code-block-12-13"></a><span class="co"># Add the test target</span></span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1" aria-label="code-block-12-14"></a><span class="fu">add_pfunit_ctest </span>(test_matrix_ops_dot</span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1" aria-label="code-block-12-15"></a>  TEST_SOURCES <span class="dv">${test_srcs}</span></span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1" aria-label="code-block-12-16"></a>  <span class="dv">LINK_LIBRARIES</span> SUT <span class="co"># your application library</span></span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1" aria-label="code-block-12-17"></a>  )</span></code></pre>
 </div>
 <p><strong>Key points:</strong></p>
 <ul>
 <li>First, we find the pFUnit package to ensure the required libraries
 and cmake functions are available</li>
-<li>We then filter the <strong>main.f90</strong> program file from the
-list of src files.</li>
 <li>We store the src files in a library (<strong>SUT</strong>, stands
 for system under test) to be referenced later.</li>
 <li>We list the test <strong>.pf</strong> files we wish to include
@@ -1559,7 +1511,7 @@ within <strong>test_srcs</strong>.</li>
 <li>We then create a test with pFUnit and CTest using the function
 provided by pFUnit, <strong>add_pfunit_ctest</strong>. Here we are…
 <ul>
-<li>naming the test <strong>test_something_interesting</strong>.</li>
+<li>naming the test <strong>test_matrix_ops_dot</strong>.</li>
 <li>informing pFUnit of the relevant src files via
 <strong>TEST_SOURCES</strong>.</li>
 <li>linking to the src library via <strong>LINK_LIBRARIES</strong>.</li>
@@ -1570,12 +1522,12 @@ provided by pFUnit, <strong>add_pfunit_ctest</strong>. Here we are…
 <h3 id="building-with-cmake">Building with CMake<a class="anchor" aria-label="anchor" href="#building-with-cmake"></a>
 </h3>
 <p>We can then build our tests with the following commands</p>
-<div class="codewrapper sourceCode" id="cb14">
+<div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">SH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode sh" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a><span class="fu">cmake</span> <span class="at">-B</span> build <span class="at">-DCMAKE_PREFIX_PATH</span><span class="op">=</span>/path/to/pfunit/build/installed</span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1" aria-label="code-block-14-2"></a><span class="fu">cmake</span> <span class="at">--build</span> build</span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1" aria-label="code-block-14-3"></a><span class="ex">ctest</span> <span class="at">--test-dir</span> build <span class="co"># or ./build/tests/test_something_interesting</span></span></code></pre>
+<pre class="sourceCode sh" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1" aria-label="code-block-13-1"></a><span class="fu">cmake</span> <span class="at">-B</span> build <span class="at">-DCMAKE_PREFIX_PATH</span><span class="op">=</span>/path/to/pfunit/build/installed</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1" aria-label="code-block-13-2"></a><span class="fu">cmake</span> <span class="at">--build</span> build</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1" aria-label="code-block-13-3"></a><span class="ex">ctest</span> <span class="at">--test-dir</span> build <span class="co"># or ./build/tests/test_matrix_ops_dot</span></span></code></pre>
 </div>
 <div id="mixing-ctest-and-pfunit" class="callout">
 <div class="callout-square">
@@ -1588,25 +1540,25 @@ provided by pFUnit, <strong>add_pfunit_ctest</strong>. Here we are…
 <p>In this case we have called <strong>add_pfunit_ctest</strong> once
 with all of our <strong>.pf</strong> test files. This results in there
 being one CTest test (i.e. one executable
-<strong>./build/tests/test_something</strong>) which runs all tests.
-However, it may be preferable to call <strong>add_pfunit_ctest</strong>
-more than once, thus creating multiple executables to further divide up
-your tests.</p>
+<strong>./build/tests/test_matrix_ops_dot</strong>) which runs all
+tests. However, it may be preferable to call
+<strong>add_pfunit_ctest</strong> more than once, thus creating multiple
+executables to further divide up your tests.</p>
 <p>Note that the tests can still be filtered by calling the executable
 itself and using pFUnit’s inbuilt filtering option, like so.</p>
-<div class="codewrapper sourceCode" id="cb15">
+<div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">SH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode sh" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1" aria-label="code-block-15-1"></a><span class="ex">$</span> ./build/tests/test_something_interesting <span class="at">-f</span> test_something_else <span class="at">-v</span></span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1" aria-label="code-block-15-2"></a></span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1" aria-label="code-block-15-3"></a></span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1" aria-label="code-block-15-4"></a> <span class="ex">Start:</span> <span class="op">&lt;</span>test_something_else_suite.test_do_something_2<span class="op">&gt;</span></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1" aria-label="code-block-15-5"></a><span class="bu">.</span>   end: <span class="op">&lt;</span>test_something_else_suite.test_do_something_2<span class="op">&gt;</span></span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1" aria-label="code-block-15-6"></a></span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1" aria-label="code-block-15-7"></a><span class="ex">Time:</span>         0.001 seconds</span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1" aria-label="code-block-15-8"></a></span>
-<span id="cb15-9"><a href="#cb15-9" tabindex="-1" aria-label="code-block-15-9"></a> <span class="ex">OK</span></span>
-<span id="cb15-10"><a href="#cb15-10" tabindex="-1" aria-label="code-block-15-10"></a> <span class="kw">(</span><span class="ex">1</span> test<span class="kw">)</span></span></code></pre>
+<pre class="sourceCode sh" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a><span class="ex">$</span> ./build/tests/test_matrix_ops_dot <span class="at">-f</span> test_dot_one_to_twenty <span class="at">-v</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1" aria-label="code-block-14-2"></a></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1" aria-label="code-block-14-3"></a></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1" aria-label="code-block-14-4"></a> <span class="ex">Start:</span> <span class="op">&lt;</span>test_matrix_ops_dot.test_dot_one_to_twenty<span class="op">&gt;</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1" aria-label="code-block-14-5"></a><span class="bu">.</span>   end: <span class="op">&lt;</span>test_matrix_ops_dot.test_dot_one_to_twenty<span class="op">&gt;</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1" aria-label="code-block-14-6"></a></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1" aria-label="code-block-14-7"></a><span class="ex">Time:</span>         0.001 seconds</span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1" aria-label="code-block-14-8"></a></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1" aria-label="code-block-14-9"></a> <span class="ex">OK</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1" aria-label="code-block-14-10"></a> <span class="kw">(</span><span class="ex">1</span> test<span class="kw">)</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -1621,14 +1573,14 @@ are identical to when <a href="#naming-our-tests-with-make">built using
 make</a>. However, when using CMake we have control of one other name.
 The name of the CTest test. This name is set when we call
 <strong>add_pfunit_ctest</strong>. For example the below will create a
-test named <strong>test_something_interesting</strong>.</p>
-<div class="codewrapper sourceCode" id="cb16">
+test named <strong>test_matrix_ops_dot</strong>.</p>
+<div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">CMAKE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb16-1"><a href="#cb16-1" tabindex="-1" aria-label="code-block-16-1"></a><span class="fu">add_pfunit_ctest </span>(test_something_interesting</span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1" aria-label="code-block-16-2"></a>  TEST_SOURCES <span class="dv">${test_srcs}</span></span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1" aria-label="code-block-16-3"></a>  <span class="dv">LINK_LIBRARIES</span> sut <span class="co"># your application library</span></span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1" aria-label="code-block-16-4"></a>  )</span></code></pre>
+<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb15-1"><a href="#cb15-1" tabindex="-1" aria-label="code-block-15-1"></a><span class="fu">add_pfunit_ctest </span>(test_matrix_ops_dot</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1" aria-label="code-block-15-2"></a>  TEST_SOURCES <span class="dv">${test_srcs}</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1" aria-label="code-block-15-3"></a>  <span class="dv">LINK_LIBRARIES</span> sut <span class="co"># your application library</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1" aria-label="code-block-15-4"></a>  )</span></code></pre>
 </div>
 <div id="challenge-practice-integrating-with-cmake" class="callout challenge">
 <div class="callout-square">
@@ -1653,7 +1605,7 @@ provided in the exercise.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>A solution is provided in <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/writing-your-first-unit-test/solution" class="external-link">exercises/writing-your-first-unit-test/solution</a>.</p>
 </div>
@@ -1978,7 +1930,7 @@ let’s break them down.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> 1. Test parameters type </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <p>First of all, we have defined a new custom type
 <strong>dot_test_parameters</strong></p>
@@ -2079,7 +2031,7 @@ Unit Test Syntax exercise</a>. Complete tasks 1 and 2.1.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>A solution is provided in <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/fortran-unit-test-syntax/solution" class="external-link">exercises/fortran-unit-test-syntax/solution</a>.</p>
 </div>
@@ -2096,7 +2048,7 @@ Unit Test Syntax exercise</a>. Complete tasks 1 and 2.1.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
   <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> 2. Parameterising the test case </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
 <div class="accordion-body">
 <p>Now that we have a new test parameter type, we must update our test
 case type to make use of it:</p>
@@ -2171,7 +2123,7 @@ type-bound procedure within our test case type called
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
   <h3 class="accordion-header" id="headingSpoiler3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> 3. Defining a suite of tests / parameter sets </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
 <div class="accordion-body">
 <p>We now are able to parameterise our test case. To do this we define a
 function (<strong>dot_test_suite</strong>) which returns an array of our
@@ -2236,7 +2188,7 @@ Unit Test Syntax exercises</a>, Complete task 2.2.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>A solution is provided in <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/fortran-unit-test-syntax/solution" class="external-link">exercises/fortran-unit-test-syntax/solution</a>.</p>
 </div>
@@ -2252,7 +2204,7 @@ Unit Test Syntax exercises</a>, Complete task 2.2.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler4" aria-expanded="false" aria-controls="collapseSpoiler4">
   <h3 class="accordion-header" id="headingSpoiler4">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> 4. Passing the test suite into the @Test </h3>
 </button>
-<div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
+<div id="collapseSpoiler4" class="accordion-collapse collapse" aria-labelledby="headingSpoiler4" data-bs-parent="#accordionSpoiler4">
 <div class="accordion-body">
 <p>Since we are now defining our inputs and expected outputs within our
 custom type <strong>dot_test_parameters</strong> and setting their
@@ -2297,7 +2249,7 @@ exercise][exercises-challenge], complete task 3.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>A solution is provided in <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/fortran-unit-test-syntax/solution" class="external-link">exercises/fortran-unit-test-syntax/solution</a>.</p>
 </div>
@@ -2310,7 +2262,7 @@ exercise][exercises-challenge], complete task 3.</p>
 </div>
 </section></section><section id="aio-testing-parallel-code"><p>Content from <a href="testing-parallel-code.html">Testing parallel code</a></p>
 <hr>
-<p>Last updated on 2026-09-04 |
+<p>Last updated on 2026-09-24 |
 
         <a href="https://github.com/carpentries-incubator/fortran-unit-testing/edit/main/episodes/testing-parallel-code.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -2964,21 +2916,19 @@ with build systems#Integrating pFUnit with Make</a> becomes,</p>
 <span id="cb10-7"><a href="#cb10-7" tabindex="-1" aria-label="code-block-10-7"></a><span class="cf">endif</span></span>
 <span id="cb10-8"><a href="#cb10-8" tabindex="-1" aria-label="code-block-10-8"></a></span>
 <span id="cb10-9"><a href="#cb10-9" tabindex="-1" aria-label="code-block-10-9"></a><span class="co"># Define variables to be picked up by make_pfunit_test</span></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1" aria-label="code-block-10-10"></a><span class="dt">tests_TESTS</span> <span class="ch">=</span><span class="st"> </span><span class="ch">\</span></span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1" aria-label="code-block-10-11"></a><span class="st">  test_something.pf </span><span class="ch">\</span></span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1" aria-label="code-block-10-12"></a><span class="st">  test_something_else.pf</span></span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1" aria-label="code-block-10-13"></a><span class="dt">tests_OTHER_SOURCES</span> <span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="kw">filter-out</span><span class="st"> </span><span class="ch">$(</span><span class="dt">BUILD_DIR</span><span class="ch">)</span><span class="st">/main.o</span><span class="kw">,</span><span class="st"> </span><span class="ch">$(</span><span class="dt">SRC_OBJS</span><span class="ch">))</span></span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1" aria-label="code-block-10-14"></a><span class="dt">tests_OTHER_LIBRARIES</span> <span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="dt">TEST_FLAGS</span><span class="ch">)</span></span>
-<span id="cb10-15"><a href="#cb10-15" tabindex="-1" aria-label="code-block-10-15"></a></span>
-<span id="cb10-16"><a href="#cb10-16" tabindex="-1" aria-label="code-block-10-16"></a><span class="co"># Triggers pre-processing and defines rule for building test executable</span></span>
-<span id="cb10-17"><a href="#cb10-17" tabindex="-1" aria-label="code-block-10-17"></a><span class="ch">$(</span><span class="kw">eval</span><span class="st"> </span><span class="ch">$(</span><span class="kw">call</span><span class="st"> make_pfunit_test</span><span class="kw">,</span><span class="st">tests</span><span class="ch">))</span></span>
-<span id="cb10-18"><a href="#cb10-18" tabindex="-1" aria-label="code-block-10-18"></a></span>
-<span id="cb10-19"><a href="#cb10-19" tabindex="-1" aria-label="code-block-10-19"></a><span class="co"># Converts pre-processed test files into objects ready for building of the executable</span></span>
-<span id="cb10-20"><a href="#cb10-20" tabindex="-1" aria-label="code-block-10-20"></a><span class="dv">%.o:</span><span class="dt"> %.F90</span></span>
-<span id="cb10-21"><a href="#cb10-21" tabindex="-1" aria-label="code-block-10-21"></a><span class="er"> </span><span class="ch">$(</span><span class="dt">FC</span><span class="ch">)</span> -c <span class="ch">$(</span><span class="dt">TEST_FLAGS</span><span class="ch">)</span> <span class="ch">$&lt;</span></span>
-<span id="cb10-22"><a href="#cb10-22" tabindex="-1" aria-label="code-block-10-22"></a></span>
-<span id="cb10-23"><a href="#cb10-23" tabindex="-1" aria-label="code-block-10-23"></a><span class="dv">clean:</span></span>
-<span id="cb10-24"><a href="#cb10-24" tabindex="-1" aria-label="code-block-10-24"></a><span class="er"> </span>\rm -f *.o *.mod *.F90 *.inc tests</span></code></pre>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1" aria-label="code-block-10-10"></a><span class="dt">tests_TESTS</span> <span class="ch">=</span><span class="st"> test_with_mpi.pf</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1" aria-label="code-block-10-11"></a><span class="dt">tests_OTHER_SOURCES</span> <span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="dt">SRC_OBJS</span><span class="ch">)</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1" aria-label="code-block-10-12"></a><span class="dt">tests_OTHER_LIBRARIES</span> <span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="dt">TEST_FLAGS</span><span class="ch">)</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1" aria-label="code-block-10-13"></a></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1" aria-label="code-block-10-14"></a><span class="co"># Triggers pre-processing and defines rule for building test executable</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1" aria-label="code-block-10-15"></a><span class="ch">$(</span><span class="kw">eval</span><span class="st"> </span><span class="ch">$(</span><span class="kw">call</span><span class="st"> make_pfunit_test</span><span class="kw">,</span><span class="st">tests</span><span class="ch">))</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1" aria-label="code-block-10-16"></a></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1" aria-label="code-block-10-17"></a><span class="co"># Converts pre-processed test files into objects ready for building of the executable</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1" aria-label="code-block-10-18"></a><span class="dv">%.o:</span><span class="dt"> %.F90</span></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1" aria-label="code-block-10-19"></a><span class="er"> </span><span class="ch">$(</span><span class="dt">FC</span><span class="ch">)</span> -c <span class="ch">$(</span><span class="dt">TEST_FLAGS</span><span class="ch">)</span> <span class="ch">$&lt;</span></span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1" aria-label="code-block-10-20"></a></span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1" aria-label="code-block-10-21"></a><span class="dv">clean:</span></span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1" aria-label="code-block-10-22"></a><span class="er"> </span>\rm -f *.o *.mod *.F90 *.inc tests</span></code></pre>
 </div>
 <p>With this, we can compile for MPI using the following command.</p>
 <div class="codewrapper sourceCode" id="cb11">
@@ -2999,7 +2949,7 @@ this, there is only one extra parameter we must pass into
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">CMAKE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="fu">add_pfunit_ctest </span>(test_something_interesting</span>
+<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="fu">add_pfunit_ctest </span>(test_with_mpi</span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1" aria-label="code-block-12-2"></a>  TEST_SOURCES <span class="dv">${test_srcs}</span></span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1" aria-label="code-block-12-3"></a>  <span class="dv">LINK_LIBRARIES</span> SUT <span class="co"># your application library</span></span>
 <span id="cb12-4"><a href="#cb12-4" tabindex="-1" aria-label="code-block-12-4"></a>  MAX_PES 4          <span class="co"># &lt;-- max number of MPI ranks required for the test</span></span>
@@ -4271,8 +4221,8 @@ with Legacy Code</a>. Pearson.</li>
   "url": "https://carpentries-incubator.github.io/fortran-unit-testing/instructor/aio.html",
   "identifier": "https://carpentries-incubator.github.io/fortran-unit-testing/instructor/aio.html",
   "dateCreated": "2025-05-09",
-  "dateModified": "2026-09-23",
-  "datePublished": "2026-09-23"
+  "dateModified": "2026-09-24",
+  "datePublished": "2026-09-24"
 }
 
   </script><script>

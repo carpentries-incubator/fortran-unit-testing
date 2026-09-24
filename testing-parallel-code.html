@@ -332,7 +332,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Testing parallel code</h1>
-        <p>Last updated on 2026-09-04 |
+        <p>Last updated on 2026-09-24 |
 
         <a href="https://github.com/carpentries-incubator/fortran-unit-testing/edit/main/episodes/testing-parallel-code.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -954,21 +954,19 @@ with build systems#Integrating pFUnit with Make</a> becomes,</p>
 <span id="cb10-7"><a href="#cb10-7" tabindex="-1" aria-label="code-block-10-7"></a><span class="cf">endif</span></span>
 <span id="cb10-8"><a href="#cb10-8" tabindex="-1" aria-label="code-block-10-8"></a></span>
 <span id="cb10-9"><a href="#cb10-9" tabindex="-1" aria-label="code-block-10-9"></a><span class="co"># Define variables to be picked up by make_pfunit_test</span></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1" aria-label="code-block-10-10"></a><span class="dt">tests_TESTS</span> <span class="ch">=</span><span class="st"> </span><span class="ch">\</span></span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1" aria-label="code-block-10-11"></a><span class="st">  test_something.pf </span><span class="ch">\</span></span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1" aria-label="code-block-10-12"></a><span class="st">  test_something_else.pf</span></span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1" aria-label="code-block-10-13"></a><span class="dt">tests_OTHER_SOURCES</span> <span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="kw">filter-out</span><span class="st"> </span><span class="ch">$(</span><span class="dt">BUILD_DIR</span><span class="ch">)</span><span class="st">/main.o</span><span class="kw">,</span><span class="st"> </span><span class="ch">$(</span><span class="dt">SRC_OBJS</span><span class="ch">))</span></span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1" aria-label="code-block-10-14"></a><span class="dt">tests_OTHER_LIBRARIES</span> <span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="dt">TEST_FLAGS</span><span class="ch">)</span></span>
-<span id="cb10-15"><a href="#cb10-15" tabindex="-1" aria-label="code-block-10-15"></a></span>
-<span id="cb10-16"><a href="#cb10-16" tabindex="-1" aria-label="code-block-10-16"></a><span class="co"># Triggers pre-processing and defines rule for building test executable</span></span>
-<span id="cb10-17"><a href="#cb10-17" tabindex="-1" aria-label="code-block-10-17"></a><span class="ch">$(</span><span class="kw">eval</span><span class="st"> </span><span class="ch">$(</span><span class="kw">call</span><span class="st"> make_pfunit_test</span><span class="kw">,</span><span class="st">tests</span><span class="ch">))</span></span>
-<span id="cb10-18"><a href="#cb10-18" tabindex="-1" aria-label="code-block-10-18"></a></span>
-<span id="cb10-19"><a href="#cb10-19" tabindex="-1" aria-label="code-block-10-19"></a><span class="co"># Converts pre-processed test files into objects ready for building of the executable</span></span>
-<span id="cb10-20"><a href="#cb10-20" tabindex="-1" aria-label="code-block-10-20"></a><span class="dv">%.o:</span><span class="dt"> %.F90</span></span>
-<span id="cb10-21"><a href="#cb10-21" tabindex="-1" aria-label="code-block-10-21"></a><span class="er"> </span><span class="ch">$(</span><span class="dt">FC</span><span class="ch">)</span> -c <span class="ch">$(</span><span class="dt">TEST_FLAGS</span><span class="ch">)</span> <span class="ch">$&lt;</span></span>
-<span id="cb10-22"><a href="#cb10-22" tabindex="-1" aria-label="code-block-10-22"></a></span>
-<span id="cb10-23"><a href="#cb10-23" tabindex="-1" aria-label="code-block-10-23"></a><span class="dv">clean:</span></span>
-<span id="cb10-24"><a href="#cb10-24" tabindex="-1" aria-label="code-block-10-24"></a><span class="er"> </span>\rm -f *.o *.mod *.F90 *.inc tests</span></code></pre>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1" aria-label="code-block-10-10"></a><span class="dt">tests_TESTS</span> <span class="ch">=</span><span class="st"> test_with_mpi.pf</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1" aria-label="code-block-10-11"></a><span class="dt">tests_OTHER_SOURCES</span> <span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="dt">SRC_OBJS</span><span class="ch">)</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1" aria-label="code-block-10-12"></a><span class="dt">tests_OTHER_LIBRARIES</span> <span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="dt">TEST_FLAGS</span><span class="ch">)</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1" aria-label="code-block-10-13"></a></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1" aria-label="code-block-10-14"></a><span class="co"># Triggers pre-processing and defines rule for building test executable</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1" aria-label="code-block-10-15"></a><span class="ch">$(</span><span class="kw">eval</span><span class="st"> </span><span class="ch">$(</span><span class="kw">call</span><span class="st"> make_pfunit_test</span><span class="kw">,</span><span class="st">tests</span><span class="ch">))</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1" aria-label="code-block-10-16"></a></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1" aria-label="code-block-10-17"></a><span class="co"># Converts pre-processed test files into objects ready for building of the executable</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1" aria-label="code-block-10-18"></a><span class="dv">%.o:</span><span class="dt"> %.F90</span></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1" aria-label="code-block-10-19"></a><span class="er"> </span><span class="ch">$(</span><span class="dt">FC</span><span class="ch">)</span> -c <span class="ch">$(</span><span class="dt">TEST_FLAGS</span><span class="ch">)</span> <span class="ch">$&lt;</span></span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1" aria-label="code-block-10-20"></a></span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1" aria-label="code-block-10-21"></a><span class="dv">clean:</span></span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1" aria-label="code-block-10-22"></a><span class="er"> </span>\rm -f *.o *.mod *.F90 *.inc tests</span></code></pre>
 </div>
 <p>With this, we can compile for MPI using the following command.</p>
 <div class="codewrapper sourceCode" id="cb11">
@@ -988,7 +986,7 @@ this, there is only one extra parameter we must pass into
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">CMAKE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="fu">add_pfunit_ctest </span>(test_something_interesting</span>
+<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="fu">add_pfunit_ctest </span>(test_with_mpi</span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1" aria-label="code-block-12-2"></a>  TEST_SOURCES <span class="dv">${test_srcs}</span></span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1" aria-label="code-block-12-3"></a>  <span class="dv">LINK_LIBRARIES</span> SUT <span class="co"># your application library</span></span>
 <span id="cb12-4"><a href="#cb12-4" tabindex="-1" aria-label="code-block-12-4"></a>  MAX_PES 4          <span class="co"># &lt;-- max number of MPI ranks required for the test</span></span>
@@ -1228,8 +1226,8 @@ exercise][exercises-challenge] in the exercises repository.</p>
   "url": "https://carpentries-incubator.github.io/fortran-unit-testing/testing-parallel-code.html",
   "identifier": "https://carpentries-incubator.github.io/fortran-unit-testing/testing-parallel-code.html",
   "dateCreated": "2025-05-09",
-  "dateModified": "2026-09-04",
-  "datePublished": "2026-09-23"
+  "dateModified": "2026-09-24",
+  "datePublished": "2026-09-24"
 }
 
   </script><script>
