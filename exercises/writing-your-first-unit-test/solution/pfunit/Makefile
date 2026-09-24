@@ -8,7 +8,8 @@ endif
 
 # Define variables to be picked up by make_pfunit_test
 tests_TESTS = \
-  test_temp_conversions.pf
+  test_temp_conversions.pf \
+  test_temp_conversions_parameterised.pf
 tests_OTHER_SOURCES = $(filter-out $(BUILD_DIR)/main.o, $(SRC_OBJS))
 tests_OTHER_LIBRARIES = $(TEST_FLAGS)
 
