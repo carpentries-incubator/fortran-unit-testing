@@ -329,7 +329,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Parameterising pFUnit tests</h1>
-        <p>Last updated on 2026-09-23 |
+        <p>Last updated on 2026-09-24 |
 
         <a href="https://github.com/carpentries-incubator/fortran-unit-testing/edit/main/episodes/parameterising-pfunit-tests.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -664,12 +664,12 @@ let’s break them down.</p>
 <span id="cb4-16"><a href="#cb4-16" tabindex="-1" aria-label="code-block-4-16"></a>    <span class="kw">procedure</span> <span class="dt">::</span> toString</span>
 <span id="cb4-17"><a href="#cb4-17" tabindex="-1" aria-label="code-block-4-17"></a><span class="dt">end type</span> dot_test_parameters</span></code></pre>
 </div>
-<p>The key features of this the type
-<strong>dot_test_parameters</strong> are</p>
+<p>The key features of the type <strong>dot_test_parameters</strong>
+are</p>
 <ul><li>It is decorated with the directive <strong><span class="citation">@TestParameter</span></strong> to inform the
 pre-processor that this is a test parameter type.</li>
 <li>It extends the type <strong>AbstractTestParameter</strong> provided
-by the pFUnit library to allow the pfunit test runner to utlisise this
+by the pFUnit library to allow the pfunit test runner to utilise this
 custom type.</li>
 <li>All inputs (<strong>a</strong> and <strong>b</strong>) and expected
 outputs (<strong>expected_dot_product</strong>) of <strong>dot</strong>
@@ -727,21 +727,18 @@ so:</p>
 <h3 class="callout-title">Challenge: Parameterising tests with pFUnit,
 part 1</h3>
 <div class="callout-content">
-<p>Take a look at the <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/fortran-unit-test-syntax/challenge" class="external-link">Fortran
-Unit Test Syntax exercise</a>. Complete tasks 1 and 2.1.</p>
-</div>
-</div>
-</div>
-<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
-  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
-</button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
-<div class="accordion-body">
-<p>A solution is provided in <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/fortran-unit-test-syntax/solution" class="external-link">exercises/fortran-unit-test-syntax/solution</a>.</p>
-</div>
-</div>
+<p>Continuing with the <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/writing-your-first-unit-test/challenge" class="external-link">Writing
+your first unit test exercise</a>, take a look at part three. Write your
+own derived-type to act as the test parameter type for parameterised
+tests of the temperature conversion library. You should think about:</p>
+<ul><li>What decorators are needed?</li>
+<li>What type should be extended?</li>
+<li>What type-bound variables should be defined, i.e. what inputs will
+the library require and what expected outputs?</li>
+<li>What other type-bound variables and/or procedures will be
+required?</li>
+<li>If you need a type-bound procedure, have you defined it?</li>
+</ul></div>
 </div>
 </div>
 </div>
@@ -776,8 +773,9 @@ case type to make use of it:</p>
 <ul><li>We are now extending the base type
 <strong>ParameterizedTestCase</strong> to inform the pre-processor that
 this is a test case that should be parameterised.</li>
-<li>To prevent duplication we simply define an instance of our test
-parameter type as a type-bound variable.</li>
+<li>To prevent duplication we only define an instance of our test
+parameter type as a type-bound variable, rather than repeat the contents
+of <strong>dot_test_parameters</strong>.</li>
 <li>The type-bound procedure <strong>teardown</strong> remains the
 same.</li>
 </ul><div class="section level4">
@@ -814,6 +812,26 @@ this in similar way to <strong>teardown</strong> by adding a new
 type-bound procedure within our test case type called
 <strong>setUp</strong>.</p>
 </div>
+</div>
+</div>
+<div id="challenge-parameterising-tests-with-pfunit-part-2" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="challenge-parameterising-tests-with-pfunit-part-2" class="callout-inner">
+<h3 class="callout-title">Challenge: Parameterising tests with pFUnit,
+part 2</h3>
+<div class="callout-content">
+<p>Continuing with part three of the <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/writing-your-first-unit-test/challenge" class="external-link">Writing
+your first unit test exercise</a>. Write your own derived-type to act as
+the test case type for your parameterised tests of the temperature
+conversion library. You should think about:</p>
+<ul><li>What decorators are needed?</li>
+<li>What type should be extended?</li>
+<li>What type-bound variables should be defined?</li>
+<li>How do we instantiate one of these test cases?</li>
+</ul></div>
 </div>
 </div>
 </div>
@@ -870,30 +888,25 @@ which we call the test suite.</p>
 each element is a single test case.</li>
 <li>This is now where we allocate <strong>a</strong> and
 <strong>b</strong>.</li>
-</ul><div id="challenge-parameterising-tests-with-pfunit-part-2" class="callout challenge">
+</ul><div id="challenge-parameterising-tests-with-pfunit-part-3" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-parameterising-tests-with-pfunit-part-2" class="callout-inner">
+<div id="challenge-parameterising-tests-with-pfunit-part-3" class="callout-inner">
 <h3 class="callout-title">Challenge: Parameterising tests with pFUnit,
-part 2</h3>
+part 3</h3>
 <div class="callout-content">
-<p>Continuing with the <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/fortran-unit-test-syntax/challenge" class="external-link">Fortran
-Unit Test Syntax exercises</a>, Complete task 2.2.</p>
-</div>
-</div>
-</div>
-<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
-  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
-</button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
-<div class="accordion-body">
-<p>A solution is provided in <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/fortran-unit-test-syntax/solution" class="external-link">exercises/fortran-unit-test-syntax/solution</a>.</p>
-</div>
-</div>
+<p>Continuing with part three of the <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/writing-your-first-unit-test/challenge" class="external-link">Writing
+your first unit test exercise</a>. Write the test suite for tests of the
+function <code>fahrenheit_to_celsius</code>. You should think about:</p>
+<ul><li>What decorators are needed, if any?</li>
+<li>Do you need a function or subroutine?</li>
+<li>What should the inputs to this procedure be?</li>
+<li>What should be its outputs?</li>
+<li>How do you define a single test scenario?</li>
+<li>How do you add more scenarios?</li>
+</ul></div>
 </div>
 </div>
 </div>
@@ -928,33 +941,89 @@ of our test subroutine:</p>
 now takes a <strong>testParameters</strong> value which we return from
 our test suite <strong>dot_test_suite</strong>.</li>
 <li>We no longer set any inputs or expected outputs within this test
-subroutine but simply just call <strong>dot</strong> and <strong><span class="citation">@AssertEqual</span></strong>.</li>
-</ul><div id="challenge-parameterising-tests-with-pfunit-part-3" class="callout challenge">
+subroutine, we only call <strong>dot</strong> and <strong><span class="citation">@AssertEqual</span></strong>.</li>
+</ul><div id="challenge-parameterising-tests-with-pfunit-part-4" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-parameterising-tests-with-pfunit-part-3" class="callout-inner">
+<div id="challenge-parameterising-tests-with-pfunit-part-4" class="callout-inner">
 <h3 class="callout-title">Challenge: Parameterising tests with pFUnit,
-part 3</h3>
+part 4</h3>
 <div class="callout-content">
-<p>Continuing with the [Fortran Unit Test Syntax
-exercise][exercises-challenge], complete task 3.</p>
+<p>Continuing with part three of the <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/writing-your-first-unit-test/challenge" class="external-link">Writing
+your first unit test exercise</a>. Write the actual test logic for the
+function <code>fahrenheit_to_celsius</code>. You should think about:</p>
+<ul><li>What decorators are needed?</li>
+<li>Do you need a function or subroutine?</li>
+<li>What should the inputs to this procedure be?</li>
+<li>What should be its outputs?</li>
+<li>How do you link this test logic to the test suite you just
+defined?</li>
+<li>How do you check if a test scenario was successful?</li>
+</ul></div>
 </div>
 </div>
 </div>
-<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
+</div>
+</div>
+</div>
+<div id="challenge-parameterising-tests-with-pfunit-part-5" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="challenge-parameterising-tests-with-pfunit-part-5" class="callout-inner">
+<h3 class="callout-title">Challenge: Parameterising tests with pFUnit,
+part 5</h3>
+<div class="callout-content">
+<p>To finish part three of the <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/writing-your-first-unit-test/challenge" class="external-link">Writing
+your first unit test exercise</a>. Alongside the tests you have just
+written for <code>fahrenheit_to_celsius</code>, add unit tests for the
+function <code>celsius_to_kelvin</code>. You should think about:</p>
+<ul><li>What can be re-used from your tests of
+<code>fahrenheit_to_celsius</code>.</li>
+<li>What new functions and subroutines need to be written?</li>
+</ul></div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
-  <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div class="accordion-body">
+<p>You can find a solution to this and all previous
+<strong>Parameterising tests with pFUnit</strong> challenges within <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/writing-your-first-unit-test/solution" class="external-link">exercises/writing-your-first-unit-test/solution</a>.</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="challenge-testing-the-game-of-life" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="challenge-testing-the-game-of-life" class="callout-inner">
+<h3 class="callout-title">Challenge: Testing the game of life</h3>
+<div class="callout-content">
+<p>Take a look at the <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/fortran-unit-test-syntax/challenge" class="external-link">Fortran
+Unit Test Syntax exercise</a>. Apply what you’ve just learnt to writing
+unit tests for the <a href="https://carpentries-incubator.github.io/fortran-unit-testing/appendix.html#conways-game-of-life" class="external-link">Game
+of Life</a></p>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>A solution is provided in <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/fortran-unit-test-syntax/solution" class="external-link">exercises/fortran-unit-test-syntax/solution</a>.</p>
-</div>
-</div>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -1019,7 +1088,7 @@ exercise][exercises-challenge], complete task 3.</p>
   "url": "https://carpentries-incubator.github.io/fortran-unit-testing/parameterising-pfunit-tests.html",
   "identifier": "https://carpentries-incubator.github.io/fortran-unit-testing/parameterising-pfunit-tests.html",
   "dateCreated": "2025-05-09",
-  "dateModified": "2026-09-23",
+  "dateModified": "2026-09-24",
   "datePublished": "2026-09-24"
 }
 
