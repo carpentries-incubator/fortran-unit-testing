@@ -511,10 +511,8 @@ TEST_FLAGS = -I$(BUILD_DIR) $(FC_FLAGS) $(LIBS) $(PFUNIT_EXTRA_FFLAGS) -lpfunit 
 endif
 
 # Define variables to be picked up by make_pfunit_test
-tests_TESTS = \
-  test_something.pf \
-  test_something_else.pf
-tests_OTHER_SOURCES = $(filter-out $(BUILD_DIR)/main.o, $(SRC_OBJS))
+tests_TESTS = test_with_mpi.pf
+tests_OTHER_SOURCES = $(SRC_OBJS)
 tests_OTHER_LIBRARIES = $(TEST_FLAGS)
 
 # Triggers pre-processing and defines rule for building test executable
@@ -542,7 +540,7 @@ The difference between a serial test and an MPI test built using CMake is minima
 **add_pfunit_ctest** as shown below.
 
 ```cmake
-add_pfunit_ctest (test_something_interesting
+add_pfunit_ctest (test_with_mpi
   TEST_SOURCES ${test_srcs}
   LINK_LIBRARIES SUT # your application library
   MAX_PES 4          # <-- max number of MPI ranks required for the test
