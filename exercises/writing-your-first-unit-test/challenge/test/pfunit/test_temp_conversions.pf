@@ -11,7 +11,10 @@ contains
     !*************************************************************************!
     !                      Test fahrenheit_to_celsius                         !
     !-------------------------------------------------------------------------!
-    !> Test Logic, unit test subroutine for fahrenheit_to_celsius
+    !> Test suite for fahrenheit_to_celsius
+    ! Your changes here...
+
+    !> Test Logic for fahrenheit_to_celsius
     ! Your changes here...
 
     !*************************************************************************!
@@ -20,7 +23,10 @@ contains
     !*************************************************************************!
     !                         Test celsius_to_kelvin                          !
     !-------------------------------------------------------------------------!
-    !> Test Logic, unit test subroutine for celsius_to_kelvin
+    !> Test suite for celsius_to_kelvin
+    ! Your changes here...
+
+    !> Test Logic for celsius_to_kelvin
     ! Your changes here...
 
     !*************************************************************************!

@@ -11,7 +11,7 @@ contains
     !*************************************************************************!
     !                      Test fahrenheit_to_celsius                         !
     !-------------------------------------------------------------------------!
-    !> Test Logic, unit test subroutines for fahrenheit_to_celsius
+    !> Test suite for fahrenheit_to_celsius
     @Test
     subroutine test_fahrenheit_to_celsius()
         call verify_fahrenheit_to_celsius(0.0, -17.777779)
@@ -20,6 +20,7 @@ contains
         call verify_fahrenheit_to_celsius(1.23, -17.094444)
     end subroutine test_fahrenheit_to_celsius
 
+    !> Test Logic for fahrenheit_to_celsius
     subroutine verify_fahrenheit_to_celsius(input, expected_output)
         !> The input fahrenheit value to pass to fahrenheit_to_celsius
         real, intent(in) :: input
@@ -46,7 +47,7 @@ contains
     !*************************************************************************!
     !                         Test celsius_to_kelvin                          !
     !-------------------------------------------------------------------------!
-    !> Test Logic, unit test subroutine for celsius_to_kelvin
+    !> Test suite for celsius_to_kelvin
     @Test
     subroutine test_celsius_to_kelvin()
         call verify_celsius_to_kelvin(0.0, 273.15)
@@ -54,6 +55,7 @@ contains
         call verify_celsius_to_kelvin(-173.15, 100.0)
     end subroutine test_celsius_to_kelvin
 
+    !> Test Logic for celsius_to_kelvin
     subroutine verify_celsius_to_kelvin(input, expected_output)
         !> The input celsius value to pass to celsius_to_kelvin
         real, intent(in) :: input

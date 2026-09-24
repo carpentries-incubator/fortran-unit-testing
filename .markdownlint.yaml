@@ -8,4 +8,5 @@
   "MD041": false, # First line in a file should be a top-level heading
   "MD052": false, # Reference links and images should use a label that is defined (links sometimes defined in links.md)
   "MD053": false, # Link and image reference definitions should be needed (don't delete links in links.md)
+  "MD001": false, # Heading levels should only increment by one level at a time [Expected: h3; Actual: h4]
 }

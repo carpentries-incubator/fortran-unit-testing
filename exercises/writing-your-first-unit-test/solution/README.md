@@ -45,14 +45,14 @@ should be as small as possible whilst still making sense with the code we are te
 ### Writing the test
 
 The solution is provided in the form of a single test file [pfunit/test_temp_conversions.pf](./pfunit/test_temp_conversions.pf)
-which replaces the file of the same name provided in the [challenge/test/pfunit](../challenge/test/pfunit/) directory. All the key
+which replaces the file of the same name provided in the [challenge/test/pfunit](../challenge/test/pfunit/) directory. The key
 points mention within [Part 1](#key-points) are upheld in this solution. Any additional points are detailed below.
 
-#### Add a description for each test
+#### Parameterised tests
 
-For each set of parameters in [test_temp_conversions.pf](./test_temp_conversions.pf) there is a description provided
-which aims to make clear what is being tested. This can be useful when thinking about test coverage of edge cases.
-It can also help in the event of a test failure to hint at what the problem may be.
+It may appear that these solutions are parameterised, however, if one instance of `verify_fahrenheit_to_celsius` or
+`verify_celsius_to_kelvin` should fail, all future calls would be skipped which means we don't see the full picture. For how to
+truly parameterise pFUnit tests, see Part 3.
 
 ### Building the test
 
@@ -60,3 +60,17 @@ It can also help in the event of a test failure to hint at what the problem may 
   - A solution is provided in [pfunit/Makefile](./pfunit/Makefile).
 - **ii. Build your new test(s) with CMake**
   - A solution is provided in [pfunit/CMakeLists.txt](./pfunit/CMakeLists.txt).
+
+## Part 3 - Parameterise your pFUnit test
+
+The solution is provided in the form of the test file
+[pfunit/test_temp_conversions_parameterised.pf](./pfunit/test_temp_conversions_parameterised.pf).
+To add this parameterised test to your build there should be some lines to uncomment in the provided solution files -
+[pfunit/Makefile](./pfunit/Makefile) and [pfunit/CMakeLists.txt](./pfunit/CMakeLists.txt).
+
+#### Add a description for each test
+
+This in-built pFUnit parameterisation also allows us to provide a description for each set of parameters in
+[test_temp_conversions_parameterised.pf](./pfunit/test_temp_conversions_parameterised.pf) which aims to make clear what is being
+tested. This can be useful when thinking about test coverage of edge cases. It can also help in the event of a test failure to hint
+at what the problem may be.

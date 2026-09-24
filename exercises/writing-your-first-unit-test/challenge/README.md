@@ -14,7 +14,7 @@ provided are:
 - **fahrenheit_to_celsius**: Which takes in a temperature in Fahrenheit and returns a temperature in Celsius.
 - **celsius_to_kelvin**: Which takes in a temperature in Celsius and returns a temperature in Kelvin.
 
-To build this library you csn use either CMake or Make from within the **challenge** directory.
+To build this library you can use either CMake or Make from within the **challenge** directory.
 
 ### Building
 
@@ -47,9 +47,9 @@ rm -rf build
 
 ### Part 1 - Test with Standard Fortran
 
-Imagine you wish to use the temp_conversions library to convert Fahrenheit to Kelvin. We
+Imagine you wish to use the `temp_conversions` library to convert Fahrenheit to Kelvin. We
 know that there is no function which does this direct conversion. With this is mind, write
-a test, or tests, to give you confidence that temp_conversions can correctly convert
+a test, or tests, to give you confidence that `temp_conversions` can correctly convert
 Fahrenheit to Kelvin.
 
 To get you started, the file [test_temp_conversions.f90](./test/standard_fortran/test_temp_conversions.f90)
@@ -62,7 +62,7 @@ the test subroutine is written it should be called within the main body of the t
 as indicated in `test_temp_conversions.f90`.
 
 > Note: If you add a new test file or change the name of `test_temp_conversions.f90`, you will
-> need to update list of tests (`test_src`) in [test/pfunit/CMakeLists.txt](./test/pfunit/CMakeLists.txt)
+> need to update list of tests (`test_src`) in [test/standard_fortran/CMakeLists.txt](./test/standard_fortran/CMakeLists.txt)
 
 ### Part 2 - Convert tests to use pFUnit
 
@@ -112,3 +112,9 @@ the pFUnit test you must write.
   ```
 
 > If you are using the devcontainer, there is an installation of pFUnit at /home/vscode/pfunit/build/installed
+
+### Part 3 - Parameterise your pFUnit test
+
+Update the pFUnit test you wrote in part 2 to utilise pFUnit's in-built test parameterisation mechanism (see the lesson
+[Parameterising pFUnit tests](https://carpentries-incubator.github.io/fortran-unit-testing/parameterising-pfunit-tests.html)
+for how to do this).
