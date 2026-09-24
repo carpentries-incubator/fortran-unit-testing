@@ -32,6 +32,11 @@ RUN cp ../solution/standard_fortran/test_temp_conversions.f90 test/standard_fort
 RUN sed -i -E 's/tests: standard_fortran_tests \#\| pfunit_tests/tests: standard_fortran_tests \| pfunit_tests/g' Makefile
 RUN sed -i -E 's/clean: \#clean_pfunit/clean: clean_pfunit/g' Makefile
 
+# Uncomment parameterised test
+RUN sed -i -E 's/test_temp_conversions.pf/test_temp_conversions.pf \\/g' test/pfunit/Makefile
+RUN sed -i -E 's/\# test_temp_conversions_parameterised.pf/test_temp_conversions_parameterised.pf/g' test/pfunit/Makefile
+RUN sed -i -E 's/\# \"test_temp_conversions_parameterised.pf\"/\"test_temp_conversions_parameterised.pf\"/g' test/pfunit/CMakeLists.txt
+
 # Clean up anything from the previous builds
 RUN make clean
 RUN rm -rf build-std

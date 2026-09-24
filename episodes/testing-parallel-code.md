@@ -282,8 +282,7 @@ Note that the constructors (i.e. `toString`, `mpi_dot_product_test_case_construc
 
 Take a look at the [Testing parallel code exercise][ex-testing-parallel-code].
 This exercise contains an MPI parallelised version of the game of life (See
-appendix) from the **Fortran Unit Test Syntax exercise**. Complete the first
-step of the challenge by converting the derived types within
+appendix). Complete the first step of the challenge by converting the derived types within
 [test_find_steady_state.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/testing-parallel-code/challenge/test/test_find_steady_state.pf#L10-L29)
 to work with MPI.
 
@@ -691,7 +690,7 @@ end subroutine test_partial_mpi_dot_product
 ### Challenge: A more complex MPI test
 
 Take a look at part 3 of the
-[Testing parallel code exercise][exercises-challenge]
+[Testing parallel code exercise][ex-testing-parallel-code]
 in the exercises repository.
 
 :::::::::::::::::::::::::::::::: solution

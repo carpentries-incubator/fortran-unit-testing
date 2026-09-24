@@ -77,6 +77,3 @@ po/*~
 *.o
 *.mod
 *.inc
-
-# pFUnit source
-pfunit

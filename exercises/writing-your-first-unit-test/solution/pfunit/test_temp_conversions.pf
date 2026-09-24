@@ -11,40 +11,35 @@ contains
     !*************************************************************************!
     !                      Test fahrenheit_to_celsius                         !
     !-------------------------------------------------------------------------!
-    !> Test Logic, unit test subroutine for fahrenheit_to_celsius with 0.0°F
+    !> Test suite for fahrenheit_to_celsius
     @Test
     subroutine test_fahrenheit_to_celsius()
-        integer, parameter :: num_tests = 4
-        real :: actual_output, inputs(num_tests), expected_outputs(num_tests)
-        character(len=200) :: failure_message
-        integer :: i
-
-        inputs = [  &
-            0.0,    &
-            32.0,   &
-            -100.0, &
-            1.23    &
-        ]
-        expected_outputs = [ &
-            -17.777779,      &
-            0.0,             &
-            -73.333336,      &
-            -17.094444       &
-        ]
-
-        do i = 1, num_tests
-            ! Get the actual celsius value returned from fahrenheit_to_celsius
-            actual_output = fahrenheit_to_celsius(inputs(i))
-
-            ! Populate the failure message
-            write(failure_message, '(A,F7.2,A,F7.2,A,F7.2,A)') "Failed With ", inputs(i), " °F: Expected ", &
-                    expected_outputs(i), "°C but got ", actual_output, "°C"
-            @assertEqual(expected_outputs(i), actual_output, tolerance=1e-6, message=trim(failure_message))
-
-            failure_message = ""
-        end do
-
+        call verify_fahrenheit_to_celsius(0.0, -17.777779)
+        call verify_fahrenheit_to_celsius(32.0, 0.0)
+        call verify_fahrenheit_to_celsius(-100.0, -73.333336)
+        call verify_fahrenheit_to_celsius(1.23, -17.094444)
     end subroutine test_fahrenheit_to_celsius
+
+    !> Test Logic for fahrenheit_to_celsius
+    subroutine verify_fahrenheit_to_celsius(input, expected_output)
+        !> The input fahrenheit value to pass to fahrenheit_to_celsius
+        real, intent(in) :: input
+        !> The celsius value we expect to be returner from fahrenheit_to_celsius
+        real, intent(in) :: expected_output
+
+        real :: actual_output
+        character(len=200) :: failure_message
+
+        ! Get the actual celsius value returned from fahrenheit_to_celsius
+        actual_output = fahrenheit_to_celsius(input)
+
+        ! Populate the failure message
+        write(failure_message, '(A,F7.2,A,F7.2,A,F7.2,A)') "Failed With ", input, " °F: Expected ", &
+                expected_output, "°C but got ", actual_output, "°C"
+
+        ! Assert output
+        @assertEqual(expected_output, actual_output, tolerance=1e-6, message=trim(failure_message))
+    end subroutine verify_fahrenheit_to_celsius
 
     !*************************************************************************!
 
@@ -52,40 +47,34 @@ contains
     !*************************************************************************!
     !                         Test celsius_to_kelvin                          !
     !-------------------------------------------------------------------------!
-    !> Test Logic, unit test subroutine for celsius_to_kelvin
+    !> Test suite for celsius_to_kelvin
     @Test
     subroutine test_celsius_to_kelvin()
-        integer, parameter :: num_tests = 3
-        real :: actual_output, inputs(num_tests), expected_outputs(num_tests)
-        character(len=200) :: failure_message
-        integer :: i
-
-        inputs = [   &
-            0.0,     &
-            -273.15, &
-            -173.15  &
-        ]
-
-        expected_outputs = [ &
-            273.15,          &
-            0.0,             &
-            100.0            &
-        ]
-
-        do i = 1, num_tests
-
-            ! Get the actual kelvin value returned from celsius_to_kelvin
-            actual_output = celsius_to_kelvin(inputs(i))
-
-            ! Populate the failure message
-            write(failure_message, '(A,F7.2,A,F7.2,A,F7.2,A)') "Failed With ", inputs(i), "°C: Expected ", &
-                    expected_outputs(i), "°K but got ", actual_output, "°K"
-            @assertEqual(expected_outputs(i), actual_output, tolerance=1e-6, message=trim(failure_message))
-
-            failure_message = ""
-        end do
-
+        call verify_celsius_to_kelvin(0.0, 273.15)
+        call verify_celsius_to_kelvin(-273.15, 0.0)
+        call verify_celsius_to_kelvin(-173.15, 100.0)
     end subroutine test_celsius_to_kelvin
+
+    !> Test Logic for celsius_to_kelvin
+    subroutine verify_celsius_to_kelvin(input, expected_output)
+        !> The input celsius value to pass to celsius_to_kelvin
+        real, intent(in) :: input
+        !> The kelvin value we expect to be returner from celsius_to_kelvin
+        real, intent(in) :: expected_output
+
+        real :: actual_output
+        character(len=200) :: failure_message
+
+        ! Get the actual kelvin value returned from celsius_to_kelvin
+        actual_output = celsius_to_kelvin(input)
+
+        ! Populate the failure message
+        write(failure_message, '(A,F7.2,A,F7.2,A,F7.2,A)') "Failed With ", input, "°C: Expected ", &
+                expected_output, "°K but got ", actual_output, "°K"
+
+        ! Assert output
+        @assertEqual(expected_output, actual_output, tolerance=1e-6, message=trim(failure_message))
+    end subroutine verify_celsius_to_kelvin
 
     !*************************************************************************!
 
