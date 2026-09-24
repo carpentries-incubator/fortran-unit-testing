@@ -31,7 +31,9 @@ There are some examples of parallel tests in [test_get_local_grid_info.pf](./tes
    find_steady_state reaches steady state within the same number of generations as its serial version.
 
 2. Add your new test to the existing build systems
+
    i. Update the [test/Makefile](./test/Makefile) to allow building MPI enabled pFUnit tests and build your new test with make.
+
    ii. Make sure your test automatically runs across different numbers of ranks via ctest. You will need to make changes in
        [CMakeLists.txt](./CMakeLists.txt) as well as within the test itself.
 
