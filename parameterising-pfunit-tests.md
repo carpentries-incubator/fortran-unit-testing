@@ -4,18 +4,18 @@ teaching:
 exercises:
 ---
 
-:::::::::::::::::::::::::::::::::::::: questions
+::: questions
 
 - Why is it useful to parameterise a test?
 - What is the syntax of writing a parameterised unit test in Fortran?
 
-::::::::::::::::::::::::::::::::::::::::::::::::
+:::
 
-::::::::::::::::::::::::::::::::::::: objectives
+::: objectives
 
 - Parameterise our own pFUnit test.
 
-::::::::::::::::::::::::::::::::::::::::::::::::
+:::
 
 No that we are able to compile and run the most basic of pFUnit tests, we are ready to look at a more advanced topic,
 parameterising our tests with pFUnit.
@@ -275,7 +275,7 @@ end module test_matrix_ops_dot
 
 There is a lot of new aspects being introduced in the above test so let's break them down.
 
-:::::::::::: spoiler
+::: spoiler
 
 ### 1. Test parameters type
 
@@ -301,10 +301,10 @@ contains
 end type dot_test_parameters
 ```
 
-The key features of this the type **dot_test_parameters** are
+The key features of the type **dot_test_parameters** are
 
 - It is decorated with the directive **@TestParameter** to inform the pre-processor that this is a test parameter type.
-- It extends the type **AbstractTestParameter** provided by the pFUnit library to allow the pfunit test runner to utlisise this
+- It extends the type **AbstractTestParameter** provided by the pFUnit library to allow the pfunit test runner to utilise this
   custom type.
 - All inputs (**a** and **b**) and expected outputs (**expected_dot_product**) of **dot** are define as type-bound
   variables.
@@ -328,7 +328,7 @@ end function toString
 
 For simplicity, we utilise the variable **description** to define this string in its entirety.
 
-:::::::::: callout
+::: callout
 
 #### Default type constructor
 
@@ -342,26 +342,27 @@ type(dot_test_parameters) :: testParameters
 testParameters = dot_test_parameters(a, b, expected_dot_product, "10x10 incrementing values")
 ```
 
-::::::::::::::::::
+:::
 
 ::: challenge
 
 ### Challenge: Parameterising tests with pFUnit, part 1
 
-Take a look at the [Fortran Unit Test Syntax exercise][ex-fortran-unit-test-syntax].
-Complete tasks 1 and 2.1.
+Continuing with the [Writing your first unit test exercise][ex-writing-your-first-unit-test], take a look at part three. Write
+your own derived-type to act as the test parameter type for parameterised tests of the temperature conversion library. You should
+think about:
 
-::: solution
-
-A solution is provided in [exercises/fortran-unit-test-syntax/solution][ex-fortran-unit-test-syntax-solution].
+- What decorators are needed?
+- What type should be extended?
+- What type-bound variables should be defined, i.e. what inputs will the library require and what expected outputs?
+- What other type-bound variables and/or procedures will be required?
+- If you need a type-bound procedure, have you defined it?
 
 :::
 
 :::
 
-::::::::::::
-
-:::::::::::: spoiler
+::: spoiler
 
 ### 2. Parameterising the test case
 
@@ -382,8 +383,10 @@ end type dot_test_case
 
 The key points to highlight are:
 
-- We are now extending the base type **ParameterizedTestCase** to inform the pre-processor that this is a test case that should be parameterised.
-- To prevent duplication we simply define an instance of our test parameter type as a type-bound variable.
+- We are now extending the base type **ParameterizedTestCase** to inform the pre-processor that this is a test case that should be
+  parameterised.
+- To prevent duplication we only define an instance of our test parameter type as a type-bound variable, rather than repeat the
+  contents of **dot_test_parameters**.
 - The type-bound procedure **teardown** remains the same.
 
 #### Test case constructor
@@ -403,7 +406,7 @@ function dot_test_case_constructor(testParameters) result(newTestCase)
 end function dot_test_case_constructor
 ```
 
-:::::::::::: callout
+::: callout
 
 #### Setting up state
 
@@ -411,11 +414,25 @@ Now that we are not using the test case constructor for setting up state we need
 pFUnit allows us to do this in similar way to **teardown** by adding a new type-bound procedure within
 our test case type called **setUp**.
 
-::::::::::::::::::::
+:::
 
-::::::::::::
+::: challenge
 
-:::::::::::: spoiler
+### Challenge: Parameterising tests with pFUnit, part 2
+
+Continuing with part three of the [Writing your first unit test exercise][ex-writing-your-first-unit-test]. Write your own
+derived-type to act as the test case type for your parameterised tests of the temperature conversion library. You should think about:
+
+- What decorators are needed?
+- What type should be extended?
+- What type-bound variables should be defined?
+- How do we instantiate one of these test cases?
+
+:::
+
+:::
+
+::: spoiler
 
 ### 3. Defining a suite of tests / parameter sets
 
@@ -461,22 +478,23 @@ Let's look at the key aspects of this function:
 
 ::: challenge
 
-### Challenge: Parameterising tests with pFUnit, part 2
+### Challenge: Parameterising tests with pFUnit, part 3
 
-Continuing with the [Fortran Unit Test Syntax exercises][ex-fortran-unit-test-syntax],
-Complete task 2.2.
+Continuing with part three of the [Writing your first unit test exercise][ex-writing-your-first-unit-test]. Write the test suite
+for tests of the function `fahrenheit_to_celsius`. You should think about:
 
-::: solution
-
-A solution is provided in [exercises/fortran-unit-test-syntax/solution][ex-fortran-unit-test-syntax-solution].
+- What decorators are needed, if any?
+- Do you need a function or subroutine?
+- What should the inputs to this procedure be?
+- What should be its outputs?
+- How do you define a single test scenario?
+- How do you add more scenarios?
 
 :::
 
 :::
 
-::::::::::::
-
-:::::::::::: spoiler
+::: spoiler
 
 ### 4. Passing the test suite into the @Test
 
@@ -497,14 +515,58 @@ end subroutine test_dot
 The key aspects are:
 
 - The **@Test** directive now takes a **testParameters** value which we return from our test suite **dot_test_suite**.
-- We no longer set any inputs or expected outputs within this test subroutine but simply just call **dot** and **@AssertEqual**.
+- We no longer set any inputs or expected outputs within this test subroutine, we only call **dot** and **@AssertEqual**.
 
 ::: challenge
 
-### Challenge: Parameterising tests with pFUnit, part 3
+### Challenge: Parameterising tests with pFUnit, part 4
 
-Continuing with the [Fortran Unit Test Syntax exercise][exercises-challenge],
-complete task 3.
+Continuing with part three of the [Writing your first unit test exercise][ex-writing-your-first-unit-test]. Write the actual test
+logic for the function `fahrenheit_to_celsius`. You should think about:
+
+- What decorators are needed?
+- Do you need a function or subroutine?
+- What should the inputs to this procedure be?
+- What should be its outputs?
+- How do you link this test logic to the test suite you just defined?
+- How do you check if a test scenario was successful?
+
+:::
+
+:::
+
+::: challenge
+
+### Challenge: Parameterising tests with pFUnit, part 5
+
+To finish part three of the [Writing your first unit test exercise][ex-writing-your-first-unit-test]. Alongside the tests you have
+just written for `fahrenheit_to_celsius`, add unit tests for the function `celsius_to_kelvin`. You should think about:
+
+- What can be re-used from your tests of `fahrenheit_to_celsius`.
+- What new functions and subroutines need to be written?
+
+::: solution
+
+You can find a solution to this and all previous **Parameterising tests with pFUnit** challenges within
+[exercises/writing-your-first-unit-test/solution][ex-writing-your-first-unit-test-solution].
+
+:::
+
+:::
+
+::: instructor
+
+The following challenge will take learners a long time to complete. Therefore, for shorter workshops, it is recommended to skip
+this and/or suggest it as some homework.
+
+:::
+
+::: challenge
+
+### Challenge: Testing the game of life
+
+Take a look at the [Fortran Unit Test Syntax exercise][ex-fortran-unit-test-syntax]. Apply what you've just learnt to writing unit
+tests for the [Game of Life][appendix-game-of-life]
 
 ::: solution
 
@@ -513,5 +575,3 @@ A solution is provided in [exercises/fortran-unit-test-syntax/solution][ex-fortr
 :::
 
 :::
-
-::::::::::::

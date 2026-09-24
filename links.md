@@ -8,3 +8,4 @@
 [ex-fortran-unit-test-syntax-solution]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/fortran-unit-test-syntax/solution
 [ex-intro-to-unit-tests]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/intro-to-unit-tests/challenge
 [ex-intro-to-unit-tests-solution]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/intro-to-unit-tests/solution
+[appendix-game-of-life]: https://carpentries-incubator.github.io/fortran-unit-testing/appendix.html#conways-game-of-life
