@@ -7,7 +7,7 @@ TEST_FLAGS = -I$(BUILD_DIR) $(PFUNIT_EXTRA_FFLAGS)
 endif
 
 # Define variables to be picked up by make_pfunit_test
-  # Uncomment here (and add a backslash after test_temp_conversions.pf)...
+# Uncomment here (and add a backslash after test_temp_conversions.pf)...
 tests_TESTS = \
   test_temp_conversions.pf
   # test_temp_conversions_parameterised.pf
