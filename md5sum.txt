@@ -13,5 +13,5 @@
 "episodes/appendix.md" "fe6b7dabf79a6f6da3fa3417096b7b56" "site/built/appendix.md" "2026-09-09"
 "instructors/instructor-notes.md" "4871b9b5f741f3056571289554d27815" "site/built/instructor-notes.md" "2026-05-05"
 "learners/reference.md" "376f0fef94781c05cf42a1ca28cf48ae" "site/built/reference.md" "2026-05-05"
-"learners/setup.md" "b52a61be38329e022fdfa2f436a0eb11" "site/built/setup.md" "2026-05-05"
+"learners/setup.md" "20f4342fc0e0ecfd7aaf015d0149d76b" "site/built/setup.md" "2026-09-25"
 "profiles/learner-profiles.md" "e938a693478164f732c321948c0141da" "site/built/learner-profiles.md" "2026-05-05"
