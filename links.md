@@ -1,0 +1,11 @@
+[ep-writing-your-first-unit-test]: https://carpentries-incubator.github.io/fortran-unit-testing/writing-your-first-unit-test.html
+[ex-writing-your-first-unit-test]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/writing-your-first-unit-test/challenge
+[ex-writing-your-first-unit-test-solution]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/writing-your-first-unit-test/solution
+[ex-testing-parallel-code]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/testing-parallel-code/challenge
+[ex-testing-parallel-code-solution]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/testing-parallel-code/solution
+[ex-refactoring-fortran]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/refactoring-fortran/challenge
+[ex-fortran-unit-test-syntax]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/fortran-unit-test-syntax/challenge
+[ex-fortran-unit-test-syntax-solution]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/fortran-unit-test-syntax/solution
+[ex-intro-to-unit-tests]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/intro-to-unit-tests/challenge
+[ex-intro-to-unit-tests-solution]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/intro-to-unit-tests/solution
+[appendix-game-of-life]: https://carpentries-incubator.github.io/fortran-unit-testing/appendix.html#conways-game-of-life
