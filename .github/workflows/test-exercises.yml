@@ -45,20 +45,23 @@ jobs:
           password: ${{ github.token }}
           registry: ghcr.io
 
+      - name: Test debugging-a-failing-test
+        run: podman build . -f docker-tests/Dockerfile.debugging-a-failing-test
+
+      - name: Test fortran-unit-test-syntax
+        run: podman build . -f docker-tests/Dockerfile.fortran-unit-test-syntax
+
       - name: Test intro-to-unit-tests
         run: podman build . -f docker-tests/Dockerfile.intro-to-unit-tests
 
       - name: Test refactoring-fortran
         run: podman build . -f docker-tests/Dockerfile.refactoring-fortran
 
-      - name: Test writing-your-first-unit-test
-        run: podman build . -f docker-tests/Dockerfile.writing-your-first-unit-test
-
-      - name: Test fortran-unit-test-syntax
-        run: podman build . -f docker-tests/Dockerfile.fortran-unit-test-syntax
-
-      - name: Test debugging-a-failing-test
-        run: podman build . -f docker-tests/Dockerfile.debugging-a-failing-test
+      - name: Test testing-parallel-code
+        run: podman build . -f docker-tests/Dockerfile.testing-parallel-code
 
       - name: Test testing-the-game-of-life-with-mpi
         run: podman build . -f docker-tests/Dockerfile.testing-the-game-of-life-with-mpi
+
+      - name: Test writing-your-first-unit-test
+        run: podman build . -f docker-tests/Dockerfile.writing-your-first-unit-test

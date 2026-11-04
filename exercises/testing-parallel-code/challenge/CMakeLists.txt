@@ -7,6 +7,8 @@ project(
   DESCRIPTION "Small MPI utility library"
 )
 
+set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -ffree-line-length-none")
+
 find_package(MPI REQUIRED COMPONENTS Fortran)
 
 add_library(mpi_utils src/mpi_utils.f90)

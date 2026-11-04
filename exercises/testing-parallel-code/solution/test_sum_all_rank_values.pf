@@ -34,12 +34,13 @@ contains
     @Test
     subroutine test_sum_all_rank_values_for_all_ranks(this)
         class(sum_all_rank_values_test_case), intent(inout) :: this
-        integer :: actual_value, num_processes
+        integer :: actual_value, num_processes, expected_value
 
         actual_value = sum_all_rank_values(this%getMpiCommunicator())
         num_processes = this%getNumProcesses()
+        expected_value = num_processes * (num_processes + 1) / 2
 
-        @assertEqual(num_processes * (num_processes + 1) / 2, actual_value, "Expected the sum of one-based ranks")
+        @assertEqual(expected_value, actual_value, "Expected the sum of one-based ranks")
     end subroutine test_sum_all_rank_values_for_all_ranks
 
 end module test_sum_all_rank_values

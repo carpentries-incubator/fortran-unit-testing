@@ -1,7 +1,7 @@
 ROOT_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 FC = mpif90
 AR = ar
-FC_FLAGS ?= -O2
+FC_FLAGS ?= -O2 -ffree-line-length-none
 BUILD_DIR ?= $(ROOT_DIR)/build
 TEST_DIR = $(ROOT_DIR)/test
 
