@@ -719,3 +719,12 @@ are zero-based and Fortran arrays are one-based.
 
 :::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::
+
+::: challenge
+
+### Challenge: Testing the parallel game of life
+
+For more practice of testing an MPI parallelised Fortran code take a look at the exercise
+[testing-the-game-of-life-with-mpi][ex-testing-the-game-of-life-with-mpi].
+
+:::

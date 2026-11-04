@@ -3,6 +3,7 @@
 [ex-writing-your-first-unit-test-solution]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/writing-your-first-unit-test/solution
 [ex-testing-parallel-code]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/testing-parallel-code/challenge
 [ex-testing-parallel-code-solution]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/testing-parallel-code/solution
+[ex-testing-the-game-of-life-with-mpi]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/testing-the-game-of-life-with-mpi/solution
 [ex-refactoring-fortran]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/refactoring-fortran/challenge
 [ex-fortran-unit-test-syntax]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/fortran-unit-test-syntax/challenge
 [ex-fortran-unit-test-syntax-solution]: https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/fortran-unit-test-syntax/solution
