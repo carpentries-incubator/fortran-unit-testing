@@ -1,8 +1,8 @@
 FROM ghcr.io/carpentries-incubator/modern-fortran:main
 
-COPY --chown=vscode exercises/testing-parallel-code /home/vscode/testing-parallel-code
+COPY --chown=vscode exercises/testing-the-game-of-life-with-mpi /home/vscode/testing-the-game-of-life-with-mpi
 
-WORKDIR /home/vscode/testing-parallel-code/challenge
+WORKDIR /home/vscode/testing-the-game-of-life-with-mpi/challenge
 
 # Fix intentional bug in code
 RUN mv ../solution/test_find_steady_state.pf ./test/ && \
