@@ -8,6 +8,7 @@ contains
 
     !> Sum each rank's one-based rank value across the communicator.
     integer function sum_all_rank_values(communicator) result(value)
+        !> MPI communicator containing the participating ranks.
         integer, intent(in) :: communicator
         integer :: ierr, rank, contribution
 
@@ -18,6 +19,7 @@ contains
 
     !> Return the sum of one-based rank values preceding this rank.
     integer function sum_preceding_rank_values(communicator) result(value)
+        !> MPI communicator containing the participating ranks.
         integer, intent(in) :: communicator
         integer :: ierr, rank, contribution
 
