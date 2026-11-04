@@ -1,4 +1,4 @@
-# Testing parallel code - Solution: Rewrite serial test as a parallel test
+# Testing the game of life with MPI - Solution: Rewrite serial test as a parallel test
 
 ## Task 1
 

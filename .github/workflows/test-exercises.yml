@@ -60,5 +60,5 @@ jobs:
       - name: Test debugging-a-failing-test
         run: podman build . -f docker-tests/Dockerfile.debugging-a-failing-test
 
-      - name: Test testing-parallel-code
-        run: podman build . -f docker-tests/Dockerfile.testing-parallel-code
+      - name: Test testing-the-game-of-life-with-mpi
+        run: podman build . -f docker-tests/Dockerfile.testing-the-game-of-life-with-mpi
