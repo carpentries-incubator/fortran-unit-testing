@@ -314,6 +314,13 @@ function sum_all_rank_values_test_case_constructor(testParameters) result(testCa
 end function sum_all_rank_values_test_case_constructor
 ```
 
+::: callout
+
+Notice that we do not define a `toString` procedure here. That is because `MPITestParameter`provides a default implementation which
+logs the number of ranks for the given test.
+
+:::
+
 :::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -405,7 +412,7 @@ end function sum_all_rank_values_test_suite
 ### Test Logic
 
 Since we are assuming our src procedure returns the same value to all ranks, for any number of MPI ranks,
-nothing much that needs to change within our test logic subroutine. The one thing that is likely to change
+nothing much needs to change within our test logic subroutine. The one thing that is likely to change
 is the call to the src procedure being tested as it is recommended to pass the MPI communicator into each
 procedure which utilises MPI. For example, the test logic might look something like this.
 
@@ -474,19 +481,20 @@ Just like serial tests, MPI tests can be integrated into projects which utilise 
 
 ### Integrating with Make
 
-To build MPI enabled pFUnit tests via Make, one must use an mpi enabled compiler such as **mpif90** and
-include the pFUnit library in the compiler arguments **-lpfunit**. Therefore, the **tests/Makefile**
-from
-[Integrating with build systems#Integrating pFUnit with Make](https://carpentries-incubator.github.io/fortran-unit-testing/integrating-with-build-systems.html#integrating-pfunit-with-make)
+To build MPI-enabled pFUnit tests with Make, use an MPI compiler wrapper such as mpif90 and a pFUnit
+installation built with MPI support. Set USEMPI = YES before including PFUNIT.mk to select its
+MPI-related build settings. Therefore, the **tests/Makefile** from
+[Integrating with build systems - Integrating pFUnit with Make](https://carpentries-incubator.github.io/fortran-unit-testing/integrating-with-build-systems.html#integrating-pfunit-with-make)
 becomes,
 
 ```makefile
 PFUNIT_INCLUDE_DIR ?= /path/to/pfunit/include
+USEMPI = YES # <-- New flag here
 
 # Don't try to include if we're cleaning as this doesn't depend on pFUnit
 ifneq ($(MAKECMDGOALS),clean)
 include $(PFUNIT_INCLUDE_DIR)/PFUNIT.mk
-TEST_FLAGS = -I$(BUILD_DIR) $(FC_FLAGS) $(LIBS) $(PFUNIT_EXTRA_FFLAGS) -lpfunit # <-- Lib added here
+TEST_FLAGS = -I$(BUILD_DIR) $(FC_FLAGS) $(LIBS) $(PFUNIT_EXTRA_FFLAGS)
 endif
 
 # Define variables to be picked up by make_pfunit_test
@@ -504,6 +512,13 @@ $(eval $(call make_pfunit_test,tests))
 clean:
  \rm -f *.o *.mod *.F90 *.inc tests
 ```
+
+::: callout
+
+`USEMPI` configures the Make integration; it does not build or convert pFUnit into an MPI-enabled library.
+Use a pFUnit installation that was built with MPI support.
+
+:::
 
 With this, we can compile for MPI using the following command.
 
@@ -670,7 +685,7 @@ end subroutine test_partial_mpi_dot_product
 ### Challenge: Write tests for `sum_preceding_rank_values`
 
 Now write the pFUnit tests for `sum_preceding_rank_values` in the [Testing parallel code exercise][ex-testing-parallel-code].
-These new test should be defined in a new test file. Unlike the previous function, its result varies by rank therefore you need to
+These new test should be defined in a new test file. Unlike the previous function, its result varies by MPI rank therefore you need to
 store a different expected result for each rank.
 
 :::::::::::::::::::::::::::::::: solution
