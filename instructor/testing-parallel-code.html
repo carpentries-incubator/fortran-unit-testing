@@ -24,7 +24,10 @@
   <div class="container-fluid top-nav-container">
     <div class="col-md-8">
       <div class="large-logo">
-        <img id="incubator-logo" alt="Lesson Description" src="../assets/images/incubator-logo.svg"><span class="badge text-bg-danger">
+        <a href="index.html">
+        <img id="incubator-logo" alt="Lesson Description" src="../assets/images/incubator-logo.svg"></a>
+
+        <span class="badge text-bg-danger">
           <abbr title="This lesson is in the pre-alpha phase, which means that it is in early development, but has not yet been taught.">
             <a href="https://docs.carpentries.org/resources/curriculum/lesson-life-cycle.html" class="external-link alert-link">
               <i aria-hidden="true" class="icon" data-feather="alert-octagon" style="border-radius: 5px"></i>
@@ -74,7 +77,9 @@
       <span class="menu-title">Menu</span>
     </button>
     <div class="nav-logo">
-      <img class="small-logo" alt="Lesson Description" src="../assets/images/incubator-logo-sm.svg"></div>
+      <a href="index.html">
+      <img class="small-logo" alt="Lesson Description" src="../assets/images/incubator-logo-sm.svg"></a>
+    </div>
     <div class="lesson-title-md">
       Unit Testing in Fortran
     </div>
@@ -115,7 +120,7 @@
       </fieldset>
     </form>
     -->
-    <a id="search-button" class="btn btn-primary" href="../instructor/aio.html" role="button" aria-label="Search the All In One page">Search the All In One page</a>
+    <a id="search-button-nav" class="btn btn-primary" href="../instructor/aio.html" role="button" aria-label="Search the All In One page">Search the All In One page</a>
   </div><!--/div.container-fluid -->
 </nav><aside class="col-md-12 lesson-progress"><div class="progress incubator">
     <div class="progress-bar incubator" role="progressbar" style="width: 71%" aria-valuenow="71" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">71%</div>
@@ -129,6 +134,9 @@
           <i class="search-icon" data-feather="x" role="img"></i>
         </button>
         <div class="sidebar-inner">
+          <div class="row mobile-row" id="theme-row-mobile">
+            <a id="search-button-sidebar" class="btn btn-primary" href="../instructor/aio.html" role="button" aria-label="Search the All In One page">Search the All In One page</a>
+          </div>
           <div class="row mobile-row" id="theme-row-mobile">
             <menu class="col theme-selector" id="theme-selector-sidebar"><li class="nav-item dropdown theme-button-list" id="theme-button-list-sidebar">
                 <button class="btn btn-link nav-link px-0 px-lg-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (auto)">
@@ -171,6 +179,7 @@
                     </div>
                   </div><!--/div.accordion-item-->
                 </div><!--/div.accordion-flush-->
+
               </div><!--div.sidenav-view-selector -->
             </div><!--/div.col -->
 
@@ -278,6 +287,29 @@
               </div>
             </div>
 
+            <hr class="half-width"><div class="accordion accordion-flush" id="accordion-links-toggle">
+                <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-heading-links-toggle">
+                  <button class="accordion-button collapsed" id="links" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-links-toggle" aria-expanded="false" aria-controls="flush-collapse-links-toggle">
+                    LINKS
+                  </button>
+                </h2>
+                <div id="flush-collapse-links-toggle" class="accordion-collapse show collapse" data-bs-parent="#accordion-links-toggle">
+                    <div class="accordion-body">
+                        <ul><li>
+                            <a href="../instructor/key-points.html">Key Points</a>
+                            </li>
+                            <li>
+                            <a href="../instructor/instructor-notes.html">Instructor Notes</a>
+                            </li>
+                            <li>
+                            <a href="../instructor/images.html">Extract All Images</a>
+                            </li>
+                        </ul></div>
+                </div>
+                </div><!--/div.accordion-item-->
+            </div><!--/div.accordion-flush-->
+
             <hr class="half-width"><div class="accordion accordion-flush lesson-resources" id="accordion-resources-toggle">
               <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-heading-resources-toggle">
@@ -287,16 +319,7 @@
                 </h2>
                 <div id="flush-collapse-resources-toggle" class="accordion-collapse collapse" data-bs-parent="#accordion-resources-toggle">
                   <div class="accordion-body">
-                    <ul><li>
-                        <a href="../instructor/key-points.html">Key Points</a>
-                      </li>
-                      <li>
-                        <a href="../instructor/instructor-notes.html">Instructor Notes</a>
-                      </li>
-                      <li>
-                        <a href="../instructor/images.html">Extract All Images</a>
-                      </li>
-                      <hr><li><a class="dropdown-item" href="reference.html">Reference</a></li>
+                    <ul><hr><li><a class="dropdown-item" href="reference.html">Reference</a></li>
                     </ul></div>
                 </div>
               </div>
@@ -332,7 +355,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Testing parallel code</h1>
-        <p>Last updated on 2026-09-24 |
+        <p>Last updated on 2026-11-04 |
 
         <a href="https://github.com/carpentries-incubator/fortran-unit-testing/edit/main/episodes/testing-parallel-code.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -674,21 +697,24 @@ for the current test.</li>
 </div>
 </div>
 </div>
-<div id="challenge-update-derived-types-to-work-with-mpi" class="callout challenge">
+<div id="challenge-define-the-sum_all_rank_values-test-case" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-update-derived-types-to-work-with-mpi" class="callout-inner">
-<h3 class="callout-title">Challenge: Update derived types to work with
-MPI</h3>
+<div id="challenge-define-the-sum_all_rank_values-test-case" class="callout-inner">
+<h3 class="callout-title">Challenge: Define the
+<code>sum_all_rank_values</code> test case</h3>
 <div class="callout-content">
-<p>Take a look at the <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/testing-parallel-code/challenge" class="external-link">Testing
-parallel code exercise</a>. This exercise contains an MPI parallelised
-version of the game of life (See appendix). Complete the first step of
-the challenge by converting the derived types within <a href="https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/testing-parallel-code/challenge/test/test_find_steady_state.pf#L10-L29" class="external-link">test_find_steady_state.pf</a>
-to work with MPI.</p>
-</div>
+<p>Start the <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/testing-parallel-code/challenge" class="external-link">Testing
+parallel code exercise</a>. Write your own derived-types to act as the
+test parameter and test case types for MPI tests of the mpi_utils
+library. You should think about:</p>
+<ul><li>What decorators are needed?</li>
+<li>What types should be extended?</li>
+<li>What type-bound variables, if any, should be defined?</li>
+<li>How do we instantiate one of these test cases?</li>
+</ul></div>
 </div>
 </div>
 <div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
@@ -698,29 +724,43 @@ to work with MPI.</p>
 </button>
 <div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
-<p>Your derived types should now look something like this,</p>
+<p>Your derived types should look something like this:</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a>@testParameter</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="dt">type</span>, <span class="dt">extends(MPITestParameter)</span> <span class="dt">::</span> find_steady_state_test_params</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a>    <span class="co">!&gt; The initial starting board to be passed into find_steady_state</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a>    <span class="dt">integer</span>, <span class="dt">dimension(:,:)</span>, <span class="dt">allocatable</span> <span class="dt">::</span> input_board</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1" aria-label="code-block-5-5"></a>    <span class="co">!&gt; The expected steady state result</span></span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1" aria-label="code-block-5-6"></a>    <span class="dt">logical</span> <span class="dt">::</span> expected_steady_state</span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1" aria-label="code-block-5-7"></a>    <span class="co">!&gt; The expected number of generations to reach steady state</span></span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1" aria-label="code-block-5-8"></a>    <span class="dt">integer</span> <span class="dt">::</span> expected_generation_number</span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1" aria-label="code-block-5-9"></a>    <span class="co">!&gt; A description of the test to be outputted for logging</span></span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1" aria-label="code-block-5-10"></a>    <span class="dt">character(len=100)</span> <span class="dt">::</span> description</span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1" aria-label="code-block-5-11"></a><span class="kw">contains</span></span>
-<span id="cb5-12"><a href="#cb5-12" tabindex="-1" aria-label="code-block-5-12"></a>    <span class="dt">procedure</span> <span class="dt">::</span> toString <span class="kw">=</span><span class="op">&gt;</span> find_steady_state_test_params_toString</span>
-<span id="cb5-13"><a href="#cb5-13" tabindex="-1" aria-label="code-block-5-13"></a><span class="dt">end type</span> find_steady_state_test_params</span>
-<span id="cb5-14"><a href="#cb5-14" tabindex="-1" aria-label="code-block-5-14"></a></span>
-<span id="cb5-15"><a href="#cb5-15" tabindex="-1" aria-label="code-block-5-15"></a><span class="co">!&gt; Type to define a single find_steady_state test case</span></span>
-<span id="cb5-16"><a href="#cb5-16" tabindex="-1" aria-label="code-block-5-16"></a>@TestCase(testParameters<span class="kw">={</span>getTestSuite()<span class="kw">}</span>, constructor<span class="kw">=</span>paramsToCase)</span>
-<span id="cb5-17"><a href="#cb5-17" tabindex="-1" aria-label="code-block-5-17"></a><span class="dt">type</span>, <span class="dt">extends(MPITestCase)</span> <span class="dt">::</span> find_steady_state_test_case</span>
-<span id="cb5-18"><a href="#cb5-18" tabindex="-1" aria-label="code-block-5-18"></a>    <span class="dt">type(find_steady_state_test_params)</span> <span class="dt">::</span> params</span>
-<span id="cb5-19"><a href="#cb5-19" tabindex="-1" aria-label="code-block-5-19"></a><span class="dt">end type</span> find_steady_state_test_case</span></code></pre>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="dt">type</span>, <span class="dt">extends(MPITestParameter)</span> <span class="dt">::</span> sum_all_rank_values_test_params</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a><span class="dt">end type</span> sum_all_rank_values_test_params</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1" aria-label="code-block-5-5"></a>@TestCase(testParameters<span class="kw">={</span>sum_all_rank_values_test_suite()<span class="kw">}</span>, constructor<span class="kw">=</span>sum_all_rank_values_test_case_constructor)</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1" aria-label="code-block-5-6"></a><span class="dt">type</span>, <span class="dt">extends(MPITestCase)</span> <span class="dt">::</span> sum_all_rank_values_test_case</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1" aria-label="code-block-5-7"></a>    <span class="dt">type(sum_all_rank_values_test_params)</span> <span class="dt">::</span> params</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1" aria-label="code-block-5-8"></a><span class="dt">end type</span> sum_all_rank_values_test_case</span></code></pre>
+</div>
+<p>You should also have defined a constructor for you test case which
+converts a parameter type to a tets case type:</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="kw">function</span> sum_all_rank_values_test_case_constructor(testParameters) <span class="kw">result</span>(testCase)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a>    <span class="dt">type(sum_all_rank_values_test_params)</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> testParameters</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a>    <span class="dt">type(sum_all_rank_values_test_case)</span> <span class="dt">::</span> testCase</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1" aria-label="code-block-6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1" aria-label="code-block-6-5"></a>    testCase<span class="op">%</span>params <span class="kw">=</span> testParameters</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1" aria-label="code-block-6-6"></a><span class="kw">end function</span> sum_all_rank_values_test_case_constructor</span></code></pre>
+</div>
+<div id="callout2" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Notice that we do not define a <code>toString</code> procedure here.
+That is because <code>MPITestParameter</code>provides a default
+implementation which logs the number of ranks for the given test.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -745,60 +785,66 @@ the default constructor generated for our custom type
 <strong>mpi_dot_product_test_parameters</strong>. Since we have extended
 <strong>MPITestParameter</strong>, we can pass the desired number of MPI
 ranks as the first argument, as shown below.</p>
-<div class="codewrapper sourceCode" id="cb6">
+<div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="co">!&gt; The test suite in which parameter sets (inputs and expected outputs) for each</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a><span class="co">!! test are defined.</span></span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a><span class="kw">function</span> mpi_dot_product_test_suite() <span class="kw">result</span>(parameter_sets)</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1" aria-label="code-block-6-4"></a>    <span class="co">!&gt; The array of parameter sets to be returned</span></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1" aria-label="code-block-6-5"></a>    <span class="dt">type(mpi_dot_product_test_parameters)</span> <span class="dt">::</span> parameter_sets(<span class="dv">10</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1" aria-label="code-block-6-6"></a></span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1" aria-label="code-block-6-7"></a>    <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> a(:), b(:)</span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1" aria-label="code-block-6-8"></a>    <span class="dt">integer</span> <span class="dt">::</span> c, i</span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1" aria-label="code-block-6-9"></a></span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1" aria-label="code-block-6-10"></a>    <span class="kw">allocate</span>(a(<span class="dv">100</span>))</span>
-<span id="cb6-11"><a href="#cb6-11" tabindex="-1" aria-label="code-block-6-11"></a>    <span class="kw">allocate</span>(b(<span class="dv">100</span>))</span>
-<span id="cb6-12"><a href="#cb6-12" tabindex="-1" aria-label="code-block-6-12"></a></span>
-<span id="cb6-13"><a href="#cb6-13" tabindex="-1" aria-label="code-block-6-13"></a>    <span class="co">! Parameter set 1</span></span>
-<span id="cb6-14"><a href="#cb6-14" tabindex="-1" aria-label="code-block-6-14"></a>    a <span class="kw">=</span> <span class="kw">[</span>(i,i<span class="kw">=</span><span class="dv">1</span>,<span class="dv">100</span>)<span class="kw">]</span>    <span class="co">!                             Here</span></span>
-<span id="cb6-15"><a href="#cb6-15" tabindex="-1" aria-label="code-block-6-15"></a>    b <span class="kw">=</span> <span class="kw">[</span>(i,i<span class="kw">=</span><span class="dv">101</span>,<span class="dv">200</span>)<span class="kw">]</span>  <span class="co">!                              |</span></span>
-<span id="cb6-16"><a href="#cb6-16" tabindex="-1" aria-label="code-block-6-16"></a>    c <span class="kw">=</span> <span class="dv">843350</span>           <span class="co">!                              V</span></span>
-<span id="cb6-17"><a href="#cb6-17" tabindex="-1" aria-label="code-block-6-17"></a>    parameter_sets(<span class="dv">1</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">1</span>, a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
-<span id="cb6-18"><a href="#cb6-18" tabindex="-1" aria-label="code-block-6-18"></a>    parameter_sets(<span class="dv">2</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">2</span>, a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
-<span id="cb6-19"><a href="#cb6-19" tabindex="-1" aria-label="code-block-6-19"></a>    parameter_sets(<span class="dv">3</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">4</span>, a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
-<span id="cb6-20"><a href="#cb6-20" tabindex="-1" aria-label="code-block-6-20"></a>    parameter_sets(<span class="dv">4</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">6</span>, a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
-<span id="cb6-21"><a href="#cb6-21" tabindex="-1" aria-label="code-block-6-21"></a>    parameter_sets(<span class="dv">5</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">8</span>, a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
-<span id="cb6-22"><a href="#cb6-22" tabindex="-1" aria-label="code-block-6-22"></a></span>
-<span id="cb6-23"><a href="#cb6-23" tabindex="-1" aria-label="code-block-6-23"></a>    <span class="co">! Parameter set 2</span></span>
-<span id="cb6-24"><a href="#cb6-24" tabindex="-1" aria-label="code-block-6-24"></a>    a <span class="kw">=</span> <span class="dv">0</span>                <span class="co">!                            and here</span></span>
-<span id="cb6-25"><a href="#cb6-25" tabindex="-1" aria-label="code-block-6-25"></a>    b <span class="kw">=</span> <span class="dv">0</span>                <span class="co">!                               |</span></span>
-<span id="cb6-26"><a href="#cb6-26" tabindex="-1" aria-label="code-block-6-26"></a>    c <span class="kw">=</span> <span class="dv">0</span>                <span class="co">!                               V</span></span>
-<span id="cb6-27"><a href="#cb6-27" tabindex="-1" aria-label="code-block-6-27"></a>    parameter_sets(<span class="dv">6</span>)  <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">1</span>, a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
-<span id="cb6-28"><a href="#cb6-28" tabindex="-1" aria-label="code-block-6-28"></a>    parameter_sets(<span class="dv">7</span>)  <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">2</span>, a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
-<span id="cb6-29"><a href="#cb6-29" tabindex="-1" aria-label="code-block-6-29"></a>    parameter_sets(<span class="dv">8</span>)  <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">4</span>, a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
-<span id="cb6-30"><a href="#cb6-30" tabindex="-1" aria-label="code-block-6-30"></a>    parameter_sets(<span class="dv">9</span>)  <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">6</span>, a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
-<span id="cb6-31"><a href="#cb6-31" tabindex="-1" aria-label="code-block-6-31"></a>    parameter_sets(<span class="dv">10</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">8</span>, a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
-<span id="cb6-32"><a href="#cb6-32" tabindex="-1" aria-label="code-block-6-32"></a></span>
-<span id="cb6-33"><a href="#cb6-33" tabindex="-1" aria-label="code-block-6-33"></a>    <span class="co">! Deallocate the temporary stores of a and b for completeness</span></span>
-<span id="cb6-34"><a href="#cb6-34" tabindex="-1" aria-label="code-block-6-34"></a>    <span class="kw">deallocate</span>(a, b)</span>
-<span id="cb6-35"><a href="#cb6-35" tabindex="-1" aria-label="code-block-6-35"></a><span class="kw">end function</span> mpi_dot_product_test_suite</span></code></pre>
+<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="co">!&gt; The test suite in which parameter sets (inputs and expected outputs) for each</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a><span class="co">!! test are defined.</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a><span class="kw">function</span> mpi_dot_product_test_suite() <span class="kw">result</span>(parameter_sets)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a>    <span class="co">!&gt; The array of parameter sets to be returned</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a>    <span class="dt">type(mpi_dot_product_test_parameters)</span> <span class="dt">::</span> parameter_sets(<span class="dv">10</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1" aria-label="code-block-7-6"></a></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1" aria-label="code-block-7-7"></a>    <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> a(:), b(:)</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1" aria-label="code-block-7-8"></a>    <span class="dt">integer</span> <span class="dt">::</span> c, i</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1" aria-label="code-block-7-9"></a></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1" aria-label="code-block-7-10"></a>    <span class="kw">allocate</span>(a(<span class="dv">100</span>))</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1" aria-label="code-block-7-11"></a>    <span class="kw">allocate</span>(b(<span class="dv">100</span>))</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1" aria-label="code-block-7-12"></a></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1" aria-label="code-block-7-13"></a>    <span class="co">! Parameter set 1</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1" aria-label="code-block-7-14"></a>    a <span class="kw">=</span> <span class="kw">[</span>(i,i<span class="kw">=</span><span class="dv">1</span>,<span class="dv">100</span>)<span class="kw">]</span>    <span class="co">!                             Here</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1" aria-label="code-block-7-15"></a>    b <span class="kw">=</span> <span class="kw">[</span>(i,i<span class="kw">=</span><span class="dv">101</span>,<span class="dv">200</span>)<span class="kw">]</span>  <span class="co">!                              |</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1" aria-label="code-block-7-16"></a>    c <span class="kw">=</span> <span class="dv">843350</span>           <span class="co">!                              V</span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1" aria-label="code-block-7-17"></a>    parameter_sets(<span class="dv">1</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">1</span>, a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1" aria-label="code-block-7-18"></a>    parameter_sets(<span class="dv">2</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">2</span>, a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1" aria-label="code-block-7-19"></a>    parameter_sets(<span class="dv">3</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">4</span>, a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1" aria-label="code-block-7-20"></a>    parameter_sets(<span class="dv">4</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">6</span>, a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1" aria-label="code-block-7-21"></a>    parameter_sets(<span class="dv">5</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">8</span>, a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1" aria-label="code-block-7-22"></a></span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1" aria-label="code-block-7-23"></a>    <span class="co">! Parameter set 2</span></span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1" aria-label="code-block-7-24"></a>    a <span class="kw">=</span> <span class="dv">0</span>                <span class="co">!                            and here</span></span>
+<span id="cb7-25"><a href="#cb7-25" tabindex="-1" aria-label="code-block-7-25"></a>    b <span class="kw">=</span> <span class="dv">0</span>                <span class="co">!                               |</span></span>
+<span id="cb7-26"><a href="#cb7-26" tabindex="-1" aria-label="code-block-7-26"></a>    c <span class="kw">=</span> <span class="dv">0</span>                <span class="co">!                               V</span></span>
+<span id="cb7-27"><a href="#cb7-27" tabindex="-1" aria-label="code-block-7-27"></a>    parameter_sets(<span class="dv">6</span>)  <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">1</span>, a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
+<span id="cb7-28"><a href="#cb7-28" tabindex="-1" aria-label="code-block-7-28"></a>    parameter_sets(<span class="dv">7</span>)  <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">2</span>, a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
+<span id="cb7-29"><a href="#cb7-29" tabindex="-1" aria-label="code-block-7-29"></a>    parameter_sets(<span class="dv">8</span>)  <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">4</span>, a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
+<span id="cb7-30"><a href="#cb7-30" tabindex="-1" aria-label="code-block-7-30"></a>    parameter_sets(<span class="dv">9</span>)  <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">6</span>, a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" tabindex="-1" aria-label="code-block-7-31"></a>    parameter_sets(<span class="dv">10</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">8</span>, a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
+<span id="cb7-32"><a href="#cb7-32" tabindex="-1" aria-label="code-block-7-32"></a></span>
+<span id="cb7-33"><a href="#cb7-33" tabindex="-1" aria-label="code-block-7-33"></a>    <span class="co">! Deallocate the temporary stores of a and b for completeness</span></span>
+<span id="cb7-34"><a href="#cb7-34" tabindex="-1" aria-label="code-block-7-34"></a>    <span class="kw">deallocate</span>(a, b)</span>
+<span id="cb7-35"><a href="#cb7-35" tabindex="-1" aria-label="code-block-7-35"></a><span class="kw">end function</span> mpi_dot_product_test_suite</span></code></pre>
 </div>
-<div id="challenge-update-test-suite-to-work-with-mpi" class="callout challenge">
+<div id="challenge-define-a-test-suite-for-your-tests-of-sum_all_rank_values-with-different-numbers-of-mpi-processors" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-update-test-suite-to-work-with-mpi" class="callout-inner">
-<h3 class="callout-title">Challenge: Update test suite to work with
-MPI</h3>
+<div id="challenge-define-a-test-suite-for-your-tests-of-sum_all_rank_values-with-different-numbers-of-mpi-processors" class="callout-inner">
+<h3 class="callout-title">Challenge: Define a test suite for your tests
+of <code>sum_all_rank_values</code> with different numbers of MPI
+processors</h3>
 <div class="callout-content">
-<p>Continuing with the <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/testing-parallel-code/challenge" class="external-link">Testing
-parallel code exercise</a>.</p>
-<p>Complete the next step of the challenge by converting the test suite
-within <a href="https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/testing-parallel-code/challenge/test/test_find_steady_state.pf#L37-L63" class="external-link">test_find_steady_state.pf</a>
-to work with your new derived types.</p>
-</div>
+<p>Write a test suite for the tests of <code>sum_all_rank_values</code>.
+You should think about:</p>
+<ul><li>What decorators are needed, if any?</li>
+<li>Do you need a function or subroutine?</li>
+<li>What should the inputs to this procedure be?</li>
+<li>What should be its outputs?</li>
+<li>How does pFUnit know how many ranks to use for each parameter
+set?</li>
+<li>What test cases would help check the function with small and larger
+communicators?</li>
+</ul></div>
 </div>
 </div>
 <div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
@@ -808,39 +854,18 @@ to work with your new derived types.</p>
 </button>
 <div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
-<p>Your derived types should now look something like this,</p>
-<div class="codewrapper sourceCode" id="cb7">
+<p>The test suite should look something like this:</p>
+<div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="kw">function</span> getTestSuite() <span class="kw">result</span>(params)</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a>    <span class="co">!&gt; The array of test parameters</span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a>    <span class="dt">type(find_steady_state_test_params)</span>, <span class="dt">allocatable</span> <span class="dt">::</span> params(:)</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a>    <span class="dt">integer</span> <span class="dt">::</span> i, max_num_ranks</span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1" aria-label="code-block-7-6"></a>    <span class="dt">integer</span>, <span class="dt">dimension(:,:)</span>, <span class="dt">allocatable</span> <span class="dt">::</span> board</span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1" aria-label="code-block-7-7"></a></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1" aria-label="code-block-7-8"></a>    <span class="co">!  Steady state should be reached after 17 iterations</span></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1" aria-label="code-block-7-9"></a>    <span class="co">!       8  9 10 11 12</span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1" aria-label="code-block-7-10"></a>    <span class="co">!      -- -- -- -- --</span></span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1" aria-label="code-block-7-11"></a>    <span class="co">!   8 | 0  0  0  0  0</span></span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1" aria-label="code-block-7-12"></a>    <span class="co">!   9 | 0  0  1  0  0</span></span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1" aria-label="code-block-7-13"></a>    <span class="co">!  10 | 0  1  1  1  0</span></span>
-<span id="cb7-14"><a href="#cb7-14" tabindex="-1" aria-label="code-block-7-14"></a>    <span class="co">!  11 | 0  1  0  1  0</span></span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1" aria-label="code-block-7-15"></a>    <span class="co">!  12 | 0  0  1  0  0</span></span>
-<span id="cb7-16"><a href="#cb7-16" tabindex="-1" aria-label="code-block-7-16"></a>    <span class="co">!  13 | 0  0  0  0  0</span></span>
-<span id="cb7-17"><a href="#cb7-17" tabindex="-1" aria-label="code-block-7-17"></a>    <span class="kw">allocate</span>(board(<span class="dv">31</span>, <span class="dv">31</span>))</span>
-<span id="cb7-18"><a href="#cb7-18" tabindex="-1" aria-label="code-block-7-18"></a>    board <span class="kw">=</span> <span class="dv">0</span></span>
-<span id="cb7-19"><a href="#cb7-19" tabindex="-1" aria-label="code-block-7-19"></a>    board(<span class="dv">9</span>,<span class="dv">9</span>:<span class="dv">11</span>)  <span class="kw">=</span> <span class="kw">[</span><span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span><span class="kw">]</span></span>
-<span id="cb7-20"><a href="#cb7-20" tabindex="-1" aria-label="code-block-7-20"></a>    board(<span class="dv">10</span>,<span class="dv">9</span>:<span class="dv">11</span>) <span class="kw">=</span> <span class="kw">[</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span><span class="kw">]</span></span>
-<span id="cb7-21"><a href="#cb7-21" tabindex="-1" aria-label="code-block-7-21"></a>    board(<span class="dv">11</span>,<span class="dv">9</span>:<span class="dv">11</span>) <span class="kw">=</span> <span class="kw">[</span><span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span><span class="kw">]</span></span>
-<span id="cb7-22"><a href="#cb7-22" tabindex="-1" aria-label="code-block-7-22"></a>    board(<span class="dv">12</span>,<span class="dv">9</span>:<span class="dv">11</span>) <span class="kw">=</span> <span class="kw">[</span><span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span><span class="kw">]</span></span>
-<span id="cb7-23"><a href="#cb7-23" tabindex="-1" aria-label="code-block-7-23"></a></span>
-<span id="cb7-24"><a href="#cb7-24" tabindex="-1" aria-label="code-block-7-24"></a>    max_num_ranks <span class="kw">=</span> <span class="dv">8</span></span>
-<span id="cb7-25"><a href="#cb7-25" tabindex="-1" aria-label="code-block-7-25"></a>    <span class="kw">allocate</span>(params(max_num_ranks))</span>
-<span id="cb7-26"><a href="#cb7-26" tabindex="-1" aria-label="code-block-7-26"></a>    <span class="kw">do</span> i <span class="kw">=</span> <span class="dv">1</span>, max_num_ranks</span>
-<span id="cb7-27"><a href="#cb7-27" tabindex="-1" aria-label="code-block-7-27"></a>        params(i) <span class="kw">=</span> find_steady_state_test_params(i, board, <span class="cn">.true.</span>, <span class="dv">17</span>, <span class="st">"an exploder initial state"</span>)</span>
-<span id="cb7-28"><a href="#cb7-28" tabindex="-1" aria-label="code-block-7-28"></a>    <span class="kw">end do</span></span>
-<span id="cb7-29"><a href="#cb7-29" tabindex="-1" aria-label="code-block-7-29"></a><span class="kw">end function</span> getTestSuite</span></code></pre>
+<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="kw">function</span> sum_all_rank_values_test_suite() <span class="kw">result</span>(params)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a>    <span class="dt">type(sum_all_rank_values_test_params)</span>, <span class="dt">allocatable</span> <span class="dt">::</span> params(:)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a>    <span class="kw">allocate</span>(params(<span class="dv">3</span>))</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a>    params(<span class="dv">1</span>) <span class="kw">=</span> sum_all_rank_values_test_params(<span class="dv">1</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1" aria-label="code-block-8-6"></a>    params(<span class="dv">2</span>) <span class="kw">=</span> sum_all_rank_values_test_params(<span class="dv">2</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1" aria-label="code-block-8-7"></a>    params(<span class="dv">3</span>) <span class="kw">=</span> sum_all_rank_values_test_params(<span class="dv">4</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1" aria-label="code-block-8-8"></a><span class="kw">end function</span> sum_all_rank_values_test_suite</span></code></pre>
 </div>
 </div>
 </div>
@@ -858,28 +883,28 @@ to work with your new derived types.</p>
 <div id="collapseSpoiler4" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler4" aria-labelledby="headingSpoiler4">
 <div class="accordion-body">
 <p>Since we are assuming our src procedure returns the same value to all
-ranks, for any number of MPI ranks, nothing much that needs to change
-within our test logic subroutine. The one thing that is likely to change
-is the call to the src procedure being tested as it is recommended to
-pass the MPI communicator into each procedure which utilises MPI. For
-example, the test logic might look something like this.</p>
-<div class="codewrapper sourceCode" id="cb8">
+ranks, for any number of MPI ranks, nothing much needs to change within
+our test logic subroutine. The one thing that is likely to change is the
+call to the src procedure being tested as it is recommended to pass the
+MPI communicator into each procedure which utilises MPI. For example,
+the test logic might look something like this.</p>
+<div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a>@Test(testParameters<span class="kw">={</span>mpi_dot_product_test_suite()<span class="kw">}</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a><span class="kw">subroutine</span> test_mpi_dot_product(this)</span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a>    <span class="co">!&gt; The instance of our test case type for this test</span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a>    <span class="dt">class(mpi_dot_product_test_case)</span>, <span class="dt">intent(inout)</span> <span class="dt">::</span> this</span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1" aria-label="code-block-8-6"></a>    <span class="dt">integer</span> <span class="dt">::</span> <span class="kw">result</span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1" aria-label="code-block-8-7"></a></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1" aria-label="code-block-8-8"></a>    <span class="kw">result</span> <span class="kw">=</span> mpi_dot_product(this<span class="op">%</span>params<span class="op">%</span>a, this<span class="op">%</span>params<span class="op">%</span>b, this<span class="op">%</span>getProcessRank(), this<span class="op">%</span>getNumProcesses(), this<span class="op">%</span>getMpiCommunicator())</span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1" aria-label="code-block-8-9"></a></span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1" aria-label="code-block-8-10"></a>    <span class="co">! Check that the call to dot_product returned what we expect</span></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1" aria-label="code-block-8-11"></a>    @AssertEqual(this<span class="op">%</span>params<span class="op">%</span>expected_dot_product, <span class="kw">result</span>, message<span class="kw">=</span><span class="st">"Unexpected value returned for the dot_product"</span>)</span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1" aria-label="code-block-8-12"></a><span class="kw">end subroutine</span> test_mpi_dot_product</span></code></pre>
+<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a>@Test(testParameters<span class="kw">={</span>mpi_dot_product_test_suite()<span class="kw">}</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a><span class="kw">subroutine</span> test_mpi_dot_product(this)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a>    <span class="co">!&gt; The instance of our test case type for this test</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1" aria-label="code-block-9-4"></a>    <span class="dt">class(mpi_dot_product_test_case)</span>, <span class="dt">intent(inout)</span> <span class="dt">::</span> this</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1" aria-label="code-block-9-6"></a>    <span class="dt">integer</span> <span class="dt">::</span> <span class="kw">result</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1" aria-label="code-block-9-7"></a></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1" aria-label="code-block-9-8"></a>    <span class="kw">result</span> <span class="kw">=</span> mpi_dot_product(this<span class="op">%</span>params<span class="op">%</span>a, this<span class="op">%</span>params<span class="op">%</span>b, this<span class="op">%</span>getProcessRank(), this<span class="op">%</span>getNumProcesses(), this<span class="op">%</span>getMpiCommunicator())</span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1" aria-label="code-block-9-9"></a></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1" aria-label="code-block-9-10"></a>    <span class="co">! Check that the call to dot_product returned what we expect</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1" aria-label="code-block-9-11"></a>    @AssertEqual(this<span class="op">%</span>params<span class="op">%</span>expected_dot_product, <span class="kw">result</span>, message<span class="kw">=</span><span class="st">"Unexpected value returned for the dot_product"</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1" aria-label="code-block-9-12"></a><span class="kw">end subroutine</span> test_mpi_dot_product</span></code></pre>
 </div>
-<div id="callout2" class="callout">
+<div id="callout3" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
@@ -893,20 +918,30 @@ the number of ranks used within each test.</p>
 </div>
 </div>
 </div>
-<div id="challenge-update-test-logic-to-work-with-mpi" class="callout challenge">
+<div id="challenge-complete-the-sum_all_rank_values-test" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-update-test-logic-to-work-with-mpi" class="callout-inner">
-<h3 class="callout-title">Challenge: Update test logic to work with
-MPI</h3>
+<div id="challenge-complete-the-sum_all_rank_values-test" class="callout-inner">
+<h3 class="callout-title">Challenge: Complete the
+<code>sum_all_rank_values</code> test</h3>
 <div class="callout-content">
-<p>Continuing with the <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/testing-parallel-code/challenge" class="external-link">Testing
-parallel code exercise</a>.</p>
-<p>Converting the test logic within <a href="https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/testing-parallel-code/challenge/test/test_find_steady_state.pf#L69-L84" class="external-link">test_find_steady_state.pf</a>
-to work with the new src procedure signature.</p>
-</div>
+<p>Write the actual test logic for the function
+<code>sum_all_rank_values</code>. This test should assert that the
+result is the sum of the one-based ranks, <code>n * (n + 1) / 2</code>,
+where <code>n</code> is the number of processors. You should think
+about:</p>
+<ul><li>What decorators are needed?</li>
+<li>Do you need a function or subroutine?</li>
+<li>What should the inputs to this procedure be?</li>
+<li>What should be its outputs?</li>
+<li>How do you link this test logic to the test suite you just
+defined?</li>
+<li>How do you check if a test scenario was successful?</li>
+<li>Which communicator should the test pass to
+<code>sum_all_rank_values</code>?</li>
+</ul></div>
 </div>
 </div>
 <div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
@@ -916,27 +951,20 @@ to work with the new src procedure signature.</p>
 </button>
 <div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
-<p>Your test logic should now look something like this,</p>
-<div class="codewrapper sourceCode" id="cb9">
+<p>The test logic should look like this:</p>
+<div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a>@Test</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a><span class="kw">subroutine</span> TestFindSteadyState(this)</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a>    <span class="co">!&gt; The current test case including inputs and expected outputs</span></span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1" aria-label="code-block-9-4"></a>    <span class="dt">class(find_steady_state_test_case)</span>, <span class="dt">intent(inout)</span> <span class="dt">::</span> this</span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a></span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1" aria-label="code-block-9-6"></a>    <span class="dt">logical</span> <span class="dt">::</span> actual_steady_state</span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1" aria-label="code-block-9-7"></a>    <span class="dt">integer</span> <span class="dt">::</span> actual_generation_number</span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1" aria-label="code-block-9-8"></a></span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1" aria-label="code-block-9-9"></a>    <span class="kw">call</span> find_steady_state(actual_steady_state, actual_generation_number, this<span class="op">%</span>params<span class="op">%</span>input_board, <span class="kw">&amp;</span></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1" aria-label="code-block-9-10"></a>        <span class="fu">size</span>(this<span class="op">%</span>params<span class="op">%</span>input_board, <span class="dv">1</span>), <span class="fu">size</span>(this<span class="op">%</span>params<span class="op">%</span>input_board, <span class="dv">2</span>), this<span class="op">%</span>getMpiCommunicator(), <span class="kw">&amp;</span></span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1" aria-label="code-block-9-11"></a>        this<span class="op">%</span>getNumProcessesRequested())</span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1" aria-label="code-block-9-12"></a></span>
-<span id="cb9-13"><a href="#cb9-13" tabindex="-1" aria-label="code-block-9-13"></a>    @assertEqual(this<span class="op">%</span>params<span class="op">%</span>expected_generation_number, actual_generation_number, <span class="st">"Unexpected generation_number"</span>)</span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1" aria-label="code-block-9-14"></a></span>
-<span id="cb9-15"><a href="#cb9-15" tabindex="-1" aria-label="code-block-9-15"></a>    @assertTrue(this<span class="op">%</span>params<span class="op">%</span>expected_steady_state <span class="op">.eqv.</span> actual_steady_state, <span class="st">"Unexpected steady_state value"</span>)</span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1" aria-label="code-block-9-16"></a></span>
-<span id="cb9-17"><a href="#cb9-17" tabindex="-1" aria-label="code-block-9-17"></a><span class="kw">end subroutine</span> TestFindSteadyState</span></code></pre>
+<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a>@Test</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a><span class="kw">subroutine</span> test_sum_all_rank_values_for_all_ranks(this)</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1" aria-label="code-block-10-3"></a>    <span class="dt">class(sum_all_rank_values_test_case)</span>, <span class="dt">intent(inout)</span> <span class="dt">::</span> this</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1" aria-label="code-block-10-4"></a>    <span class="dt">integer</span> <span class="dt">::</span> actual_value, num_processes</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1" aria-label="code-block-10-5"></a></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1" aria-label="code-block-10-6"></a>    actual_value <span class="kw">=</span> sum_all_rank_values(this<span class="op">%</span>getMpiCommunicator())</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1" aria-label="code-block-10-7"></a>    num_processes <span class="kw">=</span> this<span class="op">%</span>getNumProcesses()</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1" aria-label="code-block-10-8"></a></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1" aria-label="code-block-10-9"></a>    @assertEqual(num_processes <span class="kw">*</span> (num_processes <span class="kw">+</span> <span class="dv">1</span>) <span class="kw">/</span> <span class="dv">2</span>, actual_value, <span class="st">"Expected the sum of one-based ranks"</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1" aria-label="code-block-10-10"></a><span class="kw">end subroutine</span> test_sum_all_rank_values_for_all_ranks</span></code></pre>
 </div>
 </div>
 </div>
@@ -951,42 +979,56 @@ to work with the new src procedure signature.</p>
 which utilise either Make or CMake.</p>
 <div class="section level3">
 <h3 id="integrating-with-make">Integrating with Make<a class="anchor" aria-label="anchor" href="#integrating-with-make"></a></h3>
-<p>To build MPI enabled pFUnit tests via Make, one must use an mpi
-enabled compiler such as <strong>mpif90</strong> and include the pFUnit
-library in the compiler arguments <strong>-lpfunit</strong>. Therefore,
-the <strong>tests/Makefile</strong> from <a href="https://carpentries-incubator.github.io/fortran-unit-testing/integrating-with-build-systems.html#integrating-pfunit-with-make" class="external-link">Integrating
-with build systems#Integrating pFUnit with Make</a> becomes,</p>
-<div class="codewrapper sourceCode" id="cb10">
+<p>To build MPI-enabled pFUnit tests with Make, use an MPI compiler
+wrapper such as mpif90 and a pFUnit installation built with MPI support.
+Set USEMPI = YES before including PFUNIT.mk to select its MPI-related
+build settings. Therefore, the <strong>tests/Makefile</strong> from <a href="https://carpentries-incubator.github.io/fortran-unit-testing/integrating-with-build-systems.html#integrating-pfunit-with-make" class="external-link">Integrating
+with build systems - Integrating pFUnit with Make</a> becomes,</p>
+<div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">MAKEFILE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode makefile" tabindex="0"><code class="sourceCode makefile"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="dt">PFUNIT_INCLUDE_DIR</span> <span class="ch">?=</span><span class="st"> /path/to/pfunit/include</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1" aria-label="code-block-10-3"></a><span class="co"># Don't try to include if we're cleaning as this doesn't depend on pFUnit</span></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1" aria-label="code-block-10-4"></a><span class="cf">ifneq</span> (<span class="ch">$(</span><span class="dt">MAKECMDGOALS</span><span class="ch">)</span>,clean)</span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1" aria-label="code-block-10-5"></a><span class="kw">include</span> <span class="ch">$(</span><span class="dt">PFUNIT_INCLUDE_DIR</span><span class="ch">)</span>/PFUNIT.mk</span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1" aria-label="code-block-10-6"></a><span class="dt">TEST_FLAGS</span> <span class="ch">=</span><span class="st"> -I</span><span class="ch">$(</span><span class="dt">BUILD_DIR</span><span class="ch">)</span><span class="st"> </span><span class="ch">$(</span><span class="dt">FC_FLAGS</span><span class="ch">)</span><span class="st"> </span><span class="ch">$(</span><span class="dt">LIBS</span><span class="ch">)</span><span class="st"> </span><span class="ch">$(</span><span class="dt">PFUNIT_EXTRA_FFLAGS</span><span class="ch">)</span><span class="st"> -lpfunit </span><span class="co"># &lt;-- Lib added here</span></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1" aria-label="code-block-10-7"></a><span class="cf">endif</span></span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1" aria-label="code-block-10-8"></a></span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1" aria-label="code-block-10-9"></a><span class="co"># Define variables to be picked up by make_pfunit_test</span></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1" aria-label="code-block-10-10"></a><span class="dt">tests_TESTS</span> <span class="ch">=</span><span class="st"> test_with_mpi.pf</span></span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1" aria-label="code-block-10-11"></a><span class="dt">tests_OTHER_SOURCES</span> <span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="dt">SRC_OBJS</span><span class="ch">)</span></span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1" aria-label="code-block-10-12"></a><span class="dt">tests_OTHER_LIBRARIES</span> <span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="dt">TEST_FLAGS</span><span class="ch">)</span></span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1" aria-label="code-block-10-13"></a></span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1" aria-label="code-block-10-14"></a><span class="co"># Triggers pre-processing and defines rule for building test executable</span></span>
-<span id="cb10-15"><a href="#cb10-15" tabindex="-1" aria-label="code-block-10-15"></a><span class="ch">$(</span><span class="kw">eval</span><span class="st"> </span><span class="ch">$(</span><span class="kw">call</span><span class="st"> make_pfunit_test</span><span class="kw">,</span><span class="st">tests</span><span class="ch">))</span></span>
-<span id="cb10-16"><a href="#cb10-16" tabindex="-1" aria-label="code-block-10-16"></a></span>
-<span id="cb10-17"><a href="#cb10-17" tabindex="-1" aria-label="code-block-10-17"></a><span class="co"># Converts pre-processed test files into objects ready for building of the executable</span></span>
-<span id="cb10-18"><a href="#cb10-18" tabindex="-1" aria-label="code-block-10-18"></a><span class="dv">%.o:</span><span class="dt"> %.F90</span></span>
-<span id="cb10-19"><a href="#cb10-19" tabindex="-1" aria-label="code-block-10-19"></a><span class="er"> </span><span class="ch">$(</span><span class="dt">FC</span><span class="ch">)</span> -c <span class="ch">$(</span><span class="dt">TEST_FLAGS</span><span class="ch">)</span> <span class="ch">$&lt;</span></span>
-<span id="cb10-20"><a href="#cb10-20" tabindex="-1" aria-label="code-block-10-20"></a></span>
-<span id="cb10-21"><a href="#cb10-21" tabindex="-1" aria-label="code-block-10-21"></a><span class="dv">clean:</span></span>
-<span id="cb10-22"><a href="#cb10-22" tabindex="-1" aria-label="code-block-10-22"></a><span class="er"> </span>\rm -f *.o *.mod *.F90 *.inc tests</span></code></pre>
+<pre class="sourceCode makefile" tabindex="0"><code class="sourceCode makefile"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="dt">PFUNIT_INCLUDE_DIR</span> <span class="ch">?=</span><span class="st"> /path/to/pfunit/include</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1" aria-label="code-block-11-2"></a><span class="dt">USEMPI</span> <span class="ch">=</span><span class="st"> YES </span><span class="co"># &lt;-- New flag here</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1" aria-label="code-block-11-3"></a></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1" aria-label="code-block-11-4"></a><span class="co"># Don't try to include if we're cleaning as this doesn't depend on pFUnit</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1" aria-label="code-block-11-5"></a><span class="cf">ifneq</span> (<span class="ch">$(</span><span class="dt">MAKECMDGOALS</span><span class="ch">)</span>,clean)</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1" aria-label="code-block-11-6"></a><span class="kw">include</span> <span class="ch">$(</span><span class="dt">PFUNIT_INCLUDE_DIR</span><span class="ch">)</span>/PFUNIT.mk</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1" aria-label="code-block-11-7"></a><span class="dt">TEST_FLAGS</span> <span class="ch">=</span><span class="st"> -I</span><span class="ch">$(</span><span class="dt">BUILD_DIR</span><span class="ch">)</span><span class="st"> </span><span class="ch">$(</span><span class="dt">FC_FLAGS</span><span class="ch">)</span><span class="st"> </span><span class="ch">$(</span><span class="dt">LIBS</span><span class="ch">)</span><span class="st"> </span><span class="ch">$(</span><span class="dt">PFUNIT_EXTRA_FFLAGS</span><span class="ch">)</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1" aria-label="code-block-11-8"></a><span class="cf">endif</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1" aria-label="code-block-11-9"></a></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1" aria-label="code-block-11-10"></a><span class="co"># Define variables to be picked up by make_pfunit_test</span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1" aria-label="code-block-11-11"></a><span class="dt">tests_TESTS</span> <span class="ch">=</span><span class="st"> test_with_mpi.pf</span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1" aria-label="code-block-11-12"></a><span class="dt">tests_OTHER_SOURCES</span> <span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="dt">SRC_OBJS</span><span class="ch">)</span></span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1" aria-label="code-block-11-13"></a><span class="dt">tests_OTHER_LIBRARIES</span> <span class="ch">=</span><span class="st"> </span><span class="ch">$(</span><span class="dt">TEST_FLAGS</span><span class="ch">)</span></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1" aria-label="code-block-11-14"></a></span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1" aria-label="code-block-11-15"></a><span class="co"># Triggers pre-processing and defines rule for building test executable</span></span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1" aria-label="code-block-11-16"></a><span class="ch">$(</span><span class="kw">eval</span><span class="st"> </span><span class="ch">$(</span><span class="kw">call</span><span class="st"> make_pfunit_test</span><span class="kw">,</span><span class="st">tests</span><span class="ch">))</span></span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1" aria-label="code-block-11-17"></a></span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1" aria-label="code-block-11-18"></a><span class="co"># Converts pre-processed test files into objects ready for building of the executable</span></span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1" aria-label="code-block-11-19"></a><span class="dv">%.o:</span><span class="dt"> %.F90</span></span>
+<span id="cb11-20"><a href="#cb11-20" tabindex="-1" aria-label="code-block-11-20"></a><span class="er"> </span><span class="ch">$(</span><span class="dt">FC</span><span class="ch">)</span> -c <span class="ch">$(</span><span class="dt">TEST_FLAGS</span><span class="ch">)</span> <span class="ch">$&lt;</span></span>
+<span id="cb11-21"><a href="#cb11-21" tabindex="-1" aria-label="code-block-11-21"></a></span>
+<span id="cb11-22"><a href="#cb11-22" tabindex="-1" aria-label="code-block-11-22"></a><span class="dv">clean:</span></span>
+<span id="cb11-23"><a href="#cb11-23" tabindex="-1" aria-label="code-block-11-23"></a><span class="er"> </span>\rm -f *.o *.mod *.F90 *.inc tests</span></code></pre>
+</div>
+<div id="callout4" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p><code>USEMPI</code> configures the Make integration; it does not
+build or convert pFUnit into an MPI-enabled library. Use a pFUnit
+installation that was built with MPI support.</p>
+</div>
+</div>
 </div>
 <p>With this, we can compile for MPI using the following command.</p>
-<div class="codewrapper sourceCode" id="cb11">
+<div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">SH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode sh" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="va">PFUNIT_INCLUDE_DIR</span><span class="op">=</span>/path/to/pfunit/include <span class="va">FC</span><span class="op">=</span>mpif90 <span class="fu">make</span> tests</span></code></pre>
+<pre class="sourceCode sh" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="va">PFUNIT_INCLUDE_DIR</span><span class="op">=</span>/path/to/pfunit/include <span class="va">FC</span><span class="op">=</span>mpif90 <span class="fu">make</span> tests</span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -997,14 +1039,14 @@ produce an executable which must be run with an appropriate MPI runner
 (i.e. <strong>mpirun</strong> or <strong>mpiexec</strong>). To achieve
 this, there is only one extra parameter we must pass into
 <strong>add_pfunit_ctest</strong> as shown below.</p>
-<div class="codewrapper sourceCode" id="cb12">
+<div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">CMAKE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="fu">add_pfunit_ctest </span>(test_with_mpi</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1" aria-label="code-block-12-2"></a>  TEST_SOURCES <span class="dv">${test_srcs}</span></span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1" aria-label="code-block-12-3"></a>  <span class="dv">LINK_LIBRARIES</span> SUT <span class="co"># your application library</span></span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1" aria-label="code-block-12-4"></a>  MAX_PES 4          <span class="co"># &lt;-- max number of MPI ranks required for the test</span></span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1" aria-label="code-block-12-5"></a>  )</span></code></pre>
+<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb13-1"><a href="#cb13-1" tabindex="-1" aria-label="code-block-13-1"></a><span class="fu">add_pfunit_ctest </span>(test_with_mpi</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1" aria-label="code-block-13-2"></a>  TEST_SOURCES <span class="dv">${test_srcs}</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1" aria-label="code-block-13-3"></a>  <span class="dv">LINK_LIBRARIES</span> SUT <span class="co"># your application library</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1" aria-label="code-block-13-4"></a>  MAX_PES 4          <span class="co"># &lt;-- max number of MPI ranks required for the test</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1" aria-label="code-block-13-5"></a>  )</span></code></pre>
 </div>
 <p><strong>MAX_PES</strong> informs pFUnit of the maximum number of MPI
 ranks with which the tests within <strong>test_srcs</strong> should be
@@ -1019,39 +1061,39 @@ value to all ranks for any number of MPI ranks. We must do things
 slightly differently if we expect different values to be returned for
 different ranks. For example, imagine we now wish to test
 <strong>partial_mpi_dot_product</strong> from the following module:</p>
-<div class="codewrapper sourceCode" id="cb13">
+<div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb13-1"><a href="#cb13-1" tabindex="-1" aria-label="code-block-13-1"></a><span class="kw">module</span> mpi_implementations</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1" aria-label="code-block-13-2"></a>    <span class="kw">use</span> mpi</span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1" aria-label="code-block-13-3"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1" aria-label="code-block-13-4"></a></span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1" aria-label="code-block-13-5"></a><span class="kw">contains</span></span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1" aria-label="code-block-13-6"></a></span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1" aria-label="code-block-13-7"></a>    <span class="co">!&gt; Calculates the partial dot product of two arrays `a` and `b`, splitting the calculation across mpi processors</span></span>
-<span id="cb13-8"><a href="#cb13-8" tabindex="-1" aria-label="code-block-13-8"></a>    <span class="kw">function</span> partial_mpi_dot_product(a, b, rank, num_ranks, communicator) <span class="kw">result</span>(final_result)</span>
-<span id="cb13-9"><a href="#cb13-9" tabindex="-1" aria-label="code-block-13-9"></a>        <span class="co">!&gt; The input array `a` to be passed to dot_product</span></span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1" aria-label="code-block-13-10"></a>        <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> a(:)</span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1" aria-label="code-block-13-11"></a>        <span class="co">!&gt; The input array `b` to be passed to dot_product</span></span>
-<span id="cb13-12"><a href="#cb13-12" tabindex="-1" aria-label="code-block-13-12"></a>        <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> b(:)</span>
-<span id="cb13-13"><a href="#cb13-13" tabindex="-1" aria-label="code-block-13-13"></a>        <span class="co">!&gt; The rank of the current mpi process</span></span>
-<span id="cb13-14"><a href="#cb13-14" tabindex="-1" aria-label="code-block-13-14"></a>        <span class="dt">integer</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> rank</span>
-<span id="cb13-15"><a href="#cb13-15" tabindex="-1" aria-label="code-block-13-15"></a>        <span class="co">!&gt; The number of mpi processors in the communicator</span></span>
-<span id="cb13-16"><a href="#cb13-16" tabindex="-1" aria-label="code-block-13-16"></a>        <span class="dt">integer</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> num_ranks</span>
-<span id="cb13-17"><a href="#cb13-17" tabindex="-1" aria-label="code-block-13-17"></a>        <span class="co">!&gt; The mpi communicator to be used</span></span>
-<span id="cb13-18"><a href="#cb13-18" tabindex="-1" aria-label="code-block-13-18"></a>        <span class="dt">integer</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> communicator</span>
-<span id="cb13-19"><a href="#cb13-19" tabindex="-1" aria-label="code-block-13-19"></a></span>
-<span id="cb13-20"><a href="#cb13-20" tabindex="-1" aria-label="code-block-13-20"></a>        <span class="dt">integer</span> <span class="dt">::</span> final_result</span>
-<span id="cb13-21"><a href="#cb13-21" tabindex="-1" aria-label="code-block-13-21"></a></span>
-<span id="cb13-22"><a href="#cb13-22" tabindex="-1" aria-label="code-block-13-22"></a>        <span class="dt">integer</span> <span class="dt">::</span> indices_per_rank, proc_start, proc_<span class="kw">end</span>, ierr</span>
-<span id="cb13-23"><a href="#cb13-23" tabindex="-1" aria-label="code-block-13-23"></a></span>
-<span id="cb13-24"><a href="#cb13-24" tabindex="-1" aria-label="code-block-13-24"></a>        indices_per_rank <span class="kw">=</span> <span class="fu">size</span>(a) <span class="kw">/</span> num_ranks</span>
-<span id="cb13-25"><a href="#cb13-25" tabindex="-1" aria-label="code-block-13-25"></a>        proc_start <span class="kw">=</span> (rank <span class="kw">*</span> <span class="fu">size</span>(a)) <span class="kw">/</span> num_ranks <span class="kw">+</span> <span class="dv">1</span></span>
-<span id="cb13-26"><a href="#cb13-26" tabindex="-1" aria-label="code-block-13-26"></a>        proc_<span class="kw">end</span>   <span class="kw">=</span> ((rank <span class="kw">+</span> <span class="dv">1</span>) <span class="kw">*</span> <span class="fu">size</span>(a)) <span class="kw">/</span> num_ranks</span>
-<span id="cb13-27"><a href="#cb13-27" tabindex="-1" aria-label="code-block-13-27"></a></span>
-<span id="cb13-28"><a href="#cb13-28" tabindex="-1" aria-label="code-block-13-28"></a>        final_result <span class="kw">=</span> <span class="fu">dot_product</span>(a(proc_start:proc_<span class="kw">end</span>), b(proc_start:proc_<span class="kw">end</span>))</span>
-<span id="cb13-29"><a href="#cb13-29" tabindex="-1" aria-label="code-block-13-29"></a>    <span class="kw">end function</span> partial_mpi_dot_product</span>
-<span id="cb13-30"><a href="#cb13-30" tabindex="-1" aria-label="code-block-13-30"></a><span class="kw">end module</span></span></code></pre>
+<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a><span class="kw">module</span> mpi_implementations</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1" aria-label="code-block-14-2"></a>    <span class="kw">use</span> mpi</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1" aria-label="code-block-14-3"></a>    <span class="kw">implicit</span> <span class="kw">none</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1" aria-label="code-block-14-4"></a></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1" aria-label="code-block-14-5"></a><span class="kw">contains</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1" aria-label="code-block-14-6"></a></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1" aria-label="code-block-14-7"></a>    <span class="co">!&gt; Calculates the partial dot product of two arrays `a` and `b`, splitting the calculation across mpi processors</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1" aria-label="code-block-14-8"></a>    <span class="kw">function</span> partial_mpi_dot_product(a, b, rank, num_ranks, communicator) <span class="kw">result</span>(final_result)</span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1" aria-label="code-block-14-9"></a>        <span class="co">!&gt; The input array `a` to be passed to dot_product</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1" aria-label="code-block-14-10"></a>        <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> a(:)</span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1" aria-label="code-block-14-11"></a>        <span class="co">!&gt; The input array `b` to be passed to dot_product</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1" aria-label="code-block-14-12"></a>        <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> b(:)</span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1" aria-label="code-block-14-13"></a>        <span class="co">!&gt; The rank of the current mpi process</span></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1" aria-label="code-block-14-14"></a>        <span class="dt">integer</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> rank</span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1" aria-label="code-block-14-15"></a>        <span class="co">!&gt; The number of mpi processors in the communicator</span></span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1" aria-label="code-block-14-16"></a>        <span class="dt">integer</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> num_ranks</span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1" aria-label="code-block-14-17"></a>        <span class="co">!&gt; The mpi communicator to be used</span></span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1" aria-label="code-block-14-18"></a>        <span class="dt">integer</span>, <span class="dt">intent(in)</span> <span class="dt">::</span> communicator</span>
+<span id="cb14-19"><a href="#cb14-19" tabindex="-1" aria-label="code-block-14-19"></a></span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1" aria-label="code-block-14-20"></a>        <span class="dt">integer</span> <span class="dt">::</span> final_result</span>
+<span id="cb14-21"><a href="#cb14-21" tabindex="-1" aria-label="code-block-14-21"></a></span>
+<span id="cb14-22"><a href="#cb14-22" tabindex="-1" aria-label="code-block-14-22"></a>        <span class="dt">integer</span> <span class="dt">::</span> indices_per_rank, proc_start, proc_<span class="kw">end</span>, ierr</span>
+<span id="cb14-23"><a href="#cb14-23" tabindex="-1" aria-label="code-block-14-23"></a></span>
+<span id="cb14-24"><a href="#cb14-24" tabindex="-1" aria-label="code-block-14-24"></a>        indices_per_rank <span class="kw">=</span> <span class="fu">size</span>(a) <span class="kw">/</span> num_ranks</span>
+<span id="cb14-25"><a href="#cb14-25" tabindex="-1" aria-label="code-block-14-25"></a>        proc_start <span class="kw">=</span> (rank <span class="kw">*</span> <span class="fu">size</span>(a)) <span class="kw">/</span> num_ranks <span class="kw">+</span> <span class="dv">1</span></span>
+<span id="cb14-26"><a href="#cb14-26" tabindex="-1" aria-label="code-block-14-26"></a>        proc_<span class="kw">end</span>   <span class="kw">=</span> ((rank <span class="kw">+</span> <span class="dv">1</span>) <span class="kw">*</span> <span class="fu">size</span>(a)) <span class="kw">/</span> num_ranks</span>
+<span id="cb14-27"><a href="#cb14-27" tabindex="-1" aria-label="code-block-14-27"></a></span>
+<span id="cb14-28"><a href="#cb14-28" tabindex="-1" aria-label="code-block-14-28"></a>        final_result <span class="kw">=</span> <span class="fu">dot_product</span>(a(proc_start:proc_<span class="kw">end</span>), b(proc_start:proc_<span class="kw">end</span>))</span>
+<span id="cb14-29"><a href="#cb14-29" tabindex="-1" aria-label="code-block-14-29"></a>    <span class="kw">end function</span> partial_mpi_dot_product</span>
+<span id="cb14-30"><a href="#cb14-30" tabindex="-1" aria-label="code-block-14-30"></a><span class="kw">end module</span></span></code></pre>
 </div>
 <p>In this new function, the value for each processor will be different
 since we don’t call <strong>MPI_ALLREDUCE</strong>. To handle this
@@ -1067,104 +1109,110 @@ process matching the index of the parameter array. For example, rank 0
 would access index 1, rank 1 would access index 2 and so on. Therefore,
 we must now update our test parameter type to use an integer array for
 <strong>expected_dot_product</strong>, like so:</p>
-<div class="codewrapper sourceCode" id="cb14">
-<h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a><span class="co">!&gt; Custom test parameters type containing all of the inputs and expected</span></span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1" aria-label="code-block-14-2"></a><span class="co">!! outputs of the intrinsic dot_product</span></span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1" aria-label="code-block-14-3"></a>@TestParameter</span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1" aria-label="code-block-14-4"></a><span class="dt">type</span>, <span class="dt">extends(MPITestParameter)</span> <span class="dt">::</span> mpi_dot_product_test_parameters</span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1" aria-label="code-block-14-5"></a>    <span class="co">!&gt; The input array `a` to be passed to dot_product</span></span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1" aria-label="code-block-14-6"></a>    <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> a(:)</span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1" aria-label="code-block-14-7"></a>    <span class="co">!&gt; The input array `b` to be passed to dot_product</span></span>
-<span id="cb14-8"><a href="#cb14-8" tabindex="-1" aria-label="code-block-14-8"></a>    <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> b(:)</span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1" aria-label="code-block-14-9"></a>    <span class="co">!&gt; The expected values to be returned from dot_product</span></span>
-<span id="cb14-10"><a href="#cb14-10" tabindex="-1" aria-label="code-block-14-10"></a>    <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> expected_dot_product(:)</span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1" aria-label="code-block-14-11"></a>    <span class="co">!&gt; A description of the test to be outputted for logging</span></span>
-<span id="cb14-12"><a href="#cb14-12" tabindex="-1" aria-label="code-block-14-12"></a>    <span class="dt">character(len=100)</span> <span class="dt">::</span> description</span>
-<span id="cb14-13"><a href="#cb14-13" tabindex="-1" aria-label="code-block-14-13"></a><span class="kw">contains</span></span>
-<span id="cb14-14"><a href="#cb14-14" tabindex="-1" aria-label="code-block-14-14"></a>    <span class="co">!&gt; The required type-bound procedure for converting an instance</span></span>
-<span id="cb14-15"><a href="#cb14-15" tabindex="-1" aria-label="code-block-14-15"></a>    <span class="co">!&gt; of this type to a string for logging</span></span>
-<span id="cb14-16"><a href="#cb14-16" tabindex="-1" aria-label="code-block-14-16"></a>    <span class="dt">procedure</span> <span class="dt">::</span> toString</span>
-<span id="cb14-17"><a href="#cb14-17" tabindex="-1" aria-label="code-block-14-17"></a><span class="dt">end type</span> mpi_dot_product_test_parameters</span></code></pre>
-</div>
-<p>We can then update how we populate our test parameters to take into
-account the rank indexing:</p>
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb15-1"><a href="#cb15-1" tabindex="-1" aria-label="code-block-15-1"></a><span class="co">!&gt; The test suite in which parameter sets (inputs and expected outputs) for each</span></span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1" aria-label="code-block-15-2"></a><span class="co">!! test are defined.</span></span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1" aria-label="code-block-15-3"></a><span class="kw">function</span> mpi_dot_product_test_suite() <span class="kw">result</span>(parameter_sets)</span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1" aria-label="code-block-15-4"></a>    <span class="co">!&gt; The array of parameter sets to be returned</span></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1" aria-label="code-block-15-5"></a>    <span class="dt">type(mpi_dot_product_test_parameters)</span> <span class="dt">::</span> parameter_sets(<span class="dv">10</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1" aria-label="code-block-15-6"></a></span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1" aria-label="code-block-15-7"></a>    <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> a(:), b(:), c(:)</span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1" aria-label="code-block-15-8"></a>    <span class="dt">integer</span> <span class="dt">::</span> i, c_sum</span>
-<span id="cb15-9"><a href="#cb15-9" tabindex="-1" aria-label="code-block-15-9"></a></span>
-<span id="cb15-10"><a href="#cb15-10" tabindex="-1" aria-label="code-block-15-10"></a>    <span class="kw">allocate</span>(a(<span class="dv">100</span>))</span>
-<span id="cb15-11"><a href="#cb15-11" tabindex="-1" aria-label="code-block-15-11"></a>    <span class="kw">allocate</span>(b(<span class="dv">100</span>))</span>
-<span id="cb15-12"><a href="#cb15-12" tabindex="-1" aria-label="code-block-15-12"></a>    <span class="kw">allocate</span>(c(<span class="dv">8</span>)) <span class="co">! Allocate up to maximum number of ranks to be tested</span></span>
-<span id="cb15-13"><a href="#cb15-13" tabindex="-1" aria-label="code-block-15-13"></a></span>
-<span id="cb15-14"><a href="#cb15-14" tabindex="-1" aria-label="code-block-15-14"></a>    <span class="co">! Parameter set 1</span></span>
-<span id="cb15-15"><a href="#cb15-15" tabindex="-1" aria-label="code-block-15-15"></a>    a <span class="kw">=</span> <span class="kw">[</span>(i,i<span class="kw">=</span><span class="dv">1</span>,<span class="dv">100</span>)<span class="kw">]</span></span>
-<span id="cb15-16"><a href="#cb15-16" tabindex="-1" aria-label="code-block-15-16"></a>    b <span class="kw">=</span> <span class="kw">[</span>(i,i<span class="kw">=</span><span class="dv">101</span>,<span class="dv">200</span>)<span class="kw">]</span></span>
-<span id="cb15-17"><a href="#cb15-17" tabindex="-1" aria-label="code-block-15-17"></a>    c <span class="kw">=</span> <span class="dv">0</span></span>
-<span id="cb15-18"><a href="#cb15-18" tabindex="-1" aria-label="code-block-15-18"></a>    c(<span class="dv">1</span>) <span class="kw">=</span> <span class="dv">843350</span></span>
-<span id="cb15-19"><a href="#cb15-19" tabindex="-1" aria-label="code-block-15-19"></a>    parameter_sets(<span class="dv">1</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">1</span>, a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
-<span id="cb15-20"><a href="#cb15-20" tabindex="-1" aria-label="code-block-15-20"></a>    c(<span class="dv">1</span>:<span class="dv">2</span>) <span class="kw">=</span> <span class="kw">[</span><span class="dv">170425</span>,<span class="dv">672925</span><span class="kw">]</span></span>
-<span id="cb15-21"><a href="#cb15-21" tabindex="-1" aria-label="code-block-15-21"></a>    parameter_sets(<span class="dv">2</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">2</span>, a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
-<span id="cb15-22"><a href="#cb15-22" tabindex="-1" aria-label="code-block-15-22"></a>    c(<span class="dv">1</span>:<span class="dv">4</span>) <span class="kw">=</span> <span class="kw">[</span><span class="dv">38025</span>,<span class="dv">132400</span>,<span class="dv">258025</span>,<span class="dv">414900</span><span class="kw">]</span></span>
-<span id="cb15-23"><a href="#cb15-23" tabindex="-1" aria-label="code-block-15-23"></a>    parameter_sets(<span class="dv">3</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">4</span>, a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
-<span id="cb15-24"><a href="#cb15-24" tabindex="-1" aria-label="code-block-15-24"></a>    c(<span class="dv">1</span>:<span class="dv">6</span>) <span class="kw">=</span> <span class="kw">[</span><span class="dv">15096</span>,<span class="dv">53533</span>,<span class="dv">101796</span>,<span class="dv">148696</span>,<span class="dv">223533</span>,<span class="dv">300696</span><span class="kw">]</span></span>
-<span id="cb15-25"><a href="#cb15-25" tabindex="-1" aria-label="code-block-15-25"></a>    parameter_sets(<span class="dv">4</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">6</span>, a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
-<span id="cb15-26"><a href="#cb15-26" tabindex="-1" aria-label="code-block-15-26"></a>    c(<span class="dv">1</span>:<span class="dv">8</span>) <span class="kw">=</span> <span class="kw">[</span><span class="dv">8450</span>,<span class="dv">29575</span>,<span class="dv">49850</span>,<span class="dv">82550</span>,<span class="dv">106250</span>,<span class="dv">151775</span>,<span class="dv">177650</span>,<span class="dv">237250</span><span class="kw">]</span></span>
-<span id="cb15-27"><a href="#cb15-27" tabindex="-1" aria-label="code-block-15-27"></a>    parameter_sets(<span class="dv">5</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">8</span>, a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
-<span id="cb15-28"><a href="#cb15-28" tabindex="-1" aria-label="code-block-15-28"></a></span>
-<span id="cb15-29"><a href="#cb15-29" tabindex="-1" aria-label="code-block-15-29"></a>    <span class="co">! Parameter set 2</span></span>
-<span id="cb15-30"><a href="#cb15-30" tabindex="-1" aria-label="code-block-15-30"></a>    a <span class="kw">=</span> <span class="dv">0</span></span>
-<span id="cb15-31"><a href="#cb15-31" tabindex="-1" aria-label="code-block-15-31"></a>    b <span class="kw">=</span> <span class="dv">0</span></span>
-<span id="cb15-32"><a href="#cb15-32" tabindex="-1" aria-label="code-block-15-32"></a>    c <span class="kw">=</span> <span class="dv">0</span></span>
-<span id="cb15-33"><a href="#cb15-33" tabindex="-1" aria-label="code-block-15-33"></a>    parameter_sets(<span class="dv">6</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">1</span>, a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
-<span id="cb15-34"><a href="#cb15-34" tabindex="-1" aria-label="code-block-15-34"></a>    parameter_sets(<span class="dv">7</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">2</span>, a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
-<span id="cb15-35"><a href="#cb15-35" tabindex="-1" aria-label="code-block-15-35"></a>    parameter_sets(<span class="dv">8</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">4</span>, a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
-<span id="cb15-36"><a href="#cb15-36" tabindex="-1" aria-label="code-block-15-36"></a>    parameter_sets(<span class="dv">9</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">6</span>, a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
-<span id="cb15-37"><a href="#cb15-37" tabindex="-1" aria-label="code-block-15-37"></a>    parameter_sets(<span class="dv">10</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">8</span>, a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
-<span id="cb15-38"><a href="#cb15-38" tabindex="-1" aria-label="code-block-15-38"></a></span>
-<span id="cb15-39"><a href="#cb15-39" tabindex="-1" aria-label="code-block-15-39"></a>    <span class="co">! Deallocate the temporary stores of a, b and c for completeness</span></span>
-<span id="cb15-40"><a href="#cb15-40" tabindex="-1" aria-label="code-block-15-40"></a>    <span class="kw">deallocate</span>(a, b, c)</span>
-<span id="cb15-41"><a href="#cb15-41" tabindex="-1" aria-label="code-block-15-41"></a><span class="kw">end function</span> mpi_dot_product_test_suite</span></code></pre>
+<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb15-1"><a href="#cb15-1" tabindex="-1" aria-label="code-block-15-1"></a><span class="co">!&gt; Custom test parameters type containing all of the inputs and expected</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1" aria-label="code-block-15-2"></a><span class="co">!! outputs of the intrinsic dot_product</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1" aria-label="code-block-15-3"></a>@TestParameter</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1" aria-label="code-block-15-4"></a><span class="dt">type</span>, <span class="dt">extends(MPITestParameter)</span> <span class="dt">::</span> mpi_dot_product_test_parameters</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1" aria-label="code-block-15-5"></a>    <span class="co">!&gt; The input array `a` to be passed to dot_product</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1" aria-label="code-block-15-6"></a>    <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> a(:)</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1" aria-label="code-block-15-7"></a>    <span class="co">!&gt; The input array `b` to be passed to dot_product</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1" aria-label="code-block-15-8"></a>    <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> b(:)</span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1" aria-label="code-block-15-9"></a>    <span class="co">!&gt; The expected values to be returned from dot_product</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1" aria-label="code-block-15-10"></a>    <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> expected_dot_product(:)</span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1" aria-label="code-block-15-11"></a>    <span class="co">!&gt; A description of the test to be outputted for logging</span></span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1" aria-label="code-block-15-12"></a>    <span class="dt">character(len=100)</span> <span class="dt">::</span> description</span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1" aria-label="code-block-15-13"></a><span class="kw">contains</span></span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1" aria-label="code-block-15-14"></a>    <span class="co">!&gt; The required type-bound procedure for converting an instance</span></span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1" aria-label="code-block-15-15"></a>    <span class="co">!&gt; of this type to a string for logging</span></span>
+<span id="cb15-16"><a href="#cb15-16" tabindex="-1" aria-label="code-block-15-16"></a>    <span class="dt">procedure</span> <span class="dt">::</span> toString</span>
+<span id="cb15-17"><a href="#cb15-17" tabindex="-1" aria-label="code-block-15-17"></a><span class="dt">end type</span> mpi_dot_product_test_parameters</span></code></pre>
 </div>
-<p>Finally, we need to ensure each process accesses the correct rank
-indexed parameters during the test</p>
+<p>We can then update how we populate our test parameters to take into
+account the rank indexing:</p>
 <div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb16-1"><a href="#cb16-1" tabindex="-1" aria-label="code-block-16-1"></a>@Test(testParameters<span class="kw">={</span>mpi_dot_product_test_suite()<span class="kw">}</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1" aria-label="code-block-16-2"></a><span class="kw">subroutine</span> test_partial_mpi_dot_product(this)</span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1" aria-label="code-block-16-3"></a>    <span class="co">!&gt; The instance of our test case type for this test</span></span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1" aria-label="code-block-16-4"></a>    <span class="dt">class(mpi_dot_product_test_case)</span>, <span class="dt">intent(inout)</span> <span class="dt">::</span> this</span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1" aria-label="code-block-16-5"></a></span>
-<span id="cb16-6"><a href="#cb16-6" tabindex="-1" aria-label="code-block-16-6"></a>    <span class="dt">integer</span> <span class="dt">::</span> <span class="kw">result</span>, rank</span>
-<span id="cb16-7"><a href="#cb16-7" tabindex="-1" aria-label="code-block-16-7"></a></span>
-<span id="cb16-8"><a href="#cb16-8" tabindex="-1" aria-label="code-block-16-8"></a>    rank <span class="kw">=</span> this<span class="op">%</span>getProcessRank()</span>
+<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb16-1"><a href="#cb16-1" tabindex="-1" aria-label="code-block-16-1"></a><span class="co">!&gt; The test suite in which parameter sets (inputs and expected outputs) for each</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1" aria-label="code-block-16-2"></a><span class="co">!! test are defined.</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1" aria-label="code-block-16-3"></a><span class="kw">function</span> mpi_dot_product_test_suite() <span class="kw">result</span>(parameter_sets)</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1" aria-label="code-block-16-4"></a>    <span class="co">!&gt; The array of parameter sets to be returned</span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1" aria-label="code-block-16-5"></a>    <span class="dt">type(mpi_dot_product_test_parameters)</span> <span class="dt">::</span> parameter_sets(<span class="dv">10</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1" aria-label="code-block-16-6"></a></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1" aria-label="code-block-16-7"></a>    <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> a(:), b(:), c(:)</span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1" aria-label="code-block-16-8"></a>    <span class="dt">integer</span> <span class="dt">::</span> i, c_sum</span>
 <span id="cb16-9"><a href="#cb16-9" tabindex="-1" aria-label="code-block-16-9"></a></span>
-<span id="cb16-10"><a href="#cb16-10" tabindex="-1" aria-label="code-block-16-10"></a>    <span class="kw">result</span> <span class="kw">=</span> partial_mpi_dot_product(this<span class="op">%</span>params<span class="op">%</span>a, this<span class="op">%</span>params<span class="op">%</span>b, rank, this<span class="op">%</span>getNumProcesses(), this<span class="op">%</span>getMpiCommunicator())</span>
-<span id="cb16-11"><a href="#cb16-11" tabindex="-1" aria-label="code-block-16-11"></a></span>
-<span id="cb16-12"><a href="#cb16-12" tabindex="-1" aria-label="code-block-16-12"></a>    <span class="co">! Check that the call to dot_product returned what we expect</span></span>
-<span id="cb16-13"><a href="#cb16-13" tabindex="-1" aria-label="code-block-16-13"></a>    @AssertEqual(this<span class="op">%</span>params<span class="op">%</span>expected_dot_product(rank <span class="kw">+</span> <span class="dv">1</span>), <span class="kw">result</span>, message<span class="kw">=</span><span class="st">"Unexpected value returned for the dot_product"</span>)</span>
-<span id="cb16-14"><a href="#cb16-14" tabindex="-1" aria-label="code-block-16-14"></a><span class="kw">end subroutine</span> test_partial_mpi_dot_product</span></code></pre>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1" aria-label="code-block-16-10"></a>    <span class="kw">allocate</span>(a(<span class="dv">100</span>))</span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1" aria-label="code-block-16-11"></a>    <span class="kw">allocate</span>(b(<span class="dv">100</span>))</span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1" aria-label="code-block-16-12"></a>    <span class="kw">allocate</span>(c(<span class="dv">8</span>)) <span class="co">! Allocate up to maximum number of ranks to be tested</span></span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1" aria-label="code-block-16-13"></a></span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1" aria-label="code-block-16-14"></a>    <span class="co">! Parameter set 1</span></span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1" aria-label="code-block-16-15"></a>    a <span class="kw">=</span> <span class="kw">[</span>(i,i<span class="kw">=</span><span class="dv">1</span>,<span class="dv">100</span>)<span class="kw">]</span></span>
+<span id="cb16-16"><a href="#cb16-16" tabindex="-1" aria-label="code-block-16-16"></a>    b <span class="kw">=</span> <span class="kw">[</span>(i,i<span class="kw">=</span><span class="dv">101</span>,<span class="dv">200</span>)<span class="kw">]</span></span>
+<span id="cb16-17"><a href="#cb16-17" tabindex="-1" aria-label="code-block-16-17"></a>    c <span class="kw">=</span> <span class="dv">0</span></span>
+<span id="cb16-18"><a href="#cb16-18" tabindex="-1" aria-label="code-block-16-18"></a>    c(<span class="dv">1</span>) <span class="kw">=</span> <span class="dv">843350</span></span>
+<span id="cb16-19"><a href="#cb16-19" tabindex="-1" aria-label="code-block-16-19"></a>    parameter_sets(<span class="dv">1</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">1</span>, a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
+<span id="cb16-20"><a href="#cb16-20" tabindex="-1" aria-label="code-block-16-20"></a>    c(<span class="dv">1</span>:<span class="dv">2</span>) <span class="kw">=</span> <span class="kw">[</span><span class="dv">170425</span>,<span class="dv">672925</span><span class="kw">]</span></span>
+<span id="cb16-21"><a href="#cb16-21" tabindex="-1" aria-label="code-block-16-21"></a>    parameter_sets(<span class="dv">2</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">2</span>, a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
+<span id="cb16-22"><a href="#cb16-22" tabindex="-1" aria-label="code-block-16-22"></a>    c(<span class="dv">1</span>:<span class="dv">4</span>) <span class="kw">=</span> <span class="kw">[</span><span class="dv">38025</span>,<span class="dv">132400</span>,<span class="dv">258025</span>,<span class="dv">414900</span><span class="kw">]</span></span>
+<span id="cb16-23"><a href="#cb16-23" tabindex="-1" aria-label="code-block-16-23"></a>    parameter_sets(<span class="dv">3</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">4</span>, a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
+<span id="cb16-24"><a href="#cb16-24" tabindex="-1" aria-label="code-block-16-24"></a>    c(<span class="dv">1</span>:<span class="dv">6</span>) <span class="kw">=</span> <span class="kw">[</span><span class="dv">15096</span>,<span class="dv">53533</span>,<span class="dv">101796</span>,<span class="dv">148696</span>,<span class="dv">223533</span>,<span class="dv">300696</span><span class="kw">]</span></span>
+<span id="cb16-25"><a href="#cb16-25" tabindex="-1" aria-label="code-block-16-25"></a>    parameter_sets(<span class="dv">4</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">6</span>, a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
+<span id="cb16-26"><a href="#cb16-26" tabindex="-1" aria-label="code-block-16-26"></a>    c(<span class="dv">1</span>:<span class="dv">8</span>) <span class="kw">=</span> <span class="kw">[</span><span class="dv">8450</span>,<span class="dv">29575</span>,<span class="dv">49850</span>,<span class="dv">82550</span>,<span class="dv">106250</span>,<span class="dv">151775</span>,<span class="dv">177650</span>,<span class="dv">237250</span><span class="kw">]</span></span>
+<span id="cb16-27"><a href="#cb16-27" tabindex="-1" aria-label="code-block-16-27"></a>    parameter_sets(<span class="dv">5</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">8</span>, a, b, c, <span class="st">"10x10 incrementing values"</span>)</span>
+<span id="cb16-28"><a href="#cb16-28" tabindex="-1" aria-label="code-block-16-28"></a></span>
+<span id="cb16-29"><a href="#cb16-29" tabindex="-1" aria-label="code-block-16-29"></a>    <span class="co">! Parameter set 2</span></span>
+<span id="cb16-30"><a href="#cb16-30" tabindex="-1" aria-label="code-block-16-30"></a>    a <span class="kw">=</span> <span class="dv">0</span></span>
+<span id="cb16-31"><a href="#cb16-31" tabindex="-1" aria-label="code-block-16-31"></a>    b <span class="kw">=</span> <span class="dv">0</span></span>
+<span id="cb16-32"><a href="#cb16-32" tabindex="-1" aria-label="code-block-16-32"></a>    c <span class="kw">=</span> <span class="dv">0</span></span>
+<span id="cb16-33"><a href="#cb16-33" tabindex="-1" aria-label="code-block-16-33"></a>    parameter_sets(<span class="dv">6</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">1</span>, a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
+<span id="cb16-34"><a href="#cb16-34" tabindex="-1" aria-label="code-block-16-34"></a>    parameter_sets(<span class="dv">7</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">2</span>, a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
+<span id="cb16-35"><a href="#cb16-35" tabindex="-1" aria-label="code-block-16-35"></a>    parameter_sets(<span class="dv">8</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">4</span>, a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
+<span id="cb16-36"><a href="#cb16-36" tabindex="-1" aria-label="code-block-16-36"></a>    parameter_sets(<span class="dv">9</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">6</span>, a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
+<span id="cb16-37"><a href="#cb16-37" tabindex="-1" aria-label="code-block-16-37"></a>    parameter_sets(<span class="dv">10</span>) <span class="kw">=</span> mpi_dot_product_test_parameters(<span class="dv">8</span>, a, b, c, <span class="st">"10x10 all zeros"</span>)</span>
+<span id="cb16-38"><a href="#cb16-38" tabindex="-1" aria-label="code-block-16-38"></a></span>
+<span id="cb16-39"><a href="#cb16-39" tabindex="-1" aria-label="code-block-16-39"></a>    <span class="co">! Deallocate the temporary stores of a, b and c for completeness</span></span>
+<span id="cb16-40"><a href="#cb16-40" tabindex="-1" aria-label="code-block-16-40"></a>    <span class="kw">deallocate</span>(a, b, c)</span>
+<span id="cb16-41"><a href="#cb16-41" tabindex="-1" aria-label="code-block-16-41"></a><span class="kw">end function</span> mpi_dot_product_test_suite</span></code></pre>
 </div>
-<div id="challenge-a-more-complex-mpi-test" class="callout challenge">
+<p>Finally, we need to ensure each process accesses the correct rank
+indexed parameters during the test</p>
+<div class="codewrapper sourceCode" id="cb17">
+<h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb17-1"><a href="#cb17-1" tabindex="-1" aria-label="code-block-17-1"></a>@Test(testParameters<span class="kw">={</span>mpi_dot_product_test_suite()<span class="kw">}</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1" aria-label="code-block-17-2"></a><span class="kw">subroutine</span> test_partial_mpi_dot_product(this)</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1" aria-label="code-block-17-3"></a>    <span class="co">!&gt; The instance of our test case type for this test</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1" aria-label="code-block-17-4"></a>    <span class="dt">class(mpi_dot_product_test_case)</span>, <span class="dt">intent(inout)</span> <span class="dt">::</span> this</span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1" aria-label="code-block-17-5"></a></span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1" aria-label="code-block-17-6"></a>    <span class="dt">integer</span> <span class="dt">::</span> <span class="kw">result</span>, rank</span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1" aria-label="code-block-17-7"></a></span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1" aria-label="code-block-17-8"></a>    rank <span class="kw">=</span> this<span class="op">%</span>getProcessRank()</span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1" aria-label="code-block-17-9"></a></span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1" aria-label="code-block-17-10"></a>    <span class="kw">result</span> <span class="kw">=</span> partial_mpi_dot_product(this<span class="op">%</span>params<span class="op">%</span>a, this<span class="op">%</span>params<span class="op">%</span>b, rank, this<span class="op">%</span>getNumProcesses(), this<span class="op">%</span>getMpiCommunicator())</span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1" aria-label="code-block-17-11"></a></span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1" aria-label="code-block-17-12"></a>    <span class="co">! Check that the call to dot_product returned what we expect</span></span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1" aria-label="code-block-17-13"></a>    @AssertEqual(this<span class="op">%</span>params<span class="op">%</span>expected_dot_product(rank <span class="kw">+</span> <span class="dv">1</span>), <span class="kw">result</span>, message<span class="kw">=</span><span class="st">"Unexpected value returned for the dot_product"</span>)</span>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1" aria-label="code-block-17-14"></a><span class="kw">end subroutine</span> test_partial_mpi_dot_product</span></code></pre>
+</div>
+<div id="challenge-write-tests-for-sum_preceding_rank_values" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-a-more-complex-mpi-test" class="callout-inner">
-<h3 class="callout-title">Challenge: A more complex MPI test</h3>
+<div id="challenge-write-tests-for-sum_preceding_rank_values" class="callout-inner">
+<h3 class="callout-title">Challenge: Write tests for
+<code>sum_preceding_rank_values</code>
+</h3>
 <div class="callout-content">
-<p>Take a look at part 3 of the <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/testing-parallel-code/challenge" class="external-link">Testing
-parallel code exercise</a> in the exercises repository.</p>
+<p>Now write the pFUnit tests for <code>sum_preceding_rank_values</code>
+in the <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/testing-parallel-code/challenge" class="external-link">Testing
+parallel code exercise</a>. These new test should be defined in a new
+test file. Unlike the previous function, its result varies by MPI rank
+therefore you need to store a different expected result for each
+rank.</p>
 </div>
 </div>
 </div>
@@ -1176,7 +1224,61 @@ parallel code exercise</a> in the exercises repository.</p>
 <div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <p>A solution is provided in <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/testing-parallel-code/solution" class="external-link">exercises/testing-parallel-code/solution</a>.</p>
+<p>The parameter sets should store a value for each rank, i.e. the
+parameter type becomes:</p>
+<div class="codewrapper sourceCode" id="cb18">
+<h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb18-1"><a href="#cb18-1" tabindex="-1" aria-label="code-block-18-1"></a><span class="dt">type</span>, <span class="dt">extends(MPITestParameter)</span> <span class="dt">::</span> sum_preceding_rank_values_test_params</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1" aria-label="code-block-18-2"></a>    <span class="dt">integer</span>, <span class="dt">allocatable</span> <span class="dt">::</span> expected_value(:)</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1" aria-label="code-block-18-3"></a><span class="dt">end type</span> sum_preceding_rank_values_test_params</span></code></pre>
 </div>
+<p>Therefore, the test suite becomes:</p>
+<div class="codewrapper sourceCode" id="cb19">
+<h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb19-1"><a href="#cb19-1" tabindex="-1" aria-label="code-block-19-1"></a><span class="kw">function</span> rank_value_params() <span class="kw">result</span>(params)</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1" aria-label="code-block-19-2"></a>    <span class="dt">type(sum_preceding_rank_values_test_params)</span>, <span class="dt">allocatable</span> <span class="dt">::</span> params(:)</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1" aria-label="code-block-19-3"></a></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1" aria-label="code-block-19-4"></a>    <span class="kw">allocate</span>(params(<span class="dv">3</span>))</span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1" aria-label="code-block-19-5"></a>    params(<span class="dv">1</span>) <span class="kw">=</span> sum_preceding_rank_values_test_params(<span class="dv">1</span>, <span class="kw">[</span><span class="dv">0</span><span class="kw">]</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1" aria-label="code-block-19-6"></a>    params(<span class="dv">2</span>) <span class="kw">=</span> sum_preceding_rank_values_test_params(<span class="dv">2</span>, <span class="kw">[</span><span class="dv">0</span>, <span class="dv">1</span><span class="kw">]</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1" aria-label="code-block-19-7"></a>    params(<span class="dv">3</span>) <span class="kw">=</span> sum_preceding_rank_values_test_params(<span class="dv">4</span>, <span class="kw">[</span><span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">6</span><span class="kw">]</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1" aria-label="code-block-19-8"></a><span class="kw">end function</span> rank_value_params</span></code></pre>
+</div>
+<p>and thus the test logic becomes:</p>
+<div class="codewrapper sourceCode" id="cb20">
+<h3 class="code-label">F90<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode f90" tabindex="0"><code class="sourceCode fortranfree"><span id="cb20-1"><a href="#cb20-1" tabindex="-1" aria-label="code-block-20-1"></a>@Test</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1" aria-label="code-block-20-2"></a><span class="kw">subroutine</span> test_sum_preceding_rank_values_for_each_rank(this)</span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1" aria-label="code-block-20-3"></a>    <span class="dt">class(sum_preceding_rank_values_test_case)</span>, <span class="dt">intent(inout)</span> <span class="dt">::</span> this</span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1" aria-label="code-block-20-4"></a>    <span class="dt">integer</span> <span class="dt">::</span> actual_value, expected_value</span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1" aria-label="code-block-20-5"></a></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1" aria-label="code-block-20-6"></a>    actual_value <span class="kw">=</span> sum_preceding_rank_values(this<span class="op">%</span>getMpiCommunicator())</span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1" aria-label="code-block-20-7"></a>    expected_value <span class="kw">=</span> this<span class="op">%</span>params<span class="op">%</span>expected_value(this<span class="op">%</span>getProcessRank() <span class="kw">+</span> <span class="dv">1</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1" aria-label="code-block-20-8"></a></span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1" aria-label="code-block-20-9"></a>    @assertEqual(expected_value, actual_value, <span class="st">"Expected the exclusive prefix sum of one-based ranks"</span>)</span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1" aria-label="code-block-20-10"></a><span class="kw">end subroutine</span> test_sum_preceding_rank_values_for_each_rank</span></code></pre>
+</div>
+<p>In the test, use <code>this%getProcessRank() + 1</code> as the array
+index because MPI ranks are zero-based and Fortran arrays are
+one-based.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="challenge-testing-the-parallel-game-of-life" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="challenge-testing-the-parallel-game-of-life" class="callout-inner">
+<h3 class="callout-title">Challenge: Testing the parallel game of
+life</h3>
+<div class="callout-content">
+<p>For more practice of testing an MPI parallelised Fortran code take a
+look at the exercise <a href="https://github.com/carpentries-incubator/fortran-unit-testing/tree/main/exercises/testing-the-game-of-life-with-mpi/solution" class="external-link">testing-the-game-of-life-with-mpi</a>.</p>
 </div>
 </div>
 </div>
@@ -1218,7 +1320,7 @@ parallel code exercise</a> in the exercises repository.</p>
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/" class="external-link">sandpaper (0.21.0)</a>, <a href="https://github.com/carpentries/pegboard/tree/" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/" class="external-link">varnish (1.1.2)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/" class="external-link">sandpaper (0.21.1)</a>, <a href="https://github.com/carpentries/pegboard/tree/" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/" class="external-link">varnish (1.1.3)</a></p>
 		</div>
 		</footer></div> <!-- / div.container -->
 	<div id="to-top">
@@ -1240,8 +1342,8 @@ parallel code exercise</a> in the exercises repository.</p>
   "url": "https://carpentries-incubator.github.io/fortran-unit-testing/instructor/testing-parallel-code.html",
   "identifier": "https://carpentries-incubator.github.io/fortran-unit-testing/instructor/testing-parallel-code.html",
   "dateCreated": "2025-05-09",
-  "dateModified": "2026-09-24",
-  "datePublished": "2026-09-29"
+  "dateModified": "2026-11-04",
+  "datePublished": "2026-11-04"
 }
 
   </script><script>
