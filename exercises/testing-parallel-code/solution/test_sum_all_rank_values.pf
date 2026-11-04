@@ -1,0 +1,46 @@
+module test_sum_all_rank_values
+    use mpi_utils, only : sum_all_rank_values
+    ! allow(C121)
+    use pfunit
+    implicit none
+
+    @testParameter
+    type, extends(MPITestParameter) :: sum_all_rank_values_test_params
+    end type sum_all_rank_values_test_params
+
+    @TestCase(testParameters={sum_all_rank_values_test_suite()}, constructor=sum_all_rank_values_test_case_constructor)
+    type, extends(MPITestCase) :: sum_all_rank_values_test_case
+        type(sum_all_rank_values_test_params) :: params
+    end type sum_all_rank_values_test_case
+
+contains
+
+    function sum_all_rank_values_test_suite() result(params)
+        type(sum_all_rank_values_test_params), allocatable :: params(:)
+
+        allocate(params(3))
+        params(1) = sum_all_rank_values_test_params(1)
+        params(2) = sum_all_rank_values_test_params(2)
+        params(3) = sum_all_rank_values_test_params(4)
+    end function sum_all_rank_values_test_suite
+
+    function sum_all_rank_values_test_case_constructor(testParameters) result(testCase)
+        type(sum_all_rank_values_test_params), intent(in) :: testParameters
+        type(sum_all_rank_values_test_case) :: testCase
+
+        testCase%params = testParameters
+    end function sum_all_rank_values_test_case_constructor
+
+    @Test
+    subroutine test_sum_all_rank_values_for_all_ranks(this)
+        class(sum_all_rank_values_test_case), intent(inout) :: this
+        integer :: actual_value, num_processes, expected_value
+
+        actual_value = sum_all_rank_values(this%getMpiCommunicator())
+        num_processes = this%getNumProcesses()
+        expected_value = num_processes * (num_processes + 1) / 2
+
+        @assertEqual(expected_value, actual_value, "Expected the sum of one-based ranks")
+    end subroutine test_sum_all_rank_values_for_all_ranks
+
+end module test_sum_all_rank_values

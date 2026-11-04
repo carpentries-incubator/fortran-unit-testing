@@ -1,0 +1,19 @@
+FROM ghcr.io/carpentries-incubator/modern-fortran:main
+
+COPY --chown=vscode exercises/testing-parallel-code /home/vscode/testing-parallel-code
+
+WORKDIR /home/vscode/testing-parallel-code/challenge
+
+# Add the solution tests to the challenge.
+RUN cp ../solution/test_sum_all_rank_values.pf test/ && \
+    cp ../solution/test_sum_preceding_rank_values.pf test/
+
+# Build and run the tests with CMake.
+RUN cmake -B build-cmake -DCMAKE_PREFIX_PATH=/home/vscode/pfunit/build/installed && \
+    cmake --build build-cmake && \
+    ctest --test-dir build-cmake --output-on-failure
+
+# Build and run the tests with Make.
+RUN make clean && \
+    make tests && \
+    mpirun -np 4 ./test/tests

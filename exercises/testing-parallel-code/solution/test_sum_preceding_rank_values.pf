@@ -1,0 +1,45 @@
+module test_sum_preceding_rank_values
+    use mpi_utils, only : sum_preceding_rank_values
+    ! allow(C121)
+    use pfunit
+    implicit none
+
+    @testParameter
+    type, extends(MPITestParameter) :: sum_preceding_rank_values_test_params
+        integer, allocatable :: expected_value(:)
+    end type sum_preceding_rank_values_test_params
+
+    @TestCase(testParameters={rank_value_params()}, constructor=new_rank_value_case)
+    type, extends(MPITestCase) :: sum_preceding_rank_values_test_case
+        type(sum_preceding_rank_values_test_params) :: params
+    end type sum_preceding_rank_values_test_case
+
+contains
+
+    function rank_value_params() result(params)
+        type(sum_preceding_rank_values_test_params), allocatable :: params(:)
+
+        allocate(params(3))
+        params(1) = sum_preceding_rank_values_test_params(1, [0])
+        params(2) = sum_preceding_rank_values_test_params(2, [0, 1])
+        params(3) = sum_preceding_rank_values_test_params(4, [0, 1, 3, 6])
+    end function rank_value_params
+
+    function new_rank_value_case(testParameters) result(testCase)
+        type(sum_preceding_rank_values_test_params), intent(in) :: testParameters
+        type(sum_preceding_rank_values_test_case) :: testCase
+        testCase%params = testParameters
+    end function new_rank_value_case
+
+    @Test
+    subroutine test_sum_preceding_rank_values_for_each_rank(this)
+        class(sum_preceding_rank_values_test_case), intent(inout) :: this
+        integer :: actual_value, expected_value
+
+        actual_value = sum_preceding_rank_values(this%getMpiCommunicator())
+        expected_value = this%params%expected_value(this%getProcessRank() + 1)
+
+        @assertEqual(expected_value, actual_value, "Expected the exclusive prefix sum of one-based ranks")
+    end subroutine test_sum_preceding_rank_values_for_each_rank
+
+end module test_sum_preceding_rank_values
