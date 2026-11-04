@@ -8,6 +8,7 @@ exercises:
 
 - How do we go from **.pf** files to an executable test?
 - How do we identify which test is failing and where?
+- How do I build my tests with my existing build system?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 

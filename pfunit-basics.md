@@ -7,14 +7,13 @@ exercises:
 :::::::::::::::::::::::::::::::::::::: questions
 
 - What is the syntax of writing a unit test in Fortran?
-- How do I build my tests with my existing build system?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Able to write a unit test for a Fortran procedure with test-drive, veggies and/or pFUnit.
-- Understand the similarities between each framework and where they differ.
+- Able to write a unit test for a Fortran procedure with pFUnit.
+- Understand that pFUnit files must be pre-processed into Fortran.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
