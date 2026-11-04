@@ -278,38 +278,40 @@ Note that the constructors (i.e. `toString`, `mpi_dot_product_test_case_construc
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-#### Challenge: Update derived types to work with MPI
+#### Challenge: Define the `sum_all_rank_values` test case
 
-Take a look at the [Testing parallel code exercise][ex-testing-parallel-code].
-This exercise contains an MPI parallelised version of the game of life (See
-appendix). Complete the first step of the challenge by converting the derived types within
-[test_find_steady_state.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/testing-parallel-code/challenge/test/test_find_steady_state.pf#L10-L29)
-to work with MPI.
+Start the [Testing parallel code exercise][ex-testing-parallel-code]. Write your own derived-types to act as the test parameter and
+test case types for MPI tests of the mpi_utils library. You should think about:
+
+- What decorators are needed?
+- What types should be extended?
+- What type-bound variables, if any, should be defined?
+- How do we instantiate one of these test cases?
 
 :::::::::::::::::::::::::::::::: solution
 
-Your derived types should now look something like this,
+Your derived types should look something like this:
 
 ```f90
 @testParameter
-type, extends(MPITestParameter) :: find_steady_state_test_params
-    !> The initial starting board to be passed into find_steady_state
-    integer, dimension(:,:), allocatable :: input_board
-    !> The expected steady state result
-    logical :: expected_steady_state
-    !> The expected number of generations to reach steady state
-    integer :: expected_generation_number
-    !> A description of the test to be outputted for logging
-    character(len=100) :: description
-contains
-    procedure :: toString => find_steady_state_test_params_toString
-end type find_steady_state_test_params
+type, extends(MPITestParameter) :: sum_all_rank_values_test_params
+end type sum_all_rank_values_test_params
 
-!> Type to define a single find_steady_state test case
-@TestCase(testParameters={getTestSuite()}, constructor=paramsToCase)
-type, extends(MPITestCase) :: find_steady_state_test_case
-    type(find_steady_state_test_params) :: params
-end type find_steady_state_test_case
+@TestCase(testParameters={sum_all_rank_values_test_suite()}, constructor=sum_all_rank_values_test_case_constructor)
+type, extends(MPITestCase) :: sum_all_rank_values_test_case
+    type(sum_all_rank_values_test_params) :: params
+end type sum_all_rank_values_test_case
+```
+
+You should also have defined a constructor for you test case which converts a parameter type to a tets case type:
+
+```f90
+function sum_all_rank_values_test_case_constructor(testParameters) result(testCase)
+    type(sum_all_rank_values_test_params), intent(in) :: testParameters
+    type(sum_all_rank_values_test_case) :: testCase
+
+    testCase%params = testParameters
+end function sum_all_rank_values_test_case_constructor
 ```
 
 :::::::::::::::::::::::::::::::::::::::::
@@ -367,49 +369,30 @@ end function mpi_dot_product_test_suite
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-#### Challenge: Update test suite to work with MPI
+#### Challenge: Define a test suite for your tests of `sum_all_rank_values` with different numbers of MPI processors
 
-Continuing with the
-[Testing parallel code exercise][ex-testing-parallel-code].
+Write a test suite for the tests of `sum_all_rank_values`. You should think about:
 
-Complete the next step of the challenge by converting the test suite within
-[test_find_steady_state.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/testing-parallel-code/challenge/test/test_find_steady_state.pf#L37-L63)
-to work with your new derived types.
+- What decorators are needed, if any?
+- Do you need a function or subroutine?
+- What should the inputs to this procedure be?
+- What should be its outputs?
+- How does pFUnit know how many ranks to use for each parameter set?
+- What test cases would help check the function with small and larger communicators?
 
 :::::::::::::::::::::::::::::::: solution
 
-Your derived types should now look something like this,
+The test suite should look something like this:
 
 ```f90
-function getTestSuite() result(params)
-    !> The array of test parameters
-    type(find_steady_state_test_params), allocatable :: params(:)
+function sum_all_rank_values_test_suite() result(params)
+    type(sum_all_rank_values_test_params), allocatable :: params(:)
 
-    integer :: i, max_num_ranks
-    integer, dimension(:,:), allocatable :: board
-
-    !  Steady state should be reached after 17 iterations
-    !       8  9 10 11 12
-    !      -- -- -- -- --
-    !   8 | 0  0  0  0  0
-    !   9 | 0  0  1  0  0
-    !  10 | 0  1  1  1  0
-    !  11 | 0  1  0  1  0
-    !  12 | 0  0  1  0  0
-    !  13 | 0  0  0  0  0
-    allocate(board(31, 31))
-    board = 0
-    board(9,9:11)  = [0,1,0]
-    board(10,9:11) = [1,1,1]
-    board(11,9:11) = [1,0,1]
-    board(12,9:11) = [0,1,0]
-
-    max_num_ranks = 8
-    allocate(params(max_num_ranks))
-    do i = 1, max_num_ranks
-        params(i) = find_steady_state_test_params(i, board, .true., 17, "an exploder initial state")
-    end do
-end function getTestSuite
+    allocate(params(3))
+    params(1) = sum_all_rank_values_test_params(1)
+    params(2) = sum_all_rank_values_test_params(2)
+    params(3) = sum_all_rank_values_test_params(4)
+end function sum_all_rank_values_test_suite
 ```
 
 :::::::::::::::::::::::::::::::::::::::::
@@ -450,37 +433,34 @@ In the example above, the MPI communicator is passed into the src procedure. By 
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-#### Challenge: Update test logic to work with MPI
+#### Challenge: Complete the `sum_all_rank_values` test
 
-Continuing with the
-[Testing parallel code exercise][ex-testing-parallel-code].
+Write the actual test logic for the function `sum_all_rank_values`. This test should assert that the result is the sum of the
+one-based ranks, `n * (n + 1) / 2`, where `n` is the number of processors. You should think about:
 
-Converting the test logic within
-[test_find_steady_state.pf](https://github.com/carpentries-incubator/fortran-unit-testing/blob/main/exercises/testing-parallel-code/challenge/test/test_find_steady_state.pf#L69-L84)
-to work with the new src procedure signature.
+- What decorators are needed?
+- Do you need a function or subroutine?
+- What should the inputs to this procedure be?
+- What should be its outputs?
+- How do you link this test logic to the test suite you just defined?
+- How do you check if a test scenario was successful?
+- Which communicator should the test pass to `sum_all_rank_values`?
 
 :::::::::::::::::::::::::::::::: solution
 
-Your test logic should now look something like this,
+The test logic should look like this:
 
 ```f90
 @Test
-subroutine TestFindSteadyState(this)
-    !> The current test case including inputs and expected outputs
-    class(find_steady_state_test_case), intent(inout) :: this
+subroutine test_sum_all_rank_values_for_all_ranks(this)
+    class(sum_all_rank_values_test_case), intent(inout) :: this
+    integer :: actual_value, num_processes
 
-    logical :: actual_steady_state
-    integer :: actual_generation_number
+    actual_value = sum_all_rank_values(this%getMpiCommunicator())
+    num_processes = this%getNumProcesses()
 
-    call find_steady_state(actual_steady_state, actual_generation_number, this%params%input_board, &
-        size(this%params%input_board, 1), size(this%params%input_board, 2), this%getMpiCommunicator(), &
-        this%getNumProcessesRequested())
-
-    @assertEqual(this%params%expected_generation_number, actual_generation_number, "Unexpected generation_number")
-
-    @assertTrue(this%params%expected_steady_state .eqv. actual_steady_state, "Unexpected steady_state value")
-
-end subroutine TestFindSteadyState
+    @assertEqual(num_processes * (num_processes + 1) / 2, actual_value, "Expected the sum of one-based ranks")
+end subroutine test_sum_all_rank_values_for_all_ranks
 ```
 
 :::::::::::::::::::::::::::::::::::::::::
@@ -687,16 +667,55 @@ end subroutine test_partial_mpi_dot_product
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-### Challenge: A more complex MPI test
+### Challenge: Write tests for `sum_preceding_rank_values`
 
-Take a look at part 3 of the
-[Testing parallel code exercise][ex-testing-parallel-code]
-in the exercises repository.
+Now write the pFUnit tests for `sum_preceding_rank_values` in the [Testing parallel code exercise][ex-testing-parallel-code].
+These new test should be defined in a new test file. Unlike the previous function, its result varies by rank therefore you need to
+store a different expected result for each rank.
 
 :::::::::::::::::::::::::::::::: solution
 
 A solution is provided in
 [exercises/testing-parallel-code/solution][ex-testing-parallel-code-solution].
+
+The parameter sets should store a value for each rank, i.e. the parameter type becomes:
+
+```f90
+type, extends(MPITestParameter) :: sum_preceding_rank_values_test_params
+    integer, allocatable :: expected_value(:)
+end type sum_preceding_rank_values_test_params
+```
+
+Therefore, the test suite becomes:
+
+```f90
+function rank_value_params() result(params)
+    type(sum_preceding_rank_values_test_params), allocatable :: params(:)
+
+    allocate(params(3))
+    params(1) = sum_preceding_rank_values_test_params(1, [0])
+    params(2) = sum_preceding_rank_values_test_params(2, [0, 1])
+    params(3) = sum_preceding_rank_values_test_params(4, [0, 1, 3, 6])
+end function rank_value_params
+```
+
+and thus the test logic becomes:
+
+```f90
+@Test
+subroutine test_sum_preceding_rank_values_for_each_rank(this)
+    class(sum_preceding_rank_values_test_case), intent(inout) :: this
+    integer :: actual_value, expected_value
+
+    actual_value = sum_preceding_rank_values(this%getMpiCommunicator())
+    expected_value = this%params%expected_value(this%getProcessRank() + 1)
+
+    @assertEqual(expected_value, actual_value, "Expected the exclusive prefix sum of one-based ranks")
+end subroutine test_sum_preceding_rank_values_for_each_rank
+```
+
+In the test, use `this%getProcessRank() + 1` as the array index because MPI ranks
+are zero-based and Fortran arrays are one-based.
 
 :::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::
