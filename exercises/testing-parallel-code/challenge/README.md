@@ -1,4 +1,4 @@
-# Basic MPI testing - Challenge: Rewrite serial test as a parallel test
+# Testing parallel code - Challenge: Rewrite serial test as a parallel test
 
 This exercise aims to teach how to write pFUnit tests which test MPI-enabled code across different numbers of MPI
 processes.

@@ -1,11 +1,6 @@
-## Task
+# Testing parallel code - Challenge: Rewrite serial test as a parallel test
 
-In [test](./test) there are some pFUnit tests.
-
-Write MPI enabled pFUnit tests for the each function in the `mpi_utils` library.
-
-1. Write tests for `sum_all_rank_values` with MPI-enabled pFUnit.
-2. Write tests for `sum_preceding_rank_values` with MPI-enabled pFUnit.
+> Write MPI enabled pFUnit tests for the each function in the `mpi_utils` library.
 
 ## Task 1
 
