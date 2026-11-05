@@ -48,41 +48,36 @@ convenient approach.
 ## Syntax of writing MPI enabled pFUnit tests
 
 When we move from testing a serial code to an MPI enabled code, there are several changes we need to make to our pFUnit tests.
-For example, let's look at how our test of **dot_product** changes for the following MPI enabled version:
+For example, let's look at how our test of **dot** changes for the following MPI enabled version:
 
 ```f90
-module mpi_implementations
+module matrix_ops
     use mpi
     implicit none
-
 contains
-
     !> Calculates the dot product of two arrays `a` and `b`, splitting the calculation across mpi processors
-    function mpi_dot_product(a, b, rank, num_ranks, communicator) result(final_result)
+    function dot(a, b, communicator) result(final_result)
         !> The input array `a` to be passed to dot_product
         integer, allocatable :: a(:)
         !> The input array `b` to be passed to dot_product
         integer, allocatable :: b(:)
-        !> The rank of the current mpi process
-        integer, intent(in) :: rank
-        !> The number of mpi processors in the communicator
-        integer, intent(in) :: num_ranks
         !> The mpi communicator to be used
         integer, intent(in) :: communicator
 
-        integer :: final_result
+        integer :: rank, num_ranks, ierr
+        integer :: final_result, proc_result, indices_per_rank, proc_start, proc_end
 
-        integer :: indices_per_rank, proc_start, proc_end, ierr, proc_result
+        call MPI_COMM_RANK(communicator, rank, ierr)
+        call MPI_COMM_SIZE(communicator, num_ranks, ierr)
 
         indices_per_rank = size(a) / num_ranks
         proc_start = (rank * size(a)) / num_ranks + 1
         proc_end   = ((rank + 1) * size(a)) / num_ranks
 
         proc_result = dot_product(a(proc_start:proc_end), b(proc_start:proc_end))
-
         CALL MPI_ALLREDUCE(proc_result, final_result, 1, MPI_INTEGER, MPI_SUM, communicator, ierr)
-    end function mpi_dot_product
-end module
+    end function dot
+end module matrix_ops
 ```
 
 ::: spoiler
@@ -92,7 +87,7 @@ end module
 ```f90
 module test_with_mpi
     use pfunit
-    use mpi_implementations, only : mpi_dot_product
+    use matrix_ops, only : dot
 
     implicit none
 
@@ -198,7 +193,7 @@ contains
 
         integer :: result
 
-        result = mpi_dot_product(this%params%a, this%params%b, this%getProcessRank(), this%getNumProcesses(), this%getMpiCommunicator())
+        result = dot(this%params%a, this%params%b, this%getMpiCommunicator())
 
         ! Check that the call to dot_product returned what we expect
         @AssertEqual(this%params%expected_dot_product, result, message="Unexpected value returned for the dot_product")
@@ -424,7 +419,7 @@ subroutine test_mpi_dot_product(this)
 
     integer :: result
 
-    result = mpi_dot_product(this%params%a, this%params%b, this%getProcessRank(), this%getNumProcesses(), this%getMpiCommunicator())
+    result = dot(this%params%a, this%params%b, this%getMpiCommunicator())
 
     ! Check that the call to dot_product returned what we expect
     @AssertEqual(this%params%expected_dot_product, result, message="Unexpected value returned for the dot_product")
@@ -550,39 +545,53 @@ constructor).
 
 Thus far we have been assuming our src procedure returns the same value to all ranks for any number of MPI
 ranks. We must do things slightly differently if we expect different values to be returned for different
-ranks. For example, imagine we now wish to test **partial_mpi_dot_product** from the following module:
+ranks. For example, imagine we now wish to test **partial_dot** from the following module:
 
 ```f90
-module mpi_implementations
+module matrix_ops
     use mpi
     implicit none
 
 contains
 
     !> Calculates the partial dot product of two arrays `a` and `b`, splitting the calculation across mpi processors
-    function partial_mpi_dot_product(a, b, rank, num_ranks, communicator) result(final_result)
+    function partial_dot(a, b, communicator) result(final_result)
         !> The input array `a` to be passed to dot_product
         integer, allocatable :: a(:)
         !> The input array `b` to be passed to dot_product
         integer, allocatable :: b(:)
-        !> The rank of the current mpi process
-        integer, intent(in) :: rank
-        !> The number of mpi processors in the communicator
-        integer, intent(in) :: num_ranks
         !> The mpi communicator to be used
         integer, intent(in) :: communicator
 
-        integer :: final_result
+        integer :: rank, num_ranks
+        integer :: final_result, indices_per_rank, proc_start, proc_end, ierr
 
-        integer :: indices_per_rank, proc_start, proc_end, ierr
+        call MPI_COMM_RANK(communicator, rank, ierr)
+        call MPI_COMM_SIZE(communicator, num_ranks, ierr)
 
         indices_per_rank = size(a) / num_ranks
         proc_start = (rank * size(a)) / num_ranks + 1
         proc_end   = ((rank + 1) * size(a)) / num_ranks
 
         final_result = dot_product(a(proc_start:proc_end), b(proc_start:proc_end))
-    end function partial_mpi_dot_product
-end module
+    end function partial_dot
+
+    !> Calculates the dot product of two arrays `a` and `b`, splitting the calculation across mpi processors
+    function dot(a, b, communicator) result(final_result)
+        !> The input array `a` to be passed to dot_product
+        integer, allocatable :: a(:)
+        !> The input array `b` to be passed to dot_product
+        integer, allocatable :: b(:)
+        !> The mpi communicator to be used
+        integer, intent(in) :: communicator
+
+        integer :: final_result, ierr, proc_result
+
+        proc_result = partial_dot(a, b, communicator)
+        CALL MPI_ALLREDUCE(proc_result, final_result, 1, MPI_INTEGER, MPI_SUM, communicator, ierr)
+    end function dot
+end module matrix_ops
+
 ```
 
 In this new function, the value for each processor will be different since we don't call **MPI_ALLREDUCE**.
@@ -604,7 +613,8 @@ type, extends(MPITestParameter) :: mpi_dot_product_test_parameters
     integer, allocatable :: a(:)
     !> The input array `b` to be passed to dot_product
     integer, allocatable :: b(:)
-    !> The expected values to be returned from dot_product
+    !> The expected values to be returned from dot_product for
+    !! each rank MPI rank.
     integer, allocatable :: expected_dot_product(:)
     !> A description of the test to be outputted for logging
     character(len=100) :: description
@@ -631,7 +641,7 @@ function mpi_dot_product_test_suite() result(parameter_sets)
     allocate(b(100))
     allocate(c(8)) ! Allocate up to maximum number of ranks to be tested
 
-    ! Parameter set 1
+    ! Test case 1
     a = [(i,i=1,100)]
     b = [(i,i=101,200)]
     c = 0
@@ -646,7 +656,7 @@ function mpi_dot_product_test_suite() result(parameter_sets)
     c(1:8) = [8450,29575,49850,82550,106250,151775,177650,237250]
     parameter_sets(5) = mpi_dot_product_test_parameters(8, a, b, c, "10x10 incrementing values")
 
-    ! Parameter set 2
+    ! Test case 2
     a = 0
     b = 0
     c = 0
@@ -673,7 +683,7 @@ subroutine test_partial_mpi_dot_product(this)
 
     rank = this%getProcessRank()
 
-    result = partial_mpi_dot_product(this%params%a, this%params%b, rank, this%getNumProcesses(), this%getMpiCommunicator())
+    result = partial_dot(this%params%a, this%params%b, this%getMpiCommunicator())
 
     ! Check that the call to dot_product returned what we expect
     @AssertEqual(this%params%expected_dot_product(rank + 1), result, message="Unexpected value returned for the dot_product")
