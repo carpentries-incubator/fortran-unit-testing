@@ -207,8 +207,58 @@ Let's break down each section of this test and how it differs from the serial ve
 
 ::: instructor
 
-When writing out the new MPI versions of the **dot_product** test, it is best to start from the serial
+When writing out the new MPI versions of the **dot_product** tests, it is best to start from the serial
 version to emphasize the similarities between the two.
+
+Follow the standard `src` and `test` dir structure then you can build and run this pFUnit version. Use the two **CMakeLists.txt**
+files below:
+
+**Top level:**
+
+```cmake
+cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
+
+# Set project name
+project(
+  "matrix_ops"
+  LANGUAGES "Fortran"
+  VERSION "0.0.1"
+  DESCRIPTION "Library for matrix operations"
+)
+
+# Define a variable which stores a list of src files
+set(PROJ_SRC_FILES "${SRC_DIR}/src/matrix_ops.f90")
+
+enable_testing()
+add_subdirectory("test")
+```
+
+**Test level:**
+
+```cmake
+find_package(PFUNIT REQUIRED)
+
+# Create library for src code
+add_library(SUT STATIC ${PROJ_SRC_FILES})
+
+# List all test files
+set(test_srcs "${PROJECT_SOURCE_DIR}/test/test_with_mpi.pf")
+
+# Add the test target
+add_pfunit_ctest (test_with_mpi
+  TEST_SOURCES ${test_srcs}
+  LINK_LIBRARIES SUT # your application library
+  MAX_PES 8
+  )
+```
+
+This can then be compiled with the following commands:
+
+```sh
+cmake -B build -DCMAKE_PREFIX_PATH="/path/to/pfunit/build/installed"
+cmake --build build
+ctest --test-dir build --output-on-failure
+```
 
 :::
 
