@@ -8,7 +8,8 @@ This appendix contains supplementary material relevant to this Fortran unit test
 
 ## Conway's Game of Life
 
-Conway's Game of life is a cellular automaton devised by the British mathematician John Horton Conway in 1970 (Gardner, 1970).
+Conway's Game of life is a cellular automaton devised by the British mathematician John Horton Conway in 1970
+-- (Gardner, 1970, [The fantastic combinations of John Conway’s new solitaire game “life” by Martin Gardner](https://web.stanford.edu/class/sts145/Library/life.pdf)).
 
 The universe of the Game of Life is an infinite, two-dimensional orthogonal grid of square cells, each of which is in one of two
 possible states, live or dead (or populated and unpopulated, respectively). Every cell interacts with its eight neighbours, which
@@ -730,16 +731,9 @@ This can be achieved with the changes shown in this
 When working with Fortran it is common that you will be working with legacy code and a
 large scale refactor can feel daunting. Therefore, a great resource for us is
 *[Working Effectively with Legacy Code](https://search.worldcat.org/title/660166658)*
-(Feathers, 2004)
+(Feathers, 2004, [Working Effectively with Legacy Code](https://search.worldcat.org/title/660166658))
 
 If you don't have time to read the entire book, there is a good summary of the key point in this blog post
 [The key points of Working Effectively with Legacy Code](https://understandlegacycode.com/blog/key-points-of-working-effectively-with-legacy-code/)
 
 :::::::::::::::::::::::::::::::
-
-### References
-
-- Martin Gardner, 1970.
-  [The fantastic combinations of John Conway’s new solitaire game “life” by Martin Gardner](https://web.stanford.edu/class/sts145/Library/life.pdf).
-  Scientific American, 223, pp.120–123.
-- Michael Feathers (2004). [Working Effectively with Legacy Code](https://search.worldcat.org/title/660166658). Pearson.
