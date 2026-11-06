@@ -559,8 +559,58 @@ suggest it as some homework.</p>
 <a href="testing-parallel-code.html#headingInstructor1">Instructor Note</a><a class="anchor" aria-label="anchor" href="#testing-parallel-code-headingInstructor1"></a>
 </h3>
 <p>When writing out the new MPI versions of the
-<strong>dot_product</strong> test, it is best to start from the serial
+<strong>dot_product</strong> tests, it is best to start from the serial
 version to emphasize the similarities between the two.</p>
+<p>Follow the standard <code>src</code> and <code>test</code> dir
+structure then you can build and run this pFUnit version. Use the two
+<strong>CMakeLists.txt</strong> files below:</p>
+<p><strong>Top level:</strong></p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">CMAKE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="kw">cmake_minimum_required</span>(<span class="ot">VERSION</span> <span class="dt">3.9</span> <span class="ot">FATAL_ERROR</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a><span class="co"># Set project name</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a><span class="kw">project</span>(</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a>  <span class="st">"matrix_ops"</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a>  <span class="ot">LANGUAGES</span> <span class="st">"Fortran"</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a>  <span class="ot">VERSION</span> <span class="st">"0.0.1"</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1" aria-label="code-block-3-8"></a>  <span class="ot">DESCRIPTION</span> <span class="st">"Library for matrix operations"</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1" aria-label="code-block-3-9"></a>)</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1" aria-label="code-block-3-10"></a></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1" aria-label="code-block-3-11"></a><span class="co"># Define a variable which stores a list of src files</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1" aria-label="code-block-3-12"></a><span class="kw">set</span>(PROJ_SRC_FILES <span class="st">"</span><span class="dv">${SRC_DIR}</span><span class="st">/src/matrix_ops.f90"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1" aria-label="code-block-3-13"></a></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1" aria-label="code-block-3-14"></a><span class="kw">enable_testing</span>()</span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1" aria-label="code-block-3-15"></a><span class="kw">add_subdirectory</span>(<span class="st">"test"</span>)</span></code></pre>
+</div>
+<p><strong>Test level:</strong></p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">CMAKE<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode cmake" tabindex="0"><code class="sourceCode cmake"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="kw">find_package</span>(PFUNIT <span class="ot">REQUIRED</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a><span class="co"># Create library for src code</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a><span class="kw">add_library</span>(<span class="bn">SUT</span> <span class="ot">STATIC</span> <span class="dv">${PROJ_SRC_FILES}</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1" aria-label="code-block-4-5"></a></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1" aria-label="code-block-4-6"></a><span class="co"># List all test files</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1" aria-label="code-block-4-7"></a><span class="kw">set</span>(test_srcs <span class="st">"</span><span class="dv">${PROJECT_SOURCE_DIR}</span><span class="st">/test/test_with_mpi.pf"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1" aria-label="code-block-4-8"></a></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1" aria-label="code-block-4-9"></a><span class="co"># Add the test target</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1" aria-label="code-block-4-10"></a><span class="fu">add_pfunit_ctest </span>(test_with_mpi</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1" aria-label="code-block-4-11"></a>  TEST_SOURCES <span class="dv">${test_srcs}</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1" aria-label="code-block-4-12"></a>  <span class="dv">LINK_LIBRARIES</span> SUT <span class="co"># your application library</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1" aria-label="code-block-4-13"></a>  MAX_PES 8</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1" aria-label="code-block-4-14"></a>  )</span></code></pre>
+</div>
+<p>This can then be compiled with the following commands:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">SH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode sh" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="fu">cmake</span> <span class="at">-B</span> build <span class="at">-DCMAKE_PREFIX_PATH</span><span class="op">=</span><span class="st">"/path/to/pfunit/build/installed"</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="fu">cmake</span> <span class="at">--build</span> build</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a><span class="ex">ctest</span> <span class="at">--test-dir</span> build <span class="at">--output-on-failure</span></span></code></pre>
+</div>
 <hr>
 <br></section><section id="appendix"><h2 class="section-heading"><a href="appendix.html">Appendix</a></h2>
 <hr class="half-width"></section></section>
@@ -613,8 +663,8 @@ version to emphasize the similarities between the two.</p>
   "url": "https://carpentries-incubator.github.io/fortran-unit-testing/instructor/instructor-notes.html",
   "identifier": "https://carpentries-incubator.github.io/fortran-unit-testing/instructor/instructor-notes.html",
   "dateCreated": "2025-05-09",
-  "dateModified": "2026-11-04",
-  "datePublished": "2026-11-04"
+  "dateModified": "2026-11-06",
+  "datePublished": "2026-11-06"
 }
 
   </script><script>
