@@ -162,7 +162,11 @@ which simplify how we write tests:
 
 ### @AssertEqual for floating point values
 
-For floating point values, @AssertEqual no longer carries out an exact comparison but become a comparison up to a tolerance.
+For floating point values, @AssertEqual no longer carries out an exact comparison but become a comparison up to a tolerance:
+
+```f90
+@assertEqual(c, dot(a, b), tolerance=1e-12dp, message="Unexpected value returned from dot")
+```
 
 :::
 
