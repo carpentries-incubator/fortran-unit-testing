@@ -2,33 +2,67 @@ module test_temp_conversions
     use temp_conversions, only : fahrenheit_to_celsius, celsius_to_kelvin
     ! allow(C121)
     use funit
-    implicit none
+    implicit none (type, external)
 
     public
 
+    @testparameter
+    type, extends(abstracttestparameter) :: temp_conversion_parameters
+        real :: actual
+        real :: expected 
+        character(100) :: message
+    contains
+        procedure :: tostring
+    end type temp_conversion_parameters
+
+    @testcase(constructor=construct_temp_conversion_test_case)
+    type, extends(parameterizedtestcase) :: temp_conversion_test_case
+        type(temp_conversion_parameters) :: params
+    end type temp_conversion_test_case
+
 contains
 
-    !*************************************************************************!
-    !                      Test fahrenheit_to_celsius                         !
-    !-------------------------------------------------------------------------!
-    !> Test suite for fahrenheit_to_celsius
-    ! Your changes here...
 
-    !> Test Logic for fahrenheit_to_celsius
-    ! Your changes here...
+    function tostring(this) result(string)
+        class(temp_conversion_parameters), intent(in) :: this
+        character(:), allocatable :: string
+        string = this%message
+    end function tostring
 
-    !*************************************************************************!
+    function construct_temp_conversion_test_case(params) result(new_test_case)
+        type(temp_conversion_parameters), intent(in) :: params
+        type(temp_conversion_test_case) :: new_test_case
+        new_test_case%params = params
+    end function construct_temp_conversion_test_case
 
+    function temp_conversion_test_suite() result(params)
+        type(temp_conversion_parameters) :: params(3)
 
-    !*************************************************************************!
-    !                         Test celsius_to_kelvin                          !
-    !-------------------------------------------------------------------------!
-    !> Test suite for celsius_to_kelvin
-    ! Your changes here...
+        real :: actual
+        real :: expected
+        character(100) :: message
 
-    !> Test Logic for celsius_to_kelvin
-    ! Your changes here...
+        expected = 37.77778
+        actual = fahrenheit_to_celsius(100.0)
+        message = "100 fahrenheit to celsius"
+        params(1) = temp_conversion_parameters(actual, expected, message)
 
-    !*************************************************************************!
+        expected = -17.77778
+        actual = fahrenheit_to_celsius(0.0)
+        message = "0 fahrenheit to celsius"
+        params(2) = temp_conversion_parameters(actual, expected, message)
+
+        expected = 0.0
+        actual = celsius_to_kelvin(-273.15)
+        message = "-273.15 celsius to kelvin"
+        params(3) = temp_conversion_parameters(actual, expected, message)
+
+    end function temp_conversion_test_suite
+
+    @test(testparameters={temp_conversion_test_suite()})
+    subroutine test_temp_conversion(this)
+        class(temp_conversion_test_case), intent(inout) :: this
+        @assertEqual(this%params%expected, this%params%actual, tolerance=1e-5)
+    end subroutine test_temp_conversion
 
 end module test_temp_conversions

@@ -7,3 +7,4 @@ add_pfunit_ctest(mpi_utils_tests
   LINK_LIBRARIES mpi_utils
   MAX_PES 4
 )
+

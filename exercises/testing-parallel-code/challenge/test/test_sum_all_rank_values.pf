@@ -1,0 +1,51 @@
+
+module test_sum_all_rank_values
+    use mpi_utils, only : sum_all_rank_values
+    use pfunit
+    implicit none (type, external)
+    
+    @TestParameter
+    type, extends(MPITestParameter) :: sum_all_rank_values_params
+        integer :: expected
+        character(100) :: message
+    contains
+        procedure :: tostring
+    end type sum_all_rank_values_params
+
+    @TestCase(constructor=sum_all_rank_values_constructor)
+    type, extends(MPITestCase) :: sum_all_rank_values_test_case
+        type(sum_all_rank_values_params) :: params
+    end type sum_all_rank_values_test_case
+
+ contains
+    
+    function tostring(this) result(string)
+        class(sum_all_rank_values_params), intent(in) :: this
+        character(:), allocatable :: string
+        string = trim(this%message)
+    end function tostring
+
+    function sum_all_rank_values_constructor(params) result(test_case)
+        class(sum_all_rank_values_params), intent(in) :: params
+        type(sum_all_rank_values_test_case) :: test_case
+        test_case%params = params
+    end function sum_all_rank_values_constructor
+
+    function sum_all_rank_values_test_suite() result(test_suite)
+        type(sum_all_rank_values_params), allocatable :: test_suite(:)
+        test_suite = [ &
+            sum_all_rank_values_params(1, 1, "1 rank"), &
+            sum_all_rank_values_params(2, 3, "2 rank"), &
+            sum_all_rank_values_params(4, 10, "4 rank") &
+        ]
+    end function sum_all_rank_values_test_suite
+
+    @test(TestParameters={sum_all_rank_values_test_suite()})
+    subroutine test_sum_all_rank_values_mpi(this)
+        class(sum_all_rank_values_test_case), intent(inout) :: this
+        integer :: actual
+        actual = sum_all_rank_values(this%getMPICommunicator())
+        @assertEqual(this%params%expected, actual)
+    end subroutine test_sum_all_rank_values_mpi
+
+end module test_sum_all_rank_values
