@@ -405,6 +405,65 @@ logs the number of ranks for the given test.
 
 ### Test suite
 
+Now that we have updated our derived types, we must update how we populate our test parameter sets within
+the test suite. There is actually little that needs to change, all we must do is set how many MPI
+ranks we want each parameter set to be run with. To do this we will use the default constructor generated
+for our custom type **mpi_dot_product_test_parameters**. Since we have extended **MPITestParameter**, we can
+pass the desired number of MPI ranks as the first argument, as shown below.
+
+```f90
+!> The test suite in which parameter sets (inputs and expected outputs) for each
+!! test are defined.
+function mpi_dot_product_test_suite() result(parameter_sets)
+    !> The array of parameter sets to be returned
+    type(mpi_dot_product_test_parameters) :: parameter_sets(10)
+
+    integer, allocatable :: a(:), b(:)
+    integer :: c, i
+
+    allocate(a(100))
+    allocate(b(100))
+
+    ! Parameter set 1
+    a = [(i,i=1,100)]    !                             Here
+    b = [(i,i=101,200)]  !                              |
+    c = 843350           !                              V
+    parameter_sets(1) = mpi_dot_product_test_parameters(1, a, b, c, "10x10 incrementing values")
+    parameter_sets(2) = mpi_dot_product_test_parameters(2, a, b, c, "10x10 incrementing values")
+    parameter_sets(3) = mpi_dot_product_test_parameters(4, a, b, c, "10x10 incrementing values")
+    parameter_sets(4) = mpi_dot_product_test_parameters(6, a, b, c, "10x10 incrementing values")
+    parameter_sets(5) = mpi_dot_product_test_parameters(8, a, b, c, "10x10 incrementing values")
+
+    ! Parameter set 2
+    a = 0                !                            and here
+    b = 0                !                               |
+    c = 0                !                               V
+    parameter_sets(6)  = mpi_dot_product_test_parameters(1, a, b, c, "10x10 all zeros")
+    parameter_sets(7)  = mpi_dot_product_test_parameters(2, a, b, c, "10x10 all zeros")
+    parameter_sets(8)  = mpi_dot_product_test_parameters(4, a, b, c, "10x10 all zeros")
+    parameter_sets(9)  = mpi_dot_product_test_parameters(6, a, b, c, "10x10 all zeros")
+    parameter_sets(10) = mpi_dot_product_test_parameters(8, a, b, c, "10x10 all zeros")
+
+    ! Deallocate the temporary stores of a and b for completeness
+    deallocate(a, b)
+end function mpi_dot_product_test_suite
+```
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+#### Challenge: Define a test suite for your tests of `fahrenheit_to_celsius_parallel` with different numbers of MPI processors
+
+Write a test suite for the tests of `sum_all_rank_values`. You should think about:
+
+- What decorators are needed, if any?
+- Do you need a function or subroutine?
+- What should the inputs to this procedure be?
+- What should be its outputs?
+- How does pFUnit know how many ranks to use for each parameter set?
+- What test cases would help check the function with small and larger communicators?
+
+:::::::::::::::::::::::::::::::: solution
+
 The exercise tests the conversion procedures with 1, 2, and 4 MPI processes. A test suite returns one parameter set for
 each communicator size. Each parameter set stores one equal-sized input array per rank as columns. Eight temperatures
 can be distributed across the ranks like this:
@@ -437,42 +496,6 @@ end function fahrenheit_to_celsius_parallel_test_suite
 Each local input array has the same length within its test case: eight values with one rank, four with two ranks, and two
 with four ranks. The expected array is the same on every rank because the parallel procedure performs an all-gather.
 
-::::::::::::::::::::::::::::::::::::: challenge
-
-#### Challenge: Parameterise the Celsius-to-Kelvin test
-
-Create a separate parameter suite for `celsius_to_kelvin_parallel`. Use 1, 2, and 4 MPI processes, storing equal-sized
-local input arrays and the expected complete output.
-
-:::::::::::::::::::::::::::::::: solution
-
-The parameter sets should describe the same input values across different partitions:
-
-```f90
-function celsius_to_kelvin_parallel_test_suite() result(params)
-    type(parallel_conversion_test_params), allocatable :: params(:)
-    real, allocatable :: expected_outputs(:)
-
-    allocate(params(3), expected_outputs(8))
-    expected_outputs = [0.0, 293.15, 273.15, 173.15, 310.15, 373.15, 1273.15, 0.0]
-
-    params(1) = parallel_conversion_test_params(1)
-    params(1)%input_local_temps = reshape( &
-        [-273.15, 20.0, 0.0, -100.0, 37.0, 100.0, 1000.0, -273.15], [8, 1])
-    params(1)%expected_outputs_temps = expected_outputs
-
-    params(2) = parallel_conversion_test_params(2)
-    params(2)%input_local_temps = reshape( &
-        [-273.15, 20.0, 0.0, -100.0, 37.0, 100.0, 1000.0, -273.15], [4, 2])
-    params(2)%expected_outputs_temps = expected_outputs
-
-    params(3) = parallel_conversion_test_params(4)
-    params(3)%input_local_temps = reshape( &
-        [-273.15, 20.0, 0.0, -100.0, 37.0, 100.0, 1000.0, -273.15], [2, 4])
-    params(3)%expected_outputs_temps = expected_outputs
-end function celsius_to_kelvin_parallel_test_suite
-```
-
 :::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -481,6 +504,50 @@ end function celsius_to_kelvin_parallel_test_suite
 :::::::::::::::::::::::::::::::::::::::::::::::::::: spoiler
 
 ### Test logic
+
+Since we are assuming our src procedure returns the same value to all ranks, for any number of MPI ranks,
+nothing much needs to change within our test logic subroutine. The one thing that is likely to change
+is the call to the src procedure being tested as it is recommended to pass the MPI communicator into each
+procedure which utilises MPI. For example, the test logic might look something like this.
+
+```f90
+@Test(testParameters={mpi_dot_product_test_suite()})
+subroutine test_mpi_dot_product(this)
+    !> The instance of our test case type for this test
+    class(mpi_dot_product_test_case), intent(inout) :: this
+
+    integer :: result
+
+    result = dot(this%params%a, this%params%b, this%getMpiCommunicator())
+
+    ! Check that the call to dot_product returned what we expect
+    @AssertEqual(this%params%expected_dot_product, result, message="Unexpected value returned for the dot_product")
+end subroutine test_mpi_dot_product
+```
+
+::::::::::::::::::::::::: callout
+
+In the example above, the MPI communicator is passed into the src procedure. By using the function provided by pFUnit
+(**this%getMpiCommunicator()**) we allow pFUnit to manage the number of ranks used within each test.
+
+:::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+#### Challenge: Test the Fahrenheit-to-Celsius conversion
+
+Write the actual test logic for the function `celsius_to_kelvin_parallel`. This test should assert that the result is the sum of
+the. You should think about:
+
+- What decorators are needed?
+- Do you need a function or subroutine?
+- What should the inputs to this procedure be?
+- What should be its outputs?
+- How do you link this test logic to the test suite you just defined?
+- How do you check if a test scenario was successful?
+- Which communicator should the test pass to `celsius_to_kelvin_parallel`?
+
+:::::::::::::::::::::::::::::::: solution
 
 Both temperature conversion procedures return the complete converted array on every rank. The test uses the rank only to
 select that rank's column of local inputs; the expected output is the same on all ranks.
@@ -500,41 +567,23 @@ subroutine test_fahrenheit_to_celsius_parallel(this)
 end subroutine test_fahrenheit_to_celsius_parallel
 ```
 
-::::::::::::::::::::::::: callout
-
-In the example above, the MPI communicator is passed into the src procedure. By using the function provided by pFUnit
-(**this%getMpiCommunicator()**) we allow pFUnit to manage the number of ranks used within each test.
-
-:::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::: challenge
-
-#### Challenge: Test the Celsius-to-Kelvin conversion
-
-Write a test for `celsius_to_kelvin_parallel`. Select the current rank's column of equal-sized local inputs, pass the
-pFUnit communicator, and compare the complete result to the common expected array.
-
-:::::::::::::::::::::::::::::::: solution
-
-The test logic should follow this pattern:
-
-```f90
-@Test(testParameters={celsius_to_kelvin_parallel_test_suite()})
-subroutine test_celsius_to_kelvin_parallel(this)
-    class(parallel_conversion_test_case), intent(inout) :: this
-    integer :: process_index
-    real, allocatable :: actual(:)
-
-    process_index = this%getProcessRank() + 1
-    call celsius_to_kelvin_parallel( &
-        this%params%input_local_temps(:, process_index), actual, this%getMpiCommunicator())
-
-    @assertEqual(this%params%expected_outputs_temps, actual, tolerance=1e-4)
-end subroutine test_celsius_to_kelvin_parallel
-```
-
 :::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::
+
+::: challenge
+
+#### Test the Celsius-to-Kelvin conversion
+
+Add tests for the subroutine `celsius_to_kelvin_parallel` alongside your tests of `fahrenheit_to_celsius_parallel`
+
+:::solution
+
+A solution is provided in
+[exercises/testing-parallel-code/solution][ex-testing-parallel-code-solution].
+
+:::
+
+:::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
