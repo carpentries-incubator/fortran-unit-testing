@@ -1,0 +1,110 @@
+module test_parallel_temp_conversions
+    use temp_conversions, only : fahrenheit_to_celsius_parallel, celsius_to_kelvin_parallel
+    ! allow(C121)
+    use pfunit
+    implicit none
+
+    @testParameter
+    type, extends(MPITestParameter) :: parallel_conversion_test_params
+        integer, allocatable :: input_temp_counts(:)
+        real, allocatable :: input_local_temps(:,:), expected_outputs_temps(:)
+    end type parallel_conversion_test_params
+
+    @TestCase(constructor=parallel_conversion_test_case_constructor)
+    type, extends(MPITestCase) :: parallel_conversion_test_case
+        type(parallel_conversion_test_params) :: params
+    end type parallel_conversion_test_case
+
+contains
+
+    function parallel_conversion_test_case_constructor(test_parameters) result(test_case)
+        type(parallel_conversion_test_params), intent(in) :: test_parameters
+        type(parallel_conversion_test_case) :: test_case
+        test_case%params = test_parameters
+    end function parallel_conversion_test_case_constructor
+
+    function fahrenheit_to_celsius_parallel_test_suite() result(params)
+        type(parallel_conversion_test_params), allocatable :: params(:)
+        real, allocatable :: expected_outputs(:)
+
+        allocate(params(3), expected_outputs(7))
+
+        expected_outputs = [-40.0, 0.0, 100.0, -17.777779, 37.0, 232.88889, -273.15]
+
+        params(1) = parallel_conversion_test_params(1)
+        params(1)%input_temp_counts = [7]
+        params(1)%input_local_temps = reshape([-40.0, 32.0, 212.0, 0.0, 98.6, 451.2, -459.67], [7, 1])
+        params(1)%expected_outputs_temps = expected_outputs
+
+        params(2) = parallel_conversion_test_params(2)
+        params(2)%input_temp_counts = [3, 4]
+        params(2)%input_local_temps = reshape([-40.0, 32.0, 212.0, 0.0, 0.0, 98.6, 451.2, -459.67], [4, 2])
+        params(2)%expected_outputs_temps = expected_outputs
+
+        params(3) = parallel_conversion_test_params(4)
+        params(3)%input_temp_counts = [1, 2, 2, 2]
+        params(3)%input_local_temps = reshape([-40.0, 0.0, 32.0, 212.0, 0.0, 98.6, 451.2, -459.67], [2, 4])
+        params(3)%expected_outputs_temps = expected_outputs
+    end function fahrenheit_to_celsius_parallel_test_suite
+
+    function celsius_to_kelvin_parallel_test_suite() result(params)
+        type(parallel_conversion_test_params), allocatable :: params(:)
+        real, allocatable :: expected_outputs(:)
+
+        allocate(params(3), expected_outputs(2))
+
+        expected_outputs = [0.0, 293.15]
+
+        params(1) = parallel_conversion_test_params(1)
+        params(1)%input_temp_counts = [2]
+        params(1)%input_local_temps = reshape([-273.15, 20.0], [2, 1])
+        params(1)%expected_outputs_temps = expected_outputs
+
+        params(2) = parallel_conversion_test_params(2)
+        params(2)%input_temp_counts = [1, 1]
+        params(2)%input_local_temps = reshape([-273.15, 20.0], [1, 2])
+        params(2)%expected_outputs_temps = expected_outputs
+
+        params(3) = parallel_conversion_test_params(4)
+        params(3)%input_temp_counts = [1, 1, 0, 0]
+        params(3)%input_local_temps = reshape([-273.15, 20.0, 0.0, 0.0], [1, 4])
+        params(3)%expected_outputs_temps = expected_outputs
+    end function celsius_to_kelvin_parallel_test_suite
+
+    @Test(testParameters={fahrenheit_to_celsius_parallel_test_suite()})
+    subroutine test_fahrenheit_to_celsius_parallel(this)
+        class(parallel_conversion_test_case), intent(inout) :: this
+        integer :: process_index, local_count
+        real, allocatable :: actual(:)
+
+        process_index = this%getProcessRank() + 1
+        local_count = this%params%input_temp_counts(process_index)
+
+        call fahrenheit_to_celsius_parallel( &
+            this%params%input_local_temps(1:local_count, process_index), &
+            actual, &
+            this%getMpiCommunicator() &
+        )
+
+        @assertEqual(this%params%expected_outputs_temps, actual, tolerance=1e-4, message="Unexpected parallel Fahrenheit-to-Celsius results")
+    end subroutine test_fahrenheit_to_celsius_parallel
+
+    @Test(testParameters={celsius_to_kelvin_parallel_test_suite()})
+    subroutine test_celsius_to_kelvin_parallel(this)
+        class(parallel_conversion_test_case), intent(inout) :: this
+        integer :: process_index, local_count
+        real, allocatable :: actual(:)
+
+        process_index = this%getProcessRank() + 1
+        local_count = this%params%input_temp_counts(process_index)
+
+        call celsius_to_kelvin_parallel( &
+            this%params%input_local_temps(1:local_count, process_index), &
+            actual, &
+            this%getMpiCommunicator() &
+        )
+
+        @assertEqual(this%params%expected_outputs_temps, actual, tolerance=1e-4, message="Unexpected parallel Celsius-to-Kelvin results")
+    end subroutine test_celsius_to_kelvin_parallel
+
+end module test_parallel_temp_conversions

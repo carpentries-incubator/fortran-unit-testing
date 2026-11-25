@@ -6,9 +6,7 @@ include $(PFUNIT_INCLUDE_DIR)/PFUNIT.mk
 TEST_FLAGS = -I$(BUILD_DIR) $(FC_FLAGS) $(PFUNIT_EXTRA_FFLAGS)
 endif
 
-tests_TESTS = \
-	test_sum_all_rank_values.pf \
-	test_sum_preceding_rank_values.pf
+tests_TESTS = test_parallel_temp_conversions.pf
 tests_OTHER_SOURCES = $(SRC_OBJS)
 tests_OTHER_LIBRARIES = $(TEST_FLAGS)
 

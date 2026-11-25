@@ -1,19 +1,18 @@
-# Testing parallel code - Challenge: Rewrite serial test as a parallel test
+# Testing parallel code - Challenge: Test parallel temperature conversions
 
-This exercise aims to teach how to write pFUnit tests which test MPI-enabled code across different numbers of MPI
-processes.
+This exercise teaches how to write pFUnit tests for MPI-enabled procedures across different numbers of MPI processes.
 
 ## The code
 
-The [source code](./src) contains a small MPI library with two functions:
+The [source code](./src) contains the `temp_conversions` module from the
+[Writing your first unit test exercise](../writing-your-first-unit-test/challenge/README.md), with the original scalar
+functions `fahrenheit_to_celsius` and `celsius_to_kelvin`. It also provides MPI procedures
+`fahrenheit_to_celsius_parallel` and `celsius_to_kelvin_parallel`.
 
-- `sum_all_rank_values(communicator)` sums each processor's one-based rank within the communicator. For `n` ranks, every rank receives
-  `n * (n + 1) / 2`.
-- `sum_preceding_rank_values(communicator)` returns the exclusive prefix sum of one-based ranks, giving rank `r` the value
-  `r * (r + 1) / 2`. The first rank receives `0`, and each following rank gets a distinct value.
-
-Both functions take an integer MPI communicator ID and return deterministic values. MPI must be initialized before either
-function is called. Both functions are collective: all ranks in the communicator must call them in the same order.
+The `fahrenheit_to_celsius_parallel` and `celsius_to_kelvin_parallel` procedures take each rank's local array and an
+MPI communicator. They convert the local values and return the combined converted array on every rank, ordered by rank.
+Ranks may contribute different numbers of values, including an empty array. All ranks in the communicator must call the
+procedures in the same order.
 
 Before building, select your compilers:
 
@@ -22,11 +21,11 @@ export OMPI_FC="$(which gfortran)"
 export FC="$(which mpif90)"
 ```
 
-Build the static library with CMake:
+Build the library with CMake:
 
 ```sh
-cmake -B build
-cmake --build build
+cmake -B build-cmake
+cmake --build build-cmake
 ```
 
 Or build it with Make:
@@ -35,8 +34,18 @@ Or build it with Make:
 make
 ```
 
-The pFUnit tests cover communicators with 1, 2, and 4 ranks. Configure CMake with a pFUnit installation to build and run
-them:
+## The task
+
+Write MPI-enabled pFUnit tests for both parallel conversion procedures.
+
+1. Test both parallel conversion procedures with multiple ranks.
+2. Check that the full output is returned on every rank, in rank order, and that results match the corresponding scalar conversion.
+3. Include an input size smaller than the number of ranks so some local arrays are empty.
+
+The pFUnit test should cover different communicator sizes (for example 1, 2, and 4 processes). Use the communicator and rank
+information provided by `MPITestCase`; do not initialize or finalize MPI yourself.
+
+With CMake, configure using a pFUnit installation and run the tests:
 
 ```bash
 cmake -S . -B build-cmake \
@@ -53,10 +62,3 @@ mpirun -n 4 ./test/tests --verbose
 ```
 
 > If you are using the devcontainer, pFUnit is installed at `/home/vscode/pfunit/build/installed`.
-
-## Task
-
-Write MPI enabled pFUnit tests for the each function in the `mpi_utils` library.
-
-1. Write tests for `sum_all_rank_values` with MPI-enabled pFUnit.
-2. Write tests for `sum_preceding_rank_values` with MPI-enabled pFUnit.

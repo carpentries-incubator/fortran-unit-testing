@@ -4,9 +4,8 @@ COPY --chown=vscode exercises/testing-parallel-code /home/vscode/testing-paralle
 
 WORKDIR /home/vscode/testing-parallel-code/challenge
 
-# Add the solution tests to the challenge.
-RUN cp ../solution/test_sum_all_rank_values.pf test/ && \
-    cp ../solution/test_sum_preceding_rank_values.pf test/
+# Add the solution test to the challenge.
+RUN cp ../solution/test_parallel_temp_conversions.pf test/
 
 # Build and run the tests with CMake.
 RUN cmake -B build-cmake -DCMAKE_PREFIX_PATH=/home/vscode/pfunit/build/installed && \
