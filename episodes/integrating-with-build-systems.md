@@ -324,7 +324,7 @@ add_pfunit_ctest (test_matrix_ops_dot
 - We list the test **.pf** files we wish to include within **test_srcs**.
 - We then create a test with pFUnit and CTest using the function provided by
   pFUnit, **add_pfunit_ctest**. Here we are…
-  - naming the test **test_matrix_ops_dot**.
+  - defining a test called **test_matrix_ops_dot**.
   - informing pFUnit of the relevant src files via **TEST_SOURCES**.
   - linking to the src library via **LINK_LIBRARIES**.
 

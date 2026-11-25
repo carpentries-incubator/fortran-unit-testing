@@ -5,10 +5,10 @@ FC_FLAGS ?= -O2 -ffree-line-length-none
 BUILD_DIR ?= $(ROOT_DIR)/build
 TEST_DIR = $(ROOT_DIR)/test
 
-LIBRARY = $(BUILD_DIR)/libmpi_utils.a
-SRC_OBJS = $(BUILD_DIR)/mpi_utils.o
-MODULE = $(BUILD_DIR)/mpi_utils.mod
-SOURCE = $(ROOT_DIR)/src/mpi_utils.f90
+LIBRARY = $(BUILD_DIR)/libtemp_conversions.a
+SRC_OBJS = $(BUILD_DIR)/temp_conversions.o
+MODULE = $(BUILD_DIR)/temp_conversions.mod
+SOURCE = $(ROOT_DIR)/src/temp_conversions.f90
 
 .PHONY: all tests clean
 
