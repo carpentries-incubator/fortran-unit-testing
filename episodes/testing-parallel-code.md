@@ -268,13 +268,13 @@ ctest --test-dir build --output-on-failure
 
 The `dot` procedure in the `matrix_ops` example splits its input arrays across ranks, then uses `MPI_ALLREDUCE` to return
 the same final result on every rank. If you test a rank-local partial result instead, each rank needs its own input slice
-and expected value. Store expected values in rank order, for example as an allocatable component:
+and expected value. You would there need to store expected values in rank order, for example as an allocatable component:
 
 ```f90
 integer, allocatable :: expected_values(:)
 ```
 
-Inside the test, derive the rank's index and use it to select the expected result:
+Then, inside the test, derive the rank's index and use it to select the expected result:
 
 ```f90
 process_index = this%getProcessRank() + 1
