@@ -9,10 +9,10 @@ The [source code](./src) contains the `temp_conversions` module from the
 functions `fahrenheit_to_celsius` and `celsius_to_kelvin`. It also provides MPI procedures
 `fahrenheit_to_celsius_parallel` and `celsius_to_kelvin_parallel`.
 
-The `fahrenheit_to_celsius_parallel` and `celsius_to_kelvin_parallel` procedures take each rank's local array and an
-MPI communicator. They convert the local values and return the combined converted array on every rank, ordered by rank.
-Ranks may contribute different numbers of values, including an empty array. All ranks in the communicator must call the
-procedures in the same order.
+The `fahrenheit_to_celsius_parallel` and `celsius_to_kelvin_parallel` procedures take each rank's allocatable local array
+and an MPI communicator. All ranks must provide arrays of the same length. The procedures convert the local values and
+return the combined converted array on every rank, ordered by rank. All ranks in the communicator must call the procedures
+in the same order.
 
 Before building, select your compilers:
 
@@ -40,7 +40,7 @@ Write MPI-enabled pFUnit tests for both parallel conversion procedures.
 
 1. Test both parallel conversion procedures with multiple ranks.
 2. Check that the full output is returned on every rank, in rank order, and that results match the corresponding scalar conversion.
-3. Include an input size smaller than the number of ranks so some local arrays are empty.
+3. Use inputs that divide evenly across the 1-, 2-, and 4-process test cases so every rank receives an equal-sized array.
 
 The pFUnit test should cover different communicator sizes (for example 1, 2, and 4 processes). Use the communicator and rank
 information provided by `MPITestCase`; do not initialize or finalize MPI yourself.

@@ -262,6 +262,31 @@ ctest --test-dir build --output-on-failure
 
 :::
 
+::: callout
+
+### When inputs or outputs differ by rank
+
+The `dot` procedure in the `matrix_ops` example splits its input arrays across ranks, then uses `MPI_ALLREDUCE` to return
+the same final result on every rank. If you test a rank-local partial result instead, each rank needs its own input slice
+and expected value. Store expected values in rank order, for example as an allocatable component:
+
+```f90
+integer, allocatable :: expected_values(:)
+```
+
+Inside the test, derive the rank's index and use it to select the expected result:
+
+```f90
+process_index = this%getProcessRank() + 1
+expected_value = this%params%expected_values(process_index)
+@assertEqual(expected_value, actual)
+```
+
+The `+ 1` converts MPI's zero-based rank to Fortran's one-based array indexing. The same index can select both
+rank-specific input and expected-value parameters.
+
+:::
+
 :::::::::::::::::::::::::::::::::::::::::::::::::::: spoiler
 
 ### Derived types
@@ -323,40 +348,45 @@ Note that the constructors (i.e. `toString`, `mpi_dot_product_test_case_construc
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-#### Challenge: Define the `sum_all_rank_values` test case
+#### Challenge: Define the temperature conversion test case
 
-Start the [Testing parallel code exercise][ex-testing-parallel-code]. Write your own derived-types to act as the test parameter and
-test case types for MPI tests of the mpi_utils library. You should think about:
+Start the [Testing parallel code exercise][ex-testing-parallel-code]. Define a parameter type to store each rank's
+allocatable local temperature array and the expected complete output, and a test case type. The local arrays should have
+the same size for every rank. You should think about:
 
 - What decorators are needed?
 - What types should be extended?
 - What type-bound variables, if any, should be defined?
+- Do we require different inputs or outputs for each rank?
 - How do we instantiate one of these test cases?
 
 :::::::::::::::::::::::::::::::: solution
 
-Your derived types should look something like this:
+The parameter type should extend `MPITestParameter` and the test case type should extend `MPITestCase`. Store each rank's
+local input as one column of a two-dimensional allocatable array. Since the local arrays are the same size, the column
+index is enough to select the current rank's input:
 
 ```f90
 @testParameter
-type, extends(MPITestParameter) :: sum_all_rank_values_test_params
-end type sum_all_rank_values_test_params
+type, extends(MPITestParameter) :: parallel_conversion_test_params
+    real, allocatable :: input_local_temps(:,:), expected_outputs_temps(:)
+end type parallel_conversion_test_params
 
-@TestCase(testParameters={sum_all_rank_values_test_suite()}, constructor=sum_all_rank_values_test_case_constructor)
-type, extends(MPITestCase) :: sum_all_rank_values_test_case
-    type(sum_all_rank_values_test_params) :: params
-end type sum_all_rank_values_test_case
+@TestCase(constructor=parallel_conversion_test_case_constructor)
+type, extends(MPITestCase) :: parallel_conversion_test_case
+    type(parallel_conversion_test_params) :: params
+end type parallel_conversion_test_case
 ```
 
-You should also have defined a constructor for you test case which converts a parameter type to a tets case type:
+The constructor copies a parameter set into the test case:
 
 ```f90
-function sum_all_rank_values_test_case_constructor(testParameters) result(testCase)
-    type(sum_all_rank_values_test_params), intent(in) :: testParameters
-    type(sum_all_rank_values_test_case) :: testCase
+function parallel_conversion_test_case_constructor(test_parameters) result(test_case)
+    type(parallel_conversion_test_params), intent(in) :: test_parameters
+    type(parallel_conversion_test_case) :: test_case
 
-    testCase%params = testParameters
-end function sum_all_rank_values_test_case_constructor
+    test_case%params = test_parameters
+end function parallel_conversion_test_case_constructor
 ```
 
 ::: callout
@@ -373,78 +403,74 @@ logs the number of ranks for the given test.
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::: spoiler
 
-### Test Suite
+### Test suite
 
-Now that we have updated our derived types, we must update how we populate our test parameter sets within
-the test suite. There is actually little that needs to change, all we must do is set how many MPI
-ranks we want each parameter set to be run with. To do this we will use the default constructor generated
-for our custom type **mpi_dot_product_test_parameters**. Since we have extended **MPITestParameter**, we can
-pass the desired number of MPI ranks as the first argument, as shown below.
+The exercise tests the conversion procedures with 1, 2, and 4 MPI processes. A test suite returns one parameter set for
+each communicator size. Each parameter set stores one equal-sized input array per rank as columns. Eight temperatures
+can be distributed across the ranks like this:
 
 ```f90
-!> The test suite in which parameter sets (inputs and expected outputs) for each
-!! test are defined.
-function mpi_dot_product_test_suite() result(parameter_sets)
-    !> The array of parameter sets to be returned
-    type(mpi_dot_product_test_parameters) :: parameter_sets(10)
+function fahrenheit_to_celsius_parallel_test_suite() result(params)
+    type(parallel_conversion_test_params), allocatable :: params(:)
+    real, allocatable :: expected_outputs(:)
 
-    integer, allocatable :: a(:), b(:)
-    integer :: c, i
+    allocate(params(3), expected_outputs(8))
+    expected_outputs = [-40.0, 0.0, 100.0, -17.777779, 37.0, 232.88889, -273.15, 37.77778]
 
-    allocate(a(100))
-    allocate(b(100))
+    params(1) = parallel_conversion_test_params(1)
+    params(1)%input_local_temps = reshape( &
+        [-40.0, 32.0, 212.0, 0.0, 98.6, 451.2, -459.67, 100.0], [8, 1])
+    params(1)%expected_outputs_temps = expected_outputs
 
-    ! Parameter set 1
-    a = [(i,i=1,100)]    !                             Here
-    b = [(i,i=101,200)]  !                              |
-    c = 843350           !                              V
-    parameter_sets(1) = mpi_dot_product_test_parameters(1, a, b, c, "10x10 incrementing values")
-    parameter_sets(2) = mpi_dot_product_test_parameters(2, a, b, c, "10x10 incrementing values")
-    parameter_sets(3) = mpi_dot_product_test_parameters(4, a, b, c, "10x10 incrementing values")
-    parameter_sets(4) = mpi_dot_product_test_parameters(6, a, b, c, "10x10 incrementing values")
-    parameter_sets(5) = mpi_dot_product_test_parameters(8, a, b, c, "10x10 incrementing values")
+    params(2) = parallel_conversion_test_params(2)
+    params(2)%input_local_temps = reshape( &
+        [-40.0, 32.0, 212.0, 0.0, 98.6, 451.2, -459.67, 100.0], [4, 2])
+    params(2)%expected_outputs_temps = expected_outputs
 
-    ! Parameter set 2
-    a = 0                !                            and here
-    b = 0                !                               |
-    c = 0                !                               V
-    parameter_sets(6)  = mpi_dot_product_test_parameters(1, a, b, c, "10x10 all zeros")
-    parameter_sets(7)  = mpi_dot_product_test_parameters(2, a, b, c, "10x10 all zeros")
-    parameter_sets(8)  = mpi_dot_product_test_parameters(4, a, b, c, "10x10 all zeros")
-    parameter_sets(9)  = mpi_dot_product_test_parameters(6, a, b, c, "10x10 all zeros")
-    parameter_sets(10) = mpi_dot_product_test_parameters(8, a, b, c, "10x10 all zeros")
-
-    ! Deallocate the temporary stores of a and b for completeness
-    deallocate(a, b)
-end function mpi_dot_product_test_suite
+    params(3) = parallel_conversion_test_params(4)
+    params(3)%input_local_temps = reshape( &
+        [-40.0, 32.0, 212.0, 0.0, 98.6, 451.2, -459.67, 100.0], [2, 4])
+    params(3)%expected_outputs_temps = expected_outputs
+end function fahrenheit_to_celsius_parallel_test_suite
 ```
+
+Each local input array has the same length within its test case: eight values with one rank, four with two ranks, and two
+with four ranks. The expected array is the same on every rank because the parallel procedure performs an all-gather.
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-#### Challenge: Define a test suite for your tests of `sum_all_rank_values` with different numbers of MPI processors
+#### Challenge: Parameterise the Celsius-to-Kelvin test
 
-Write a test suite for the tests of `sum_all_rank_values`. You should think about:
-
-- What decorators are needed, if any?
-- Do you need a function or subroutine?
-- What should the inputs to this procedure be?
-- What should be its outputs?
-- How does pFUnit know how many ranks to use for each parameter set?
-- What test cases would help check the function with small and larger communicators?
+Create a separate parameter suite for `celsius_to_kelvin_parallel`. Use 1, 2, and 4 MPI processes, storing equal-sized
+local input arrays and the expected complete output.
 
 :::::::::::::::::::::::::::::::: solution
 
-The test suite should look something like this:
+The parameter sets should describe the same input values across different partitions:
 
 ```f90
-function sum_all_rank_values_test_suite() result(params)
-    type(sum_all_rank_values_test_params), allocatable :: params(:)
+function celsius_to_kelvin_parallel_test_suite() result(params)
+    type(parallel_conversion_test_params), allocatable :: params(:)
+    real, allocatable :: expected_outputs(:)
 
-    allocate(params(3))
-    params(1) = sum_all_rank_values_test_params(1)
-    params(2) = sum_all_rank_values_test_params(2)
-    params(3) = sum_all_rank_values_test_params(4)
-end function sum_all_rank_values_test_suite
+    allocate(params(3), expected_outputs(8))
+    expected_outputs = [0.0, 293.15, 273.15, 173.15, 310.15, 373.15, 1273.15, 0.0]
+
+    params(1) = parallel_conversion_test_params(1)
+    params(1)%input_local_temps = reshape( &
+        [-273.15, 20.0, 0.0, -100.0, 37.0, 100.0, 1000.0, -273.15], [8, 1])
+    params(1)%expected_outputs_temps = expected_outputs
+
+    params(2) = parallel_conversion_test_params(2)
+    params(2)%input_local_temps = reshape( &
+        [-273.15, 20.0, 0.0, -100.0, 37.0, 100.0, 1000.0, -273.15], [4, 2])
+    params(2)%expected_outputs_temps = expected_outputs
+
+    params(3) = parallel_conversion_test_params(4)
+    params(3)%input_local_temps = reshape( &
+        [-273.15, 20.0, 0.0, -100.0, 37.0, 100.0, 1000.0, -273.15], [2, 4])
+    params(3)%expected_outputs_temps = expected_outputs
+end function celsius_to_kelvin_parallel_test_suite
 ```
 
 :::::::::::::::::::::::::::::::::::::::::
@@ -454,26 +480,24 @@ end function sum_all_rank_values_test_suite
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::: spoiler
 
-### Test Logic
+### Test logic
 
-Since we are assuming our src procedure returns the same value to all ranks, for any number of MPI ranks,
-nothing much needs to change within our test logic subroutine. The one thing that is likely to change
-is the call to the src procedure being tested as it is recommended to pass the MPI communicator into each
-procedure which utilises MPI. For example, the test logic might look something like this.
+Both temperature conversion procedures return the complete converted array on every rank. The test uses the rank only to
+select that rank's column of local inputs; the expected output is the same on all ranks.
 
 ```F90
-@Test(testParameters={mpi_dot_product_test_suite()})
-subroutine test_mpi_dot_product(this)
-    !> The instance of our test case type for this test
-    class(mpi_dot_product_test_case), intent(inout) :: this
+@Test(testParameters={fahrenheit_to_celsius_parallel_test_suite()})
+subroutine test_fahrenheit_to_celsius_parallel(this)
+    class(parallel_conversion_test_case), intent(inout) :: this
+    integer :: process_index
+    real, allocatable :: actual(:)
 
-    integer :: result
+    process_index = this%getProcessRank() + 1
+    call fahrenheit_to_celsius_parallel( &
+        this%params%input_local_temps(:, process_index), actual, this%getMpiCommunicator())
 
-    result = dot(this%params%a, this%params%b, this%getMpiCommunicator())
-
-    ! Check that the call to dot_product returned what we expect
-    @AssertEqual(this%params%expected_dot_product, result, message="Unexpected value returned for the dot_product")
-end subroutine test_mpi_dot_product
+    @assertEqual(this%params%expected_outputs_temps, actual, tolerance=1e-4)
+end subroutine test_fahrenheit_to_celsius_parallel
 ```
 
 ::::::::::::::::::::::::: callout
@@ -485,34 +509,28 @@ In the example above, the MPI communicator is passed into the src procedure. By 
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-#### Challenge: Complete the `sum_all_rank_values` test
+#### Challenge: Test the Celsius-to-Kelvin conversion
 
-Write the actual test logic for the function `sum_all_rank_values`. This test should assert that the result is the sum of the
-one-based ranks, `n * (n + 1) / 2`, where `n` is the number of processors. You should think about:
-
-- What decorators are needed?
-- Do you need a function or subroutine?
-- What should the inputs to this procedure be?
-- What should be its outputs?
-- How do you link this test logic to the test suite you just defined?
-- How do you check if a test scenario was successful?
-- Which communicator should the test pass to `sum_all_rank_values`?
+Write a test for `celsius_to_kelvin_parallel`. Select the current rank's column of equal-sized local inputs, pass the
+pFUnit communicator, and compare the complete result to the common expected array.
 
 :::::::::::::::::::::::::::::::: solution
 
-The test logic should look like this:
+The test logic should follow this pattern:
 
 ```f90
-@Test
-subroutine test_sum_all_rank_values_for_all_ranks(this)
-    class(sum_all_rank_values_test_case), intent(inout) :: this
-    integer :: actual_value, num_processes
+@Test(testParameters={celsius_to_kelvin_parallel_test_suite()})
+subroutine test_celsius_to_kelvin_parallel(this)
+    class(parallel_conversion_test_case), intent(inout) :: this
+    integer :: process_index
+    real, allocatable :: actual(:)
 
-    actual_value = sum_all_rank_values(this%getMpiCommunicator())
-    num_processes = this%getNumProcesses()
+    process_index = this%getProcessRank() + 1
+    call celsius_to_kelvin_parallel( &
+        this%params%input_local_temps(:, process_index), actual, this%getMpiCommunicator())
 
-    @assertEqual(num_processes * (num_processes + 1) / 2, actual_value, "Expected the sum of one-based ranks")
-end subroutine test_sum_all_rank_values_for_all_ranks
+    @assertEqual(this%params%expected_outputs_temps, actual, tolerance=1e-4)
+end subroutine test_celsius_to_kelvin_parallel
 ```
 
 :::::::::::::::::::::::::::::::::::::::::
@@ -590,210 +608,6 @@ add_pfunit_ctest (test_with_mpi
 should be run. Therefore, this number should match the largest number of ranks requested in the tests
 defined within **test_srcs** (i.e. the largest value passed as the first argument into a **MPITestParameter**
 constructor).
-
-## Testing more complex procedures
-
-Thus far we have been assuming our src procedure returns the same value to all ranks for any number of MPI
-ranks. We must do things slightly differently if we expect different values to be returned for different
-ranks. For example, imagine we now wish to test **partial_dot** from the following module:
-
-```f90
-module matrix_ops
-    use mpi
-    implicit none
-
-contains
-
-    !> Calculates the partial dot product of two arrays `a` and `b`, splitting the calculation across mpi processors
-    function partial_dot(a, b, communicator) result(final_result)
-        !> The input array `a` to be passed to dot_product
-        integer, allocatable :: a(:)
-        !> The input array `b` to be passed to dot_product
-        integer, allocatable :: b(:)
-        !> The mpi communicator to be used
-        integer, intent(in) :: communicator
-
-        integer :: rank, num_ranks
-        integer :: final_result, indices_per_rank, proc_start, proc_end, ierr
-
-        call MPI_COMM_RANK(communicator, rank, ierr)
-        call MPI_COMM_SIZE(communicator, num_ranks, ierr)
-
-        indices_per_rank = size(a) / num_ranks
-        proc_start = (rank * size(a)) / num_ranks + 1
-        proc_end   = ((rank + 1) * size(a)) / num_ranks
-
-        final_result = dot_product(a(proc_start:proc_end), b(proc_start:proc_end))
-    end function partial_dot
-
-    !> Calculates the dot product of two arrays `a` and `b`, splitting the calculation across mpi processors
-    function dot(a, b, communicator) result(final_result)
-        !> The input array `a` to be passed to dot_product
-        integer, allocatable :: a(:)
-        !> The input array `b` to be passed to dot_product
-        integer, allocatable :: b(:)
-        !> The mpi communicator to be used
-        integer, intent(in) :: communicator
-
-        integer :: final_result, ierr, proc_result
-
-        proc_result = partial_dot(a, b, communicator)
-        CALL MPI_ALLREDUCE(proc_result, final_result, 1, MPI_INTEGER, MPI_SUM, communicator, ierr)
-    end function dot
-end module matrix_ops
-
-```
-
-In this new function, the value for each processor will be different since we don't call **MPI_ALLREDUCE**.
-To handle this scenario we can make use of the functions provided by pFUnit, **getNumProcesses()** and
-**getProcessRank()**. However, these values are not set until the test case runs (i.e. until we are within
-the subroutine decorated with **@Test**). Therefore, we must be a little clever about how we populate our
-test parameters.
-
-We can build arrays of input/output parameters with the rank of a process matching the index of the parameter
-array. For example, rank 0 would access index 1, rank 1 would access index 2 and so on. Therefore, we must now
-update our test parameter type to use an integer array for **expected_dot_product**, like so:
-
-```F90
-!> Custom test parameters type containing all of the inputs and expected
-!! outputs of the intrinsic dot_product
-@TestParameter
-type, extends(MPITestParameter) :: mpi_dot_product_test_parameters
-    !> The input array `a` to be passed to dot_product
-    integer, allocatable :: a(:)
-    !> The input array `b` to be passed to dot_product
-    integer, allocatable :: b(:)
-    !> The expected values to be returned from dot_product for
-    !! each rank MPI rank.
-    integer, allocatable :: expected_dot_product(:)
-    !> A description of the test to be outputted for logging
-    character(len=100) :: description
-contains
-    !> The required type-bound procedure for converting an instance
-    !> of this type to a string for logging
-    procedure :: toString
-end type mpi_dot_product_test_parameters
-```
-
-We can then update how we populate our test parameters to take into account the rank indexing:
-
-```F90
-!> The test suite in which parameter sets (inputs and expected outputs) for each
-!! test are defined.
-function mpi_dot_product_test_suite() result(parameter_sets)
-    !> The array of parameter sets to be returned
-    type(mpi_dot_product_test_parameters) :: parameter_sets(10)
-
-    integer, allocatable :: a(:), b(:), c(:)
-    integer :: i, c_sum
-
-    allocate(a(100))
-    allocate(b(100))
-    allocate(c(8)) ! Allocate up to maximum number of ranks to be tested
-
-    ! Test case 1
-    a = [(i,i=1,100)]
-    b = [(i,i=101,200)]
-    c = 0
-    c(1) = 843350
-    parameter_sets(1) = mpi_dot_product_test_parameters(1, a, b, c, "10x10 incrementing values")
-    c(1:2) = [170425,672925]
-    parameter_sets(2) = mpi_dot_product_test_parameters(2, a, b, c, "10x10 incrementing values")
-    c(1:4) = [38025,132400,258025,414900]
-    parameter_sets(3) = mpi_dot_product_test_parameters(4, a, b, c, "10x10 incrementing values")
-    c(1:6) = [15096,53533,101796,148696,223533,300696]
-    parameter_sets(4) = mpi_dot_product_test_parameters(6, a, b, c, "10x10 incrementing values")
-    c(1:8) = [8450,29575,49850,82550,106250,151775,177650,237250]
-    parameter_sets(5) = mpi_dot_product_test_parameters(8, a, b, c, "10x10 incrementing values")
-
-    ! Test case 2
-    a = 0
-    b = 0
-    c = 0
-    parameter_sets(6) = mpi_dot_product_test_parameters(1, a, b, c, "10x10 all zeros")
-    parameter_sets(7) = mpi_dot_product_test_parameters(2, a, b, c, "10x10 all zeros")
-    parameter_sets(8) = mpi_dot_product_test_parameters(4, a, b, c, "10x10 all zeros")
-    parameter_sets(9) = mpi_dot_product_test_parameters(6, a, b, c, "10x10 all zeros")
-    parameter_sets(10) = mpi_dot_product_test_parameters(8, a, b, c, "10x10 all zeros")
-
-    ! Deallocate the temporary stores of a, b and c for completeness
-    deallocate(a, b, c)
-end function mpi_dot_product_test_suite
-```
-
-Finally, we need to ensure each process accesses the correct rank indexed parameters during the test
-
-```F90
-@Test(testParameters={mpi_dot_product_test_suite()})
-subroutine test_partial_mpi_dot_product(this)
-    !> The instance of our test case type for this test
-    class(mpi_dot_product_test_case), intent(inout) :: this
-
-    integer :: result, rank
-
-    rank = this%getProcessRank()
-
-    result = partial_dot(this%params%a, this%params%b, this%getMpiCommunicator())
-
-    ! Check that the call to dot_product returned what we expect
-    @AssertEqual(this%params%expected_dot_product(rank + 1), result, message="Unexpected value returned for the dot_product")
-end subroutine test_partial_mpi_dot_product
-```
-
-::::::::::::::::::::::::::::::::::::: challenge
-
-### Challenge: Write tests for `sum_preceding_rank_values`
-
-Now write the pFUnit tests for `sum_preceding_rank_values` in the [Testing parallel code exercise][ex-testing-parallel-code].
-These new test should be defined in a new test file. Unlike the previous function, its result varies by MPI rank therefore you need to
-store a different expected result for each rank.
-
-:::::::::::::::::::::::::::::::: solution
-
-A solution is provided in
-[exercises/testing-parallel-code/solution][ex-testing-parallel-code-solution].
-
-The parameter sets should store a value for each rank, i.e. the parameter type becomes:
-
-```f90
-type, extends(MPITestParameter) :: sum_preceding_rank_values_test_params
-    integer, allocatable :: expected_value(:)
-end type sum_preceding_rank_values_test_params
-```
-
-Therefore, the test suite becomes:
-
-```f90
-function rank_value_params() result(params)
-    type(sum_preceding_rank_values_test_params), allocatable :: params(:)
-
-    allocate(params(3))
-    params(1) = sum_preceding_rank_values_test_params(1, [0])
-    params(2) = sum_preceding_rank_values_test_params(2, [0, 1])
-    params(3) = sum_preceding_rank_values_test_params(4, [0, 1, 3, 6])
-end function rank_value_params
-```
-
-and thus the test logic becomes:
-
-```f90
-@Test
-subroutine test_sum_preceding_rank_values_for_each_rank(this)
-    class(sum_preceding_rank_values_test_case), intent(inout) :: this
-    integer :: actual_value, expected_value
-
-    actual_value = sum_preceding_rank_values(this%getMpiCommunicator())
-    expected_value = this%params%expected_value(this%getProcessRank() + 1)
-
-    @assertEqual(expected_value, actual_value, "Expected the exclusive prefix sum of one-based ranks")
-end subroutine test_sum_preceding_rank_values_for_each_rank
-```
-
-In the test, use `this%getProcessRank() + 1` as the array index because MPI ranks
-are zero-based and Fortran arrays are one-based.
-
-:::::::::::::::::::::::::::::::::::::::::
-::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::: challenge
 

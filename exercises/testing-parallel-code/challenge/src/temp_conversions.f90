@@ -1,5 +1,5 @@
 module temp_conversions
-    use mpi, only : MPI_Allgather, MPI_Allgatherv, MPI_INTEGER, MPI_REAL, MPI_Comm_size
+    use mpi, only : MPI_Allgather, MPI_Allreduce, MPI_INTEGER, MPI_MAX, MPI_MIN, MPI_REAL, MPI_Comm_size
     implicit none
     private
     public :: fahrenheit_to_celsius, celsius_to_kelvin
@@ -50,29 +50,24 @@ contains
         integer, intent(in) :: communicator
         procedure(scalar_conversion) :: conversion
 
-        integer :: ierr, num_processes, local_count, total_count, i
-        integer, allocatable :: counts(:), displacements(:)
+        integer :: ierr, num_processes, local_count, total_count, min_count, max_count, i
         real, allocatable :: local_output(:)
 
         call MPI_Comm_size(communicator, num_processes, ierr)
         local_count = size(local_input)
+        call MPI_Allreduce(local_count, min_count, 1, MPI_INTEGER, MPI_MIN, communicator, ierr)
+        call MPI_Allreduce(local_count, max_count, 1, MPI_INTEGER, MPI_MAX, communicator, ierr)
+        if (min_count /= max_count) error stop "All ranks must provide the same number of temperatures"
+
         allocate(local_output(local_count))
         do i = 1, local_count
             local_output(i) = conversion(local_input(i))
         end do
 
-        allocate(counts(num_processes), displacements(num_processes))
-        call MPI_Allgather(local_count, 1, MPI_INTEGER, counts, 1, MPI_INTEGER, communicator, ierr)
-
-        displacements(1) = 0
-        do i = 2, num_processes
-            displacements(i) = displacements(i - 1) + counts(i - 1)
-        end do
-        total_count = sum(counts)
-
+        total_count = local_count * num_processes
         allocate(all_output(total_count))
-        call MPI_Allgatherv(local_output, local_count, MPI_REAL, all_output, counts, displacements, &
-                            MPI_REAL, communicator, ierr)
+        call MPI_Allgather(local_output, local_count, MPI_REAL, all_output, local_count, MPI_REAL, &
+                           communicator, ierr)
     end subroutine convert_parallel
 
 end module temp_conversions
