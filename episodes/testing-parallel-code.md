@@ -471,24 +471,30 @@ can be distributed across the ranks like this:
 ```f90
 function fahrenheit_to_celsius_parallel_test_suite() result(params)
     type(parallel_conversion_test_params), allocatable :: params(:)
-    real, allocatable :: expected_outputs(:)
+    real, allocatable :: inputs(:), expected_outputs(:)
 
-    allocate(params(3), expected_outputs(8))
+    allocate(params(3), inputs(8), expected_outputs(8))
+
+    inputs = [-40.0, 32.0, 212.0, 0.0, 98.6, 451.2, -459.67, 100.0]
     expected_outputs = [-40.0, 0.0, 100.0, -17.777779, 37.0, 232.88889, -273.15, 37.77778]
 
     params(1) = parallel_conversion_test_params(1)
-    params(1)%input_local_temps = reshape( &
-        [-40.0, 32.0, 212.0, 0.0, 98.6, 451.2, -459.67, 100.0], [8, 1])
+    allocate(params(1)%input_local_temps(8, 1))
+    params(1)%input_local_temps(:, 1) = inputs
     params(1)%expected_outputs_temps = expected_outputs
 
     params(2) = parallel_conversion_test_params(2)
-    params(2)%input_local_temps = reshape( &
-        [-40.0, 32.0, 212.0, 0.0, 98.6, 451.2, -459.67, 100.0], [4, 2])
+    allocate(params(2)%input_local_temps(4, 2))
+    params(2)%input_local_temps(:, 1) = inputs(1:4)
+    params(2)%input_local_temps(:, 2) = inputs(5:8)
     params(2)%expected_outputs_temps = expected_outputs
 
     params(3) = parallel_conversion_test_params(4)
-    params(3)%input_local_temps = reshape( &
-        [-40.0, 32.0, 212.0, 0.0, 98.6, 451.2, -459.67, 100.0], [2, 4])
+    allocate(params(3)%input_local_temps(2, 4))
+    params(3)%input_local_temps(:, 1) = inputs(1:2)
+    params(3)%input_local_temps(:, 2) = inputs(3:4)
+    params(3)%input_local_temps(:, 3) = inputs(5:6)
+    params(3)%input_local_temps(:, 4) = inputs(7:8)
     params(3)%expected_outputs_temps = expected_outputs
 end function fahrenheit_to_celsius_parallel_test_suite
 ```
@@ -561,9 +567,12 @@ subroutine test_fahrenheit_to_celsius_parallel(this)
 
     process_index = this%getProcessRank() + 1
     call fahrenheit_to_celsius_parallel( &
-        this%params%input_local_temps(:, process_index), actual, this%getMpiCommunicator())
+        this%params%input_local_temps(:, process_index), &
+        actual, &
+        this%getMpiCommunicator() &
+    )
 
-    @assertEqual(this%params%expected_outputs_temps, actual, tolerance=1e-4)
+    @assertEqual(this%params%expected_outputs_temps, actual, tolerance=1e-4, message="Unexpected parallel Fahrenheit-to-Celsius results")
 end subroutine test_fahrenheit_to_celsius_parallel
 ```
 
