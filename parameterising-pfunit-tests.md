@@ -279,7 +279,7 @@ There is a lot of new aspects being introduced in the above test so let's break 
 
 ### 1. Test parameters type
 
-First of all, we have defined a new custom type **dot_test_parameters**
+First, we have defined a new custom type **dot_test_parameters**
 
 ```fortran
 !> Custom test parameters type containing all of the inputs and expected
